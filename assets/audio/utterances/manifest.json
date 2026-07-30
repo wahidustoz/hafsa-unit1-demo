@@ -1,0 +1,87 @@
+{
+  "source": {
+    "primary": "reference/chant-vocals/unit1.mp3",
+    "fallback": "assets/audio/chants/unit1-word-chant.mp3",
+    "note": "primary is the isolated vocal stem (music bed removed); fallback used only where noted below because the vocal-isolation process degraded a word-final consonant"
+  },
+  "processing": "atrim(sliceStart,sliceEnd) -> asetpts=PTS-STARTPTS -> dynaudnorm=f=150:g=15:m=12 -> afade in 60ms -> afade out 120ms -> libmp3lame 192k 44100Hz mono",
+  "words": {
+    "ant": {
+      "source": "primary",
+      "sliceStart": 7.9,
+      "sliceEnd": 10.06,
+      "wordAtMs": 1183,
+      "durMs": 2194,
+      "transcript": "I, I, aunt",
+      "note": "ASR renders the homophone 'aunt' in isolation; wider-context transcription of the same audio confirms 'A, a, ant. A, a, ant.'"
+    },
+    "apple": {
+      "source": "primary",
+      "sliceStart": 11.7,
+      "sliceEnd": 13.89,
+      "wordAtMs": 1217,
+      "durMs": 2220,
+      "transcript": "A, a, apple"
+    },
+    "alligator": {
+      "source": "primary",
+      "sliceStart": 15.5,
+      "sliceEnd": 17.558,
+      "wordAtMs": 1208,
+      "durMs": 2090,
+      "transcript": "A, a, alligator"
+    },
+    "ball": {
+      "source": "primary",
+      "sliceStart": 23.07,
+      "sliceEnd": 25.17,
+      "wordAtMs": 1222,
+      "durMs": 2142,
+      "transcript": "The, the, ball"
+    },
+    "bear": {
+      "source": "fallback",
+      "sliceStart": 26.82,
+      "sliceEnd": 28.99,
+      "wordAtMs": 1263,
+      "durMs": 2220,
+      "transcript": "B-b bear",
+      "note": "vocal stem mistranscribed as 'Ben' (word-final consonant degraded by isolation); full chant mix at the identical window is clean"
+    },
+    "bag": {
+      "source": "primary",
+      "sliceStart": 30.59,
+      "sliceEnd": 32.86,
+      "wordAtMs": 1327,
+      "durMs": 2299,
+      "transcript": "B-b-bang",
+      "note": "isolated 2.3s clip is misheard by ASR as 'bang' from both the vocal stem and the full-chant fallback; wider-context transcription of the surrounding audio confirms the content is 'B-b-bear. B-b-bag. B-b-bag.' Kept on the vocal stem since the fallback gave no improvement; flagged as an ASR short-clip limitation, not a wrong-word slice"
+    },
+    "cup": {
+      "source": "fallback",
+      "sliceStart": 38.4,
+      "sliceEnd": 40.58,
+      "wordAtMs": 1100,
+      "durMs": 2220,
+      "transcript": "C-C-cup",
+      "note": "vocal stem destroyed the final unvoiced 'p' (heard as 'pan'/'cum'/'cuz' across 3 attempts); full chant mix at the identical window is clean"
+    },
+    "cow": {
+      "source": "primary",
+      "sliceStart": 42.13,
+      "sliceEnd": 44.33,
+      "wordAtMs": 1162,
+      "durMs": 2247,
+      "transcript": "Cuh, cuh, cow"
+    },
+    "car": {
+      "source": "fallback",
+      "sliceStart": 45.96,
+      "sliceEnd": 48.11,
+      "wordAtMs": 1165,
+      "durMs": 2194,
+      "transcript": "C, c, car",
+      "note": "vocal stem mistranscribed the word-final 'r' as 'carn'/'cars'; full chant mix at the identical window is clean"
+    }
+  }
+}

@@ -1,0 +1,179 @@
+.step-whatsthis{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+.step-whatsthis .wt-stage{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--sp-10);
+  padding:var(--sp-8);
+}
+
+.step-whatsthis .wt-row1{
+  position:relative;
+  display:grid;
+  width:100%;
+  justify-items:center;
+  text-align:center;
+}
+
+.step-whatsthis .wt-prompt,
+.step-whatsthis .wt-answer{
+  grid-area:1/1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--sp-3);
+  color:var(--ink);
+  opacity:1;
+  transform:translateY(0) scale(1);
+  transition:opacity var(--t-move) var(--ease-out),transform var(--t-move) var(--ease-out);
+}
+
+.step-whatsthis .wt-prompt{
+  font-size:clamp(48px,6vw,84px);
+}
+
+.step-whatsthis .wt-answer{
+  opacity:0;
+  transform:translateY(14px) scale(.94);
+  pointer-events:none;
+}
+
+.step-whatsthis.is-answer .wt-answer{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+
+.step-whatsthis.is-answer .wt-prompt{
+  opacity:0;
+  transform:translateY(-14px) scale(.94);
+  pointer-events:none;
+}
+
+.step-whatsthis .wt-letters{
+  display:flex;
+  gap:var(--sp-3);
+}
+
+.step-whatsthis .wt-letter{
+  font-weight:700;
+  line-height:1;
+  font-size:clamp(120px,18vw,260px);
+}
+
+.step-whatsthis.is-answer .wt-letter{
+  animation:pop var(--t-pop) var(--ease-pop) backwards;
+}
+
+.step-whatsthis.is-answer .wt-letter:nth-child(2){
+  animation-delay:.06s;
+}
+
+.step-whatsthis .wt-word{
+  font-size:clamp(36px,4.5vw,60px);
+}
+
+.step-whatsthis .wt-row2{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--sp-3);
+}
+
+.step-whatsthis .wt-plinth{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:min(48vh,500px);
+  aspect-ratio:1;
+  min-width:var(--tap-child);
+  min-height:var(--tap-child);
+  border-radius:50%;
+  border:5px solid var(--ink);
+  background:radial-gradient(130% 130% at 30% 20%,var(--reward-lt) 0%,var(--reward) 58%,var(--reward-dk) 100%);
+  box-shadow:0 var(--lift) 0 var(--reward-hard),var(--shadow-ambient);
+  cursor:pointer;
+  transition:transform var(--t-press) ease,box-shadow var(--t-press) ease;
+}
+
+.step-whatsthis:not(.is-answer) .wt-plinth:hover{
+  transform:translateY(-6px);
+}
+
+.step-whatsthis .wt-plinth:active{
+  transform:translateY(var(--sink));
+  box-shadow:0 var(--lift-pressed) 0 var(--reward-hard),0 6px 10px var(--ink-a16);
+}
+
+.step-whatsthis.is-answer .wt-plinth{
+  cursor:default;
+}
+
+.step-whatsthis .wt-glow{
+  position:absolute;
+  inset:-8%;
+  border-radius:50%;
+  border:4px solid var(--primary);
+  opacity:0;
+  pointer-events:none;
+}
+
+.step-whatsthis .wt-plinth.is-glowing .wt-glow{
+  animation:pulse var(--t-pulse) var(--ease-out) 2;
+}
+
+.step-whatsthis .wt-object{
+  position:relative;
+  width:min(34vh,340px);
+  height:auto;
+  filter:drop-shadow(0 10px 14px var(--ink-a16));
+}
+
+.step-whatsthis .wt-plinth.is-popped .wt-object{
+  animation:pop var(--t-pop) var(--ease-pop);
+}
+
+.step-whatsthis .wt-pointer{
+  position:absolute;
+  right:-8%;
+  bottom:4%;
+  width:clamp(56px,8vw,104px);
+  height:auto;
+  transform-origin:30% 90%;
+  filter:drop-shadow(0 6px 8px var(--ink-a16));
+  opacity:1;
+  animation:bob var(--t-bob) var(--ease-idle) infinite alternate;
+  transition:opacity var(--t-quick) ease;
+}
+
+.step-whatsthis.is-answer .wt-pointer{
+  opacity:0;
+  animation-play-state:paused;
+}
+
+.step-whatsthis .wt-shadow{
+  width:min(30vh,320px);
+  height:24px;
+  margin-top:calc(-1 * var(--sp-3));
+  border-radius:50%;
+  background:var(--ink-a12);
+  filter:blur(var(--sp-2));
+}
+
+.step-whatsthis .wt-next{
+  animation:pop var(--t-pop) var(--ease-pop);
+}
+
+.step-whatsthis.is-paused,
+.step-whatsthis.is-paused *{
+  animation-play-state:paused !important;
+}
