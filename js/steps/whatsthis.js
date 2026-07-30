@@ -116,7 +116,7 @@ export default {
       phase = 'holding'
       audio.chime('next')
       nextBtn.hidden = false
-      scheduleAdvance(1200)
+      scheduleAdvance(2200)
     }
 
     function goNext() {

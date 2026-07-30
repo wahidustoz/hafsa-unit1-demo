@@ -3,10 +3,18 @@ import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
 const TOTAL = UNIT1.length
-const HOLD_READY_MS = 700
 const FLASH_MS = 380
-const HOLD_NEXT_MS = 700
+const HOLD_NEXT_MS = 1600
+const COUNTDOWN_STEPS = [3, 2, 1]
+const COUNTDOWN_BEAT_MS = 800
 const SFX_WHOOSH = './assets/audio/sfx/transition-sting.mp3'
+const SFX_TICK = './assets/audio/sfx/menu-hover.mp3'
+
+function retrigger(el, cls) {
+  el.classList.remove(cls)
+  void el.offsetWidth
+  el.classList.add(cls)
+}
 
 function shuffle(list) {
   const out = list.slice()
@@ -35,6 +43,9 @@ export default {
             '<div class="pk-curtain__panel pk-curtain__panel--r"></div>' +
             '<div class="pk-curtain__mark">?</div>' +
           '</div>' +
+          '<div class="pk-countdown">' +
+            '<span class="pk-countdown__num" data-countdown-num></span>' +
+          '</div>' +
         '</div>' +
         '<div class="pk-answer" data-answer>' +
           '<div class="pk-letters" data-letters></div>' +
@@ -50,6 +61,7 @@ export default {
     const glowEl = root.querySelector('[data-glow]')
     const objectEl = root.querySelector('[data-object]')
     const curtainEl = root.querySelector('[data-curtain]')
+    const countdownNumEl = root.querySelector('[data-countdown-num]')
     const answerEl = root.querySelector('[data-answer]')
     const lettersEl = root.querySelector('[data-letters]')
     const wordEl = root.querySelector('[data-word]')
@@ -61,6 +73,7 @@ export default {
     let alive = true
     let paused = ctx.isPaused()
     let isFlashing = false
+    let isCountingDown = false
     let pendingReveal = null
 
     const timers = new Set()
@@ -143,11 +156,32 @@ export default {
       glowEl.classList.remove('is-active')
       answerEl.classList.remove('is-revealed')
       actionsEl.classList.remove('is-visible')
+      countdownNumEl.classList.remove('is-pop')
+      countdownNumEl.textContent = ''
       hintEl.textContent = 'Ready…'
       hintEl.classList.remove('is-question')
       objectEl.src = w.img
       objectEl.alt = w.word
       buildLetters(w)
+    }
+
+    async function runCountdown() {
+      if (isCountingDown) return
+      isCountingDown = true
+      for (let i = 0; i < COUNTDOWN_STEPS.length; i++) {
+        if (!alive) break
+        countdownNumEl.textContent = String(COUNTDOWN_STEPS[i])
+        retrigger(countdownNumEl, 'is-pop')
+        audio.play(SFX_TICK)
+        await wait(COUNTDOWN_BEAT_MS)
+      }
+      isCountingDown = false
+    }
+
+    async function countdownThenFlash() {
+      await runCountdown()
+      if (!alive) return
+      await flash()
     }
 
     function flash() {
@@ -184,8 +218,8 @@ export default {
     }
 
     function onPeekClick() {
-      if (!pendingReveal) return
-      flash()
+      if (!pendingReveal || isCountingDown) return
+      countdownThenFlash()
     }
 
     revealBtn.addEventListener('click', onRevealClick)
@@ -207,9 +241,7 @@ export default {
         ctx.setProgress(i, TOTAL)
         const w = order[i]
         prepareStage(w)
-        await wait(HOLD_READY_MS)
-        if (!alive) return
-        await flash()
+        await countdownThenFlash()
         if (!alive) return
         showRevealUI()
         await waitForReveal()

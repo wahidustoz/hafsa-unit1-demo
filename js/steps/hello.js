@@ -2,8 +2,8 @@ import { UNIT1 } from '../data.js'
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
-const HOLD_MS = 600
-const FINISH_HOLD_MS = 900
+const HOLD_MS = 1600
+const FINISH_HOLD_MS = 1200
 const TOTAL = UNIT1.length
 
 function retrigger(el, cls) {

@@ -158,6 +158,31 @@
   animation:pk-fade-out var(--t-quick) var(--ease-out) backwards;
 }
 
+.step-peekaboo .pk-countdown{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.step-peekaboo .pk-countdown__num{
+  font-family:var(--font);
+  font-weight:800;
+  font-size:calc(var(--pk-arena) * .6);
+  line-height:1;
+  color:var(--white);
+  -webkit-text-stroke:6px var(--ink);
+  paint-order:stroke fill;
+  text-shadow:0 10px 0 var(--celebration-dk),0 18px 24px var(--ink-a25);
+  opacity:0;
+  transform:scale(.25);
+}
+.step-peekaboo .pk-countdown__num.is-pop{
+  animation:pk-count-pop var(--t-cheer) var(--ease-pop) both;
+}
+
 .step-peekaboo .pk-answer{
   flex:none;
   display:flex;
@@ -274,6 +299,12 @@
 @keyframes pk-pulse-btn{
   from{transform:scale(1)}
   to{transform:scale(1.045)}
+}
+@keyframes pk-count-pop{
+  0%{opacity:0;transform:scale(.25)}
+  28%{opacity:1;transform:scale(1.2)}
+  50%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1.5)}
 }
 
 .step-peekaboo.is-paused,
