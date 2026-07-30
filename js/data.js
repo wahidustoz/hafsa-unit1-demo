@@ -1,22 +1,22 @@
 export const UNIT1 = [
   { word: 'ant', letter: 'A', letters: 'A a', img: './assets/images/ant.png',
-    utter: './assets/audio/utterances/ant.mp3', wordAtMs: 1183, durMs: 2194 },
+    utter: './assets/audio/utterances/ant.mp3', wordAtMs: 1435, durMs: 2325 },
   { word: 'apple', letter: 'A', letters: 'A a', img: './assets/images/apple.png',
-    utter: './assets/audio/utterances/apple.mp3', wordAtMs: 1217, durMs: 2220 },
+    utter: './assets/audio/utterances/apple.mp3', wordAtMs: 1510, durMs: 2273 },
   { word: 'alligator', letter: 'A', letters: 'A a', img: './assets/images/alligator.png',
-    utter: './assets/audio/utterances/alligator.mp3', wordAtMs: 1208, durMs: 2090 },
+    utter: './assets/audio/utterances/alligator.mp3', wordAtMs: 1462, durMs: 2586 },
   { word: 'ball', letter: 'B', letters: 'B b', img: './assets/images/ball.png',
-    utter: './assets/audio/utterances/ball.mp3', wordAtMs: 1222, durMs: 2142 },
+    utter: './assets/audio/utterances/ball.mp3', wordAtMs: 1332, durMs: 2220 },
   { word: 'bear', letter: 'B', letters: 'B b', img: './assets/images/bear.png',
-    utter: './assets/audio/utterances/bear.mp3', wordAtMs: 1263, durMs: 2220 },
+    utter: './assets/audio/utterances/bear.mp3', wordAtMs: 1376, durMs: 2273 },
   { word: 'bag', letter: 'B', letters: 'B b', img: './assets/images/bag.png',
-    utter: './assets/audio/utterances/bag.mp3', wordAtMs: 1327, durMs: 2299 },
+    utter: './assets/audio/utterances/bag.mp3', wordAtMs: 1347, durMs: 2377 },
   { word: 'cup', letter: 'C', letters: 'C c', img: './assets/images/cup.png',
-    utter: './assets/audio/utterances/cup.mp3', wordAtMs: 1100, durMs: 2220 },
+    utter: './assets/audio/utterances/cup.mp3', wordAtMs: 1372, durMs: 2116 },
   { word: 'cow', letter: 'C', letters: 'C c', img: './assets/images/cow.png',
-    utter: './assets/audio/utterances/cow.mp3', wordAtMs: 1162, durMs: 2247 },
+    utter: './assets/audio/utterances/cow.mp3', wordAtMs: 1470, durMs: 2273 },
   { word: 'car', letter: 'C', letters: 'C c', img: './assets/images/car.png',
-    utter: './assets/audio/utterances/car.mp3', wordAtMs: 1165, durMs: 2194 }
+    utter: './assets/audio/utterances/car.mp3', wordAtMs: 1496, durMs: 2325 }
 ]
 
 export const CHANT_CUES = [

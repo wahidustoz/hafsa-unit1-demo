@@ -1,87 +1,85 @@
 {
   "source": {
-    "primary": "reference/chant-vocals/unit1.mp3",
-    "fallback": "assets/audio/chants/unit1-word-chant.mp3",
-    "note": "primary is the isolated vocal stem (music bed removed); fallback used only where noted below because the vocal-isolation process degraded a word-final consonant"
+    "primary": "assets/audio/words/unit1/<word>.mp3 (repo root, outside demo-unit1)",
+    "note": "Corrected 2026-07-31: previous utterances were sliced from the fast chant recording (wrong source, wrong pacing). Replaced with the slow standalone letter-name + letter-sound + word recordings. IMPORTANT: the source directory itself has a 3-way filename rotation among the C-words - the file named cup.mp3 actually contains the word 'cow', cow.mp3 actually contains 'car', and car.mp3 actually contains 'cup'. Verified by ElevenLabs transcription of the untouched originals. Corrected by sourcing each target word from the correctly-content-matching original file: target cup.mp3 <- source car.mp3, target cow.mp3 <- source cup.mp3, target car.mp3 <- source cow.mp3. The other 6 words (ant, apple, alligator, ball, bear, bag) were not affected."
   },
-  "processing": "atrim(sliceStart,sliceEnd) -> asetpts=PTS-STARTPTS -> dynaudnorm=f=150:g=15:m=12 -> afade in 60ms -> afade out 120ms -> libmp3lame 192k 44100Hz mono",
+  "processing": "two-pass loudnorm(I=-20:TP=-1.5:LRA=11:linear=true, measured per-file) -> apad(pad_dur=0.12) -> libmp3lame 192k 44100Hz mono. Pacing untouched: no speed change, no internal pause trimming/compression. 120ms of true digital silence appended so the completion chime does not clip the final consonant. Target of -20 LUFS (rather than a louder -16) was chosen deliberately: a -16 LUFS two-pass attempt produced a 3.6 LU spread across the 9 files because true-peak headroom differs per file (consonant transients), which is more perceptibly inconsistent than the originals; -20 LUFS is achievable by every file via pure linear gain (no per-file TP limiting kicks in unevenly) and produced a 0.25 LU spread (-20.25 to -20.50 LUFS measured post-processing) - effectively imperceptible loudness difference across the set.",
+  "wordAtMsMethod": "ffmpeg -af silencedetect=noise=-35dB:d=0.12 on the final processed file. Each file shows 4 silence blocks: (1) lead-in before the letter-name beat, (2) pause before the letter-sound beat, (3) pause before the word - this block's silence_end is wordAtMs, (4) a trailing block created by the appended 120ms pad merging with the recording's natural tail. Because of block (4), the literal last silence_end in the file is NOT the word onset (it lands ~90-100% into the clip, outside the expected 45-75% range) - the third silence_end must be used. This adjustment was needed uniformly for all 9 files, not just outliers. Cross-checked at -30dB and -40dB on ant/cup/alligator/car: results agreed to within 1ms at -35dB and -40dB; -30dB was rejected for car because it is over-sensitive and splits the word 'car' itself on the internal dip around its final 'r', producing a spurious 5th block.",
   "words": {
     "ant": {
-      "source": "primary",
-      "sliceStart": 7.9,
-      "sliceEnd": 10.06,
-      "wordAtMs": 1183,
-      "durMs": 2194,
-      "transcript": "I, I, aunt",
-      "note": "ASR renders the homophone 'aunt' in isolation; wider-context transcription of the same audio confirms 'A, a, ant. A, a, ant.'"
+      "sourceFile": "assets/audio/words/unit1/ant.mp3",
+      "durMs": 2325,
+      "wordAtMs": 1435,
+      "wordAtPct": 61.7,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.176, 0.811, 1.435 (word onset), 2.288 (trailing pad block, ignored)",
+      "transcript": "Ah, ah, ant"
     },
     "apple": {
-      "source": "primary",
-      "sliceStart": 11.7,
-      "sliceEnd": 13.89,
-      "wordAtMs": 1217,
-      "durMs": 2220,
-      "transcript": "A, a, apple"
+      "sourceFile": "assets/audio/words/unit1/apple.mp3",
+      "durMs": 2273,
+      "wordAtMs": 1510,
+      "wordAtPct": 66.4,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.172, 0.839, 1.510 (word onset), 2.236 (trailing pad block, ignored)",
+      "transcript": "A A apple"
     },
     "alligator": {
-      "source": "primary",
-      "sliceStart": 15.5,
-      "sliceEnd": 17.558,
-      "wordAtMs": 1208,
-      "durMs": 2090,
+      "sourceFile": "assets/audio/words/unit1/alligator.mp3",
+      "durMs": 2586,
+      "wordAtMs": 1462,
+      "wordAtPct": 56.5,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.176, 0.807, 1.462 (word onset), 2.549 (trailing pad block, ignored). Cross-checked -30dB/-40dB: 1.463/1.459, consistent within 4ms",
       "transcript": "A, a, alligator"
     },
     "ball": {
-      "source": "primary",
-      "sliceStart": 23.07,
-      "sliceEnd": 25.17,
-      "wordAtMs": 1222,
-      "durMs": 2142,
-      "transcript": "The, the, ball"
+      "sourceFile": "assets/audio/words/unit1/ball.mp3",
+      "durMs": 2220,
+      "wordAtMs": 1332,
+      "wordAtPct": 60.0,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.167, 0.749, 1.332 (word onset), 2.184 (trailing pad block, ignored)",
+      "transcript": "B, b, ball"
     },
     "bear": {
-      "source": "fallback",
-      "sliceStart": 26.82,
-      "sliceEnd": 28.99,
-      "wordAtMs": 1263,
-      "durMs": 2220,
-      "transcript": "B-b bear",
-      "note": "vocal stem mistranscribed as 'Ben' (word-final consonant degraded by isolation); full chant mix at the identical window is clean"
+      "sourceFile": "assets/audio/words/unit1/bear.mp3",
+      "durMs": 2273,
+      "wordAtMs": 1376,
+      "wordAtPct": 60.5,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.174, 0.768, 1.376 (word onset), 2.236 (trailing pad block, ignored)",
+      "transcript": "B-b bear"
     },
     "bag": {
-      "source": "primary",
-      "sliceStart": 30.59,
-      "sliceEnd": 32.86,
-      "wordAtMs": 1327,
-      "durMs": 2299,
-      "transcript": "B-b-bang",
-      "note": "isolated 2.3s clip is misheard by ASR as 'bang' from both the vocal stem and the full-chant fallback; wider-context transcription of the surrounding audio confirms the content is 'B-b-bear. B-b-bag. B-b-bag.' Kept on the vocal stem since the fallback gave no improvement; flagged as an ASR short-clip limitation, not a wrong-word slice"
+      "sourceFile": "assets/audio/words/unit1/bag.mp3",
+      "durMs": 2377,
+      "wordAtMs": 1347,
+      "wordAtPct": 56.7,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.171, 0.740, 1.347 (word onset), 2.340 (trailing pad block, ignored)",
+      "transcript": "B-b, bag"
     },
     "cup": {
-      "source": "fallback",
-      "sliceStart": 38.4,
-      "sliceEnd": 40.58,
-      "wordAtMs": 1100,
-      "durMs": 2220,
-      "transcript": "C-C-cup",
-      "note": "vocal stem destroyed the final unvoiced 'p' (heard as 'pan'/'cum'/'cuz' across 3 attempts); full chant mix at the identical window is clean"
+      "sourceFile": "assets/audio/words/unit1/car.mp3",
+      "sourceFileNote": "source directory rotation - the file literally named car.mp3 contains the spoken word 'cup'",
+      "durMs": 2116,
+      "wordAtMs": 1372,
+      "wordAtPct": 64.8,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.172, 0.787, 1.372 (word onset), 2.079 (trailing pad block, ignored)",
+      "transcript": "C-c-cup"
     },
     "cow": {
-      "source": "primary",
-      "sliceStart": 42.13,
-      "sliceEnd": 44.33,
-      "wordAtMs": 1162,
-      "durMs": 2247,
-      "transcript": "Cuh, cuh, cow"
+      "sourceFile": "assets/audio/words/unit1/cup.mp3",
+      "sourceFileNote": "source directory rotation - the file literally named cup.mp3 contains the spoken word 'cow'",
+      "durMs": 2273,
+      "wordAtMs": 1470,
+      "wordAtPct": 64.7,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.174, 0.849, 1.470 (word onset), 2.236 (trailing pad block, ignored)",
+      "transcript": "C-c-cow"
     },
     "car": {
-      "source": "fallback",
-      "sliceStart": 45.96,
-      "sliceEnd": 48.11,
-      "wordAtMs": 1165,
-      "durMs": 2194,
-      "transcript": "C, c, car",
-      "note": "vocal stem mistranscribed the word-final 'r' as 'carn'/'cars'; full chant mix at the identical window is clean"
+      "sourceFile": "assets/audio/words/unit1/cow.mp3",
+      "sourceFileNote": "source directory rotation - the file literally named cow.mp3 contains the spoken word 'car'",
+      "durMs": 2325,
+      "wordAtMs": 1496,
+      "wordAtPct": 64.3,
+      "silenceEvidence": "silencedetect -35dB/0.12: silence_end 0.178, 0.849, 1.496 (word onset), 2.288 (trailing pad block, ignored). -30dB rejected: splits 'car' internally into a spurious 5th block around its final r",
+      "transcript": "C-c-car"
     }
   }
 }

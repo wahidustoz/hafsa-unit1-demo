@@ -8,11 +8,19 @@ import stepPeekaboo from './steps/peekaboo.js';
 const STEP_MODULES = [stepHello, stepWhatsthis, stepChant, stepPeekaboo];
 const STEP_ORDER = ['hello', 'whatsthis', 'chant', 'peekaboo'];
 const STEP_META = {
-  hello: { icon: '🍎' },
-  whatsthis: { icon: '❓' },
-  chant: { icon: '🎵' },
-  peekaboo: { icon: '👀' },
+  hello: { icon: '🍎', tone: 'primary' },
+  whatsthis: { icon: '❓', tone: 'reward' },
+  chant: { icon: '🎵', tone: 'celebration' },
+  peekaboo: { icon: '👀', tone: 'success' },
 };
+
+const HUB_POINTS = [
+  { x: 150, y: 172 },
+  { x: 450, y: 430 },
+  { x: 760, y: 172 },
+  { x: 1050, y: 430 },
+];
+const HUB_VIEWBOX = { w: 1180, h: 620 };
 
 const steps = new Map();
 
@@ -246,37 +254,87 @@ function renderUnits() {
   root.appendChild(page);
 }
 
-function buildStepCard(id) {
+function buildStepNode(id, i) {
   const meta = STEP_META[id];
   const mod = steps.get(id);
   const isDone = completed.has(id);
+  const point = HUB_POINTS[i];
 
-  const card = document.createElement('button');
-  card.type = 'button';
-  card.className = 'card card--tappable hub-card' + (isDone ? ' is-done' : '');
-  card.setAttribute('aria-label', mod.title + (isDone ? ' — completed' : ''));
+  const node = document.createElement('div');
+  node.className = 'candy-node hub-node hub-node--' + meta.tone;
+  node.style.left = ((point.x / HUB_VIEWBOX.w) * 100).toFixed(2) + '%';
+  node.style.top = ((point.y / HUB_VIEWBOX.h) * 100).toFixed(2) + '%';
+  node.style.setProperty('--i', String(i));
 
-  const icon = document.createElement('span');
-  icon.className = 'hub-card__icon';
-  icon.setAttribute('aria-hidden', 'true');
-  icon.textContent = meta.icon;
+  const pad = document.createElement('span');
+  pad.className = 'candy-node__pad';
+  pad.setAttribute('aria-hidden', 'true');
 
-  const label = document.createElement('span');
-  label.className = 'hub-card__label t-title';
-  label.textContent = mod.title;
+  const bubble = document.createElement('button');
+  bubble.type = 'button';
+  bubble.className = 'candy-node__bubble';
+  bubble.setAttribute('aria-label', mod.title + (isDone ? ' — completed' : ''));
 
-  card.append(icon, label);
+  const num = document.createElement('span');
+  num.className = 'candy-node__num';
+  num.setAttribute('aria-hidden', 'true');
+  num.textContent = String(i + 1);
+
+  const face = document.createElement('span');
+  face.className = 'candy-node__face';
+  face.setAttribute('aria-hidden', 'true');
+  face.textContent = meta.icon;
+
+  bubble.append(num, face);
 
   if (isDone) {
-    const badge = document.createElement('span');
-    badge.className = 'hub-card__badge';
-    badge.setAttribute('aria-hidden', 'true');
-    badge.textContent = '✓';
-    card.appendChild(badge);
+    const sticker = document.createElement('span');
+    sticker.className = 'candy-node__sticker';
+    sticker.setAttribute('aria-hidden', 'true');
+    sticker.textContent = '✓';
+    bubble.appendChild(sticker);
   }
 
-  card.addEventListener('click', () => goto(`#/unit/1/${id}`));
-  return card;
+  bubble.addEventListener('click', () => goto(`#/unit/1/${id}`));
+
+  const label = document.createElement('span');
+  label.className = 'pill hub-node__label';
+  label.setAttribute('aria-hidden', 'true');
+  label.textContent = mod.title;
+
+  node.append(pad, bubble, label);
+  return node;
+}
+
+function buildHubRoad() {
+  const wrap = document.createElement('div');
+  wrap.className = 'hub-road';
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('class', 'hub-road__svg');
+  svg.setAttribute('viewBox', `0 0 ${HUB_VIEWBOX.w} ${HUB_VIEWBOX.h}`);
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('focusable', 'false');
+
+  const d = catmullRomPath(HUB_POINTS);
+  ['hub-road__casing', 'hub-road__fill', 'hub-road__dots'].forEach((cls) => {
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('class', cls);
+    path.setAttribute('d', d);
+    svg.appendChild(path);
+  });
+
+  wrap.appendChild(svg);
+
+  const nodes = document.createElement('div');
+  nodes.className = 'hub-road__nodes';
+  nodes.setAttribute('role', 'group');
+  nodes.setAttribute('aria-label', 'Unit 1 steps');
+  STEP_ORDER.forEach((id, i) => nodes.appendChild(buildStepNode(id, i)));
+  wrap.appendChild(nodes);
+
+  return wrap;
 }
 
 function renderHub() {
@@ -311,13 +369,11 @@ function renderHub() {
 
   header.append(back, title, chips);
 
-  const path = document.createElement('div');
-  path.className = 'hub-path';
-  path.setAttribute('role', 'group');
-  path.setAttribute('aria-label', 'Unit 1 steps');
-  STEP_ORDER.forEach((id) => path.appendChild(buildStepCard(id)));
+  const stage = document.createElement('div');
+  stage.className = 'hub-stage';
+  stage.appendChild(buildHubRoad());
 
-  page.append(header, path);
+  page.append(header, stage);
   root.appendChild(page);
 }
 
