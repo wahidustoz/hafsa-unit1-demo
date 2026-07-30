@@ -15,6 +15,7 @@
 </head>
 <body>
 <div id="app" class="shell"></div>
+<script>window.__mediaEls=[];const __p=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(){window.__mediaEls.push(this);return __p.apply(this,arguments)}</script>
 <script type="module" src="./js/app.js"></script>
 </body>
 </html>

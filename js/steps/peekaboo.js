@@ -7,11 +7,8 @@ const FLASH_MS = 380
 const HOLD_NEXT_MS = 1600
 const COUNTDOWN_STEPS = [3, 2, 1]
 const COUNTDOWN_BEAT_MS = 800
-const SFX_WHOOSH = './assets/audio/sfx/transition-sting.mp3'
 const SFX_TICK = './assets/audio/sfx/menu-hover.mp3'
-const VOICE_READY = './assets/audio/voice/ready.mp3'
-const VOICE_FLASH = ['./assets/audio/voice/peekaboo.mp3', './assets/audio/voice/quick-look.mp3']
-const VOICE_ASK = ['./assets/audio/voice/whos-that.mp3', './assets/audio/voice/what-was-that.mp3']
+const VOICE_PEEKABOO = './assets/audio/voice/peekaboo.mp3'
 
 function retrigger(el, cls) {
   el.classList.remove(cls)
@@ -78,7 +75,6 @@ export default {
     let isFlashing = false
     let isCountingDown = false
     let pendingReveal = null
-    let voiceTurn = 0
 
     const timers = new Set()
 
@@ -172,7 +168,6 @@ export default {
     async function runCountdown() {
       if (isCountingDown) return
       isCountingDown = true
-      audio.play(VOICE_READY)
       for (let i = 0; i < COUNTDOWN_STEPS.length; i++) {
         if (!alive) break
         countdownNumEl.textContent = String(COUNTDOWN_STEPS[i])
@@ -194,8 +189,7 @@ export default {
       isFlashing = true
       curtainEl.classList.add('is-peeking')
       objectEl.classList.add('is-flash')
-      audio.play(SFX_WHOOSH)
-      audio.play(VOICE_FLASH[voiceTurn % VOICE_FLASH.length])
+      audio.play(VOICE_PEEKABOO)
       return wait(FLASH_MS).then(() => {
         curtainEl.classList.remove('is-peeking')
         objectEl.classList.remove('is-flash')
@@ -207,7 +201,6 @@ export default {
       hintEl.textContent = 'What was it?'
       hintEl.classList.add('is-question')
       actionsEl.classList.add('is-visible')
-      audio.play(VOICE_ASK[voiceTurn % VOICE_ASK.length])
     }
 
     function waitForReveal() {
@@ -246,7 +239,6 @@ export default {
       for (let i = 0; i < order.length; i++) {
         if (!alive) return
         ctx.setProgress(i, TOTAL)
-        voiceTurn = i
         const w = order[i]
         prepareStage(w)
         await countdownThenFlash()
