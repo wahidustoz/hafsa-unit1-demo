@@ -5,15 +5,19 @@ import stepWhatsthis from './steps/whatsthis.js';
 import stepChant from './steps/chant.js';
 import stepPeekaboo from './steps/peekaboo.js';
 import stepStory from './steps/story.js';
+import stepBubbles from './steps/bubbles.js';
+import stepPopup from './steps/popup.js';
 
-const STEP_MODULES = [stepHello, stepWhatsthis, stepChant, stepPeekaboo, stepStory];
-const STEP_ORDER = ['hello', 'whatsthis', 'chant', 'peekaboo', 'story'];
+const STEP_MODULES = [stepHello, stepWhatsthis, stepChant, stepPeekaboo, stepStory, stepBubbles, stepPopup];
+const STEP_ORDER = ['hello', 'whatsthis', 'chant', 'peekaboo', 'story', 'bubbles', 'popup'];
 const STEP_META = {
   hello: { icon: '🍎', tone: 'primary' },
   whatsthis: { icon: '❓', tone: 'reward' },
   chant: { icon: '🎵', tone: 'celebration' },
   peekaboo: { icon: '👀', tone: 'success' },
   story: { icon: '📖', tone: 'grape' },
+  bubbles: { icon: '🫧', tone: 'primary' },
+  popup: { icon: '🌟', tone: 'celebration' },
 };
 
 const HUB_POINTS = [
@@ -22,8 +26,10 @@ const HUB_POINTS = [
   { x: 590, y: 172 },
   { x: 825, y: 430 },
   { x: 1060, y: 172 },
+  { x: 1295, y: 430 },
+  { x: 1530, y: 172 },
 ];
-const HUB_VIEWBOX = { w: 1180, h: 620 };
+const HUB_VIEWBOX = { w: 1650, h: 620 };
 
 const steps = new Map();
 
@@ -97,7 +103,7 @@ function parseRoute(hash) {
   const clean = hash || '#/units';
   if (clean === '#/units') return { name: 'units' };
   if (clean === '#/unit/1') return { name: 'hub' };
-  const m = clean.match(/^#\/unit\/1\/(hello|whatsthis|chant|peekaboo|story)$/);
+  const m = clean.match(/^#\/unit\/1\/(hello|whatsthis|chant|peekaboo|story|bubbles|popup)$/);
   if (m) return { name: 'step', id: m[1] };
   return { name: 'redirect' };
 }
