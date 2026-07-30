@@ -1,4 +1,10 @@
 .step-story{
+  --story-canvas-w:941;
+  --story-canvas-h:1672;
+  --story-crop-x:0;
+  --story-crop-y:700;
+  --story-crop-w:941;
+  --story-crop-h:770;
   position:relative;
   display:flex;
   align-items:center;
@@ -10,8 +16,8 @@
 .step-story .story-frame{
   --story-glow:#ffffff;
   position:relative;
-  height:min(96cqh, calc(92cqw * 1.7768));
-  aspect-ratio:941/1672;
+  height:min(100cqh, calc(96cqw * var(--story-crop-h) / var(--story-crop-w)));
+  aspect-ratio:calc(var(--story-crop-w) / var(--story-crop-h));
   max-width:100%;
   border-radius:var(--r-xl);
   border:4px solid var(--ink);
@@ -21,13 +27,22 @@
   user-select:none;
 }
 
+.step-story .story-canvas{
+  position:absolute;
+  z-index:0;
+  left:calc(-100% * var(--story-crop-x) / var(--story-crop-w));
+  top:calc(-100% * var(--story-crop-y) / var(--story-crop-h));
+  width:calc(100% * var(--story-canvas-w) / var(--story-crop-w));
+  height:calc(100% * var(--story-canvas-h) / var(--story-crop-h));
+}
+
 .step-story .story-frame__bg{
   position:absolute;
   inset:0;
   z-index:0;
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:fill;
   display:block;
 }
 

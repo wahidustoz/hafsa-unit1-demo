@@ -125,12 +125,16 @@ export default {
     const frame = document.createElement('div')
     frame.className = 'story-frame'
 
+    const canvas = document.createElement('div')
+    canvas.className = 'story-canvas'
+    frame.appendChild(canvas)
+
     const bg = document.createElement('img')
     bg.className = 'story-frame__bg'
     bg.src = './assets/story/scene.jpg'
     bg.alt = ''
     bg.setAttribute('aria-hidden', 'true')
-    frame.appendChild(bg)
+    canvas.appendChild(bg)
 
     const badgeEl = document.createElement('div')
     badgeEl.className = 'story-badge'
@@ -164,7 +168,7 @@ export default {
       cut.style.height = 'auto'
 
       wrap.append(halo, cut)
-      frame.appendChild(wrap)
+      canvas.appendChild(wrap)
       wrappers[o.key] = wrap
     })
 
