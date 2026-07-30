@@ -13,7 +13,7 @@ const STEP_META = {
   whatsthis: { icon: '❓', tone: 'reward' },
   chant: { icon: '🎵', tone: 'celebration' },
   peekaboo: { icon: '👀', tone: 'success' },
-  story: { icon: '📖', tone: 'resting' },
+  story: { icon: '📖', tone: 'grape' },
 };
 
 const HUB_POINTS = [
@@ -268,12 +268,6 @@ function buildStepNode(id, i) {
   node.style.left = ((point.x / HUB_VIEWBOX.w) * 100).toFixed(2) + '%';
   node.style.top = ((point.y / HUB_VIEWBOX.h) * 100).toFixed(2) + '%';
   node.style.setProperty('--i', String(i));
-  if (meta.tone === 'resting') {
-    node.style.setProperty('--node-lt', 'var(--resting-lt)');
-    node.style.setProperty('--node-base', 'var(--resting)');
-    node.style.setProperty('--node-dk', 'var(--resting-dk)');
-    node.style.setProperty('--node-hard', 'var(--resting-hard)');
-  }
 
   const pad = document.createElement('span');
   pad.className = 'candy-node__pad';

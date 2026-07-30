@@ -153,6 +153,10 @@ body{overflow-x:hidden;justify-content:stretch}
   --node-lt:var(--success-lt);--node-base:var(--success);
   --node-dk:var(--success-dk);--node-hard:var(--success-hard);
 }
+.hub-node--grape{
+  --node-lt:var(--grape-lt);--node-base:var(--grape);
+  --node-dk:var(--grape-dk);--node-hard:var(--grape-hard);
+}
 .hub-node .candy-node__pad{
   width:calc(100% + var(--sp-10));
   height:calc(var(--node-s) * .26);

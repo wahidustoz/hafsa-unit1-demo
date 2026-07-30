@@ -22,28 +22,17 @@
   border-radius:var(--r-xl);
   border:4px solid var(--ink);
   overflow:hidden;
-  background:var(--ink);
+  background-color:var(--ink);
+  background-image:url('../../assets/story/scene.jpg');
+  background-repeat:no-repeat;
+  background-size:
+    calc(100% * var(--story-canvas-w) / var(--story-crop-w))
+    calc(100% * var(--story-canvas-h) / var(--story-crop-h));
+  background-position:
+    0%
+    calc(100% * var(--story-crop-y) / (var(--story-canvas-h) - var(--story-crop-h)));
   box-shadow:0 8px 0 var(--ink-a16), var(--shadow-ambient);
   user-select:none;
-}
-
-.step-story .story-canvas{
-  position:absolute;
-  z-index:0;
-  left:calc(-100% * var(--story-crop-x) / var(--story-crop-w));
-  top:calc(-100% * var(--story-crop-y) / var(--story-crop-h));
-  width:calc(100% * var(--story-canvas-w) / var(--story-crop-w));
-  height:calc(100% * var(--story-canvas-h) / var(--story-crop-h));
-}
-
-.step-story .story-frame__bg{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  width:100%;
-  height:100%;
-  object-fit:fill;
-  display:block;
 }
 
 .step-story .story-obj{

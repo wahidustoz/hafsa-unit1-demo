@@ -1,7 +1,7 @@
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
-const CANVAS = [941, 1672]
+const CROP = { x: 0, y: 700, w: 941, h: 770 }
 const PAD = 6
 const LEAD = 0.8
 const HL = 2.5
@@ -47,10 +47,10 @@ const LYRICS = [
 
 function pct(box) {
   return {
-    l: (box[0] / CANVAS[0]) * 100,
-    t: (box[1] / CANVAS[1]) * 100,
-    w: (box[2] / CANVAS[0]) * 100,
-    h: (box[3] / CANVAS[1]) * 100,
+    l: ((box[0] - CROP.x) / CROP.w) * 100,
+    t: ((box[1] - CROP.y) / CROP.h) * 100,
+    w: (box[2] / CROP.w) * 100,
+    h: (box[3] / CROP.h) * 100,
   }
 }
 
@@ -125,17 +125,6 @@ export default {
     const frame = document.createElement('div')
     frame.className = 'story-frame'
 
-    const canvas = document.createElement('div')
-    canvas.className = 'story-canvas'
-    frame.appendChild(canvas)
-
-    const bg = document.createElement('img')
-    bg.className = 'story-frame__bg'
-    bg.src = './assets/story/scene.jpg'
-    bg.alt = ''
-    bg.setAttribute('aria-hidden', 'true')
-    canvas.appendChild(bg)
-
     const badgeEl = document.createElement('div')
     badgeEl.className = 'story-badge'
     badgeEl.textContent = 'Get ready! 🎵'
@@ -168,7 +157,7 @@ export default {
       cut.style.height = 'auto'
 
       wrap.append(halo, cut)
-      canvas.appendChild(wrap)
+      frame.appendChild(wrap)
       wrappers[o.key] = wrap
     })
 
