@@ -4,21 +4,24 @@ import stepHello from './steps/hello.js';
 import stepWhatsthis from './steps/whatsthis.js';
 import stepChant from './steps/chant.js';
 import stepPeekaboo from './steps/peekaboo.js';
+import stepStory from './steps/story.js';
 
-const STEP_MODULES = [stepHello, stepWhatsthis, stepChant, stepPeekaboo];
-const STEP_ORDER = ['hello', 'whatsthis', 'chant', 'peekaboo'];
+const STEP_MODULES = [stepHello, stepWhatsthis, stepChant, stepPeekaboo, stepStory];
+const STEP_ORDER = ['hello', 'whatsthis', 'chant', 'peekaboo', 'story'];
 const STEP_META = {
   hello: { icon: '🍎', tone: 'primary' },
   whatsthis: { icon: '❓', tone: 'reward' },
   chant: { icon: '🎵', tone: 'celebration' },
   peekaboo: { icon: '👀', tone: 'success' },
+  story: { icon: '📖', tone: 'resting' },
 };
 
 const HUB_POINTS = [
-  { x: 150, y: 172 },
-  { x: 450, y: 430 },
-  { x: 760, y: 172 },
-  { x: 1050, y: 430 },
+  { x: 120, y: 172 },
+  { x: 355, y: 430 },
+  { x: 590, y: 172 },
+  { x: 825, y: 430 },
+  { x: 1060, y: 172 },
 ];
 const HUB_VIEWBOX = { w: 1180, h: 620 };
 
@@ -94,7 +97,7 @@ function parseRoute(hash) {
   const clean = hash || '#/units';
   if (clean === '#/units') return { name: 'units' };
   if (clean === '#/unit/1') return { name: 'hub' };
-  const m = clean.match(/^#\/unit\/1\/(hello|whatsthis|chant|peekaboo)$/);
+  const m = clean.match(/^#\/unit\/1\/(hello|whatsthis|chant|peekaboo|story)$/);
   if (m) return { name: 'step', id: m[1] };
   return { name: 'redirect' };
 }
@@ -265,6 +268,12 @@ function buildStepNode(id, i) {
   node.style.left = ((point.x / HUB_VIEWBOX.w) * 100).toFixed(2) + '%';
   node.style.top = ((point.y / HUB_VIEWBOX.h) * 100).toFixed(2) + '%';
   node.style.setProperty('--i', String(i));
+  if (meta.tone === 'resting') {
+    node.style.setProperty('--node-lt', 'var(--resting-lt)');
+    node.style.setProperty('--node-base', 'var(--resting)');
+    node.style.setProperty('--node-dk', 'var(--resting-dk)');
+    node.style.setProperty('--node-hard', 'var(--resting-hard)');
+  }
 
   const pad = document.createElement('span');
   pad.className = 'candy-node__pad';
