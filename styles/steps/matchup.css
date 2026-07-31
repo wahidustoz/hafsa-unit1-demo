@@ -131,7 +131,7 @@
   padding:min(var(--sp-3),1.4cqh);
 }
 .mu-option__plate{
-  --mu-obj:calc((var(--mu-card) - var(--sp-8)) / 3.2);
+  --mu-obj:calc((var(--mu-card) - var(--sp-8)) / max(1.5,min(var(--n,3),3.2)));
   display:flex;
   flex-wrap:wrap;
   align-items:center;

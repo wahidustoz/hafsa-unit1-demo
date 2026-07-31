@@ -33,7 +33,7 @@
 }
 
 .ad-group{
-  --ad-obj:min(46cqh,calc(56cqw / var(--total,5)),200px);
+  --ad-obj:min(46cqh,calc(48cqw / var(--total,5)),200px);
   flex:none;
   display:flex;
   flex-wrap:nowrap;
@@ -115,7 +115,7 @@
 .ad-op--eq{opacity:1}
 
 .ad-answer{
-  --ad-ans:min(58cqh,26cqw,280px);
+  --ad-ans:min(58cqh,22cqw,280px);
   position:relative;
   flex:none;
   display:grid;
