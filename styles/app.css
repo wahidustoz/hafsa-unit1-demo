@@ -81,6 +81,12 @@ body{overflow-x:hidden;justify-content:stretch}
   animation:bob 2.4s var(--ease-idle) infinite alternate;
 }
 .units-node.is-shaking .candy-node__bubble{animation:wiggle .5s ease-in-out}
+.units-node .candy-node__sticker{
+  top:calc(var(--node-s) * -.06);right:calc(var(--node-s) * -.07);
+  width:calc(var(--node-s) * .27);height:calc(var(--node-s) * .27);
+  font-size:calc(var(--node-s) * .15);
+  color:var(--success-dk);
+}
 
 .units-node__start{
   position:absolute;top:calc(-1 * var(--sp-6));left:50%;z-index:3;

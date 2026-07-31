@@ -1,0 +1,1441 @@
+{
+  "voice": {
+    "provider": "elevenlabs",
+    "voiceName": "Adela",
+    "voiceId": "ptBd2v6mebIps3ZQEXD7",
+    "modelId": "eleven_v3",
+    "settings": {
+      "stability": 0,
+      "similarity_boost": 0.75,
+      "style": 0.95,
+      "use_speaker_boost": true
+    }
+  },
+  "assembly": "every clip is a single ElevenLabs eleven_v3 generation of one natural sentence (the [excited] audio tag plus \"...\" ellipses pace the delivery); there is no concatenation of separately-synthesised fragments and no injected silence gaps; each generation is verified with speech-to-text (scribe_v1) and regenerated on any content mismatch, up to 6 attempts",
+  "processing": "standard two-pass loudnorm(I=-18.0:TP=-1.5:LRA=11.0): a measurement pass, then a second pass fed the measured_I/measured_TP/measured_LRA/measured_thresh/offset values with linear=true -> 44100Hz mono libmp3lame 192k",
+  "onsetMethod": "primary onsets are word-start timestamps from ElevenLabs speech-to-text (scribe_v1) on the final processed file, mapped to aAtMs/joinAtMs/bAtMs/countAtMs/sumWordAtMs/wordAtMs by word position; ffmpeg silencedetect=noise=Xdb:d=0.12 at -35/-30/-40dB is run on the same file as an independent cross-check and stored per clip (silenceCrossCheck)",
+  "loudnessSpreadLu": 0.38,
+  "clips": {
+    "digit-1": {
+      "text": "[excited] This is one... one ball!",
+      "kind": "digit",
+      "transcript": "This is one, one ball",
+      "durMs": 3318,
+      "loudnessLufs": -18.25,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 99,
+          "endMs": 359
+        },
+        {
+          "text": "is",
+          "startMs": 439,
+          "endMs": 659
+        },
+        {
+          "text": "one,",
+          "startMs": 740,
+          "endMs": 1079
+        },
+        {
+          "text": "one",
+          "startMs": 2220,
+          "endMs": 2480
+        },
+        {
+          "text": "ball",
+          "startMs": 2659,
+          "endMs": 3180
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          2066
+        ],
+        "-30": [
+          2068
+        ],
+        "-40": [
+          2063
+        ]
+      },
+      "wordAtMs": 2220
+    },
+    "digit-2": {
+      "text": "[excited] This is two... two cups!",
+      "kind": "digit",
+      "transcript": "This is two, two cups",
+      "durMs": 2926,
+      "loudnessLufs": -18.28,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 159,
+          "endMs": 419
+        },
+        {
+          "text": "is",
+          "startMs": 560,
+          "endMs": 799
+        },
+        {
+          "text": "two,",
+          "startMs": 859,
+          "endMs": 1259
+        },
+        {
+          "text": "two",
+          "startMs": 1860,
+          "endMs": 2139
+        },
+        {
+          "text": "cups",
+          "startMs": 2279,
+          "endMs": 2799
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          821,
+          1819,
+          2650
+        ],
+        "-30": [
+          821,
+          1819,
+          2651
+        ],
+        "-40": [
+          821,
+          1819,
+          2650
+        ]
+      },
+      "wordAtMs": 1860
+    },
+    "digit-3": {
+      "text": "[excited] This is three... three apples!",
+      "kind": "digit",
+      "transcript": "This is three. Three apples",
+      "durMs": 3318,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 99,
+          "endMs": 459
+        },
+        {
+          "text": "is",
+          "startMs": 539,
+          "endMs": 699
+        },
+        {
+          "text": "three.",
+          "startMs": 899,
+          "endMs": 1379
+        },
+        {
+          "text": "Three",
+          "startMs": 2139,
+          "endMs": 2500
+        },
+        {
+          "text": "apples",
+          "startMs": 2659,
+          "endMs": 3180
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          882,
+          1966
+        ],
+        "-30": [
+          885,
+          2059
+        ],
+        "-40": [
+          878,
+          1522,
+          1964
+        ]
+      },
+      "wordAtMs": 2139
+    },
+    "digit-4": {
+      "text": "[excited] This is four... four cars!",
+      "kind": "digit",
+      "transcript": "This is four. Four cars",
+      "durMs": 2691,
+      "loudnessLufs": -18.28,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 119,
+          "endMs": 280
+        },
+        {
+          "text": "is",
+          "startMs": 319,
+          "endMs": 560
+        },
+        {
+          "text": "four.",
+          "startMs": 599,
+          "endMs": 979
+        },
+        {
+          "text": "Four",
+          "startMs": 1579,
+          "endMs": 1819
+        },
+        {
+          "text": "cars",
+          "startMs": 1959,
+          "endMs": 2500
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1474
+        ],
+        "-30": [
+          1481
+        ],
+        "-40": [
+          1467
+        ]
+      },
+      "wordAtMs": 1579
+    },
+    "digit-5": {
+      "text": "[excited] This is five... five bears!",
+      "kind": "digit",
+      "transcript": "This is five. Five bears",
+      "durMs": 3004,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 99,
+          "endMs": 239
+        },
+        {
+          "text": "is",
+          "startMs": 299,
+          "endMs": 519
+        },
+        {
+          "text": "five.",
+          "startMs": 560,
+          "endMs": 1039
+        },
+        {
+          "text": "Five",
+          "startMs": 1899,
+          "endMs": 2220
+        },
+        {
+          "text": "bears",
+          "startMs": 2339,
+          "endMs": 2900
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1774
+        ],
+        "-30": [
+          1788
+        ],
+        "-40": [
+          1772
+        ]
+      },
+      "wordAtMs": 1899
+    },
+    "digit-6": {
+      "text": "[excited] This is six... six bags!",
+      "kind": "digit",
+      "transcript": "This is six. Six bags",
+      "durMs": 2926,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 140,
+          "endMs": 419
+        },
+        {
+          "text": "is",
+          "startMs": 479,
+          "endMs": 620
+        },
+        {
+          "text": "six.",
+          "startMs": 779,
+          "endMs": 1279
+        },
+        {
+          "text": "Six",
+          "startMs": 1879,
+          "endMs": 2180
+        },
+        {
+          "text": "bags",
+          "startMs": 2299,
+          "endMs": 2799
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          133,
+          1089,
+          1713
+        ],
+        "-30": [
+          133,
+          1089,
+          1717
+        ],
+        "-40": [
+          122,
+          1089,
+          1704
+        ]
+      },
+      "wordAtMs": 1879
+    },
+    "digit-7": {
+      "text": "[excited] This is seven... seven cows!",
+      "kind": "digit",
+      "transcript": "This is seven. Seven cows",
+      "durMs": 3239,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 199,
+          "endMs": 459
+        },
+        {
+          "text": "is",
+          "startMs": 599,
+          "endMs": 819
+        },
+        {
+          "text": "seven.",
+          "startMs": 939,
+          "endMs": 1439
+        },
+        {
+          "text": "Seven",
+          "startMs": 2159,
+          "endMs": 2500
+        },
+        {
+          "text": "cows",
+          "startMs": 2619,
+          "endMs": 3140
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          187,
+          2041
+        ],
+        "-30": [
+          195,
+          2047
+        ],
+        "-40": [
+          186,
+          2033
+        ]
+      },
+      "wordAtMs": 2159
+    },
+    "digit-8": {
+      "text": "[excited] This is eight... eight ants!",
+      "kind": "digit",
+      "transcript": "This is eight. Eight ants",
+      "durMs": 3631,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 159,
+          "endMs": 340
+        },
+        {
+          "text": "is",
+          "startMs": 419,
+          "endMs": 699
+        },
+        {
+          "text": "eight.",
+          "startMs": 1220,
+          "endMs": 1679
+        },
+        {
+          "text": "Eight",
+          "startMs": 2579,
+          "endMs": 2859
+        },
+        {
+          "text": "ants",
+          "startMs": 3059,
+          "endMs": 3519
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          134,
+          1157,
+          1555,
+          2542
+        ],
+        "-30": [
+          134,
+          1157,
+          1557,
+          2543
+        ],
+        "-40": [
+          1157,
+          1555,
+          2542
+        ]
+      },
+      "wordAtMs": 2579
+    },
+    "digit-9": {
+      "text": "[excited] This is nine... nine apples!",
+      "kind": "digit",
+      "transcript": "This is nine. Nine apples",
+      "durMs": 4127,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 119,
+          "endMs": 360
+        },
+        {
+          "text": "is",
+          "startMs": 379,
+          "endMs": 680
+        },
+        {
+          "text": "nine.",
+          "startMs": 719,
+          "endMs": 2099
+        },
+        {
+          "text": "Nine",
+          "startMs": 2159,
+          "endMs": 2639
+        },
+        {
+          "text": "apples",
+          "startMs": 2779,
+          "endMs": 3359
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          140,
+          1935
+        ],
+        "-30": [
+          140,
+          1940
+        ],
+        "-40": [
+          140,
+          1932
+        ]
+      },
+      "wordAtMs": 2159
+    },
+    "digit-0": {
+      "text": "[excited] This is zero... zero cars!",
+      "kind": "digit",
+      "transcript": "This is zero. Zero cars",
+      "durMs": 3788,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "This",
+          "startMs": 119,
+          "endMs": 399
+        },
+        {
+          "text": "is",
+          "startMs": 539,
+          "endMs": 719
+        },
+        {
+          "text": "zero.",
+          "startMs": 779,
+          "endMs": 1299
+        },
+        {
+          "text": "Zero",
+          "startMs": 2539,
+          "endMs": 2919
+        },
+        {
+          "text": "cars",
+          "startMs": 3079,
+          "endMs": 3659
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          2412
+        ],
+        "-30": [
+          2428
+        ],
+        "-40": [
+          2401
+        ]
+      },
+      "wordAtMs": 2539
+    },
+    "num-1": {
+      "text": "[excited] One!",
+      "kind": "plain",
+      "transcript": "One",
+      "durMs": 1411,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "One",
+          "startMs": 179,
+          "endMs": 659
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-2": {
+      "text": "[excited] Two!",
+      "kind": "plain",
+      "transcript": "Two",
+      "durMs": 1071,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "Two",
+          "startMs": 159,
+          "endMs": 699
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-3": {
+      "text": "[excited] Three!",
+      "kind": "plain",
+      "transcript": "Three",
+      "durMs": 1306,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "Three",
+          "startMs": 179,
+          "endMs": 719
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-4": {
+      "text": "[excited] Four!",
+      "kind": "plain",
+      "transcript": "Four",
+      "durMs": 1149,
+      "loudnessLufs": -18.3,
+      "sttWords": [
+        {
+          "text": "Four",
+          "startMs": 159,
+          "endMs": 639
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-5": {
+      "text": "[excited] Five!",
+      "kind": "plain",
+      "transcript": "Five",
+      "durMs": 1646,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "Five",
+          "startMs": 119,
+          "endMs": 819
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-6": {
+      "text": "[excited] Six!",
+      "kind": "plain",
+      "transcript": "Six",
+      "durMs": 993,
+      "loudnessLufs": -18.55,
+      "sttWords": [
+        {
+          "text": "Six",
+          "startMs": 159,
+          "endMs": 639
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-7": {
+      "text": "[excited] Seven!",
+      "kind": "plain",
+      "transcript": "Seven",
+      "durMs": 1149,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "Seven",
+          "startMs": 280,
+          "endMs": 740
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-8": {
+      "text": "[excited] Eight!",
+      "kind": "plain",
+      "transcript": "Eight",
+      "durMs": 1228,
+      "loudnessLufs": -18.3,
+      "sttWords": [
+        {
+          "text": "Eight",
+          "startMs": 119,
+          "endMs": 560
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-9": {
+      "text": "[excited] Nine!",
+      "kind": "plain",
+      "transcript": "Nine",
+      "durMs": 1228,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "Nine",
+          "startMs": 159,
+          "endMs": 659
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "num-0": {
+      "text": "[excited] Zero!",
+      "kind": "plain",
+      "transcript": "Zero",
+      "durMs": 1959,
+      "loudnessLufs": -18.25,
+      "sttWords": [
+        {
+          "text": "Zero",
+          "startMs": 219,
+          "endMs": 899
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "total-1": {
+      "text": "[excited] That's one!",
+      "kind": "plain",
+      "transcript": "That's one",
+      "durMs": 1567,
+      "loudnessLufs": -18.28,
+      "sttWords": [
+        {
+          "text": "That's",
+          "startMs": 140,
+          "endMs": 519
+        },
+        {
+          "text": "one",
+          "startMs": 519,
+          "endMs": 879
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "total-2": {
+      "text": "[excited] That's two!",
+      "kind": "plain",
+      "transcript": "That's two",
+      "durMs": 1489,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "That's",
+          "startMs": 99,
+          "endMs": 459
+        },
+        {
+          "text": "two",
+          "startMs": 519,
+          "endMs": 920
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "total-3": {
+      "text": "[excited] That's three!",
+      "kind": "plain",
+      "transcript": "That's three",
+      "durMs": 1881,
+      "loudnessLufs": -18.25,
+      "sttWords": [
+        {
+          "text": "That's",
+          "startMs": 99,
+          "endMs": 579
+        },
+        {
+          "text": "three",
+          "startMs": 600,
+          "endMs": 1120
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "total-4": {
+      "text": "[excited] That's four!",
+      "kind": "plain",
+      "transcript": "That's four",
+      "durMs": 1489,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "That's",
+          "startMs": 99,
+          "endMs": 419
+        },
+        {
+          "text": "four",
+          "startMs": 439,
+          "endMs": 819
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "total-5": {
+      "text": "[excited] That's five!",
+      "kind": "plain",
+      "transcript": "That's five",
+      "durMs": 1881,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "That's",
+          "startMs": 159,
+          "endMs": 539
+        },
+        {
+          "text": "five",
+          "startMs": 559,
+          "endMs": 1159
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "add-1": {
+      "text": "[excited] One ball... plus one ball... is... one... two balls!",
+      "kind": "add",
+      "transcript": "One ball plus one ball is one, two balls",
+      "durMs": 8673,
+      "loudnessLufs": -18.28,
+      "sttWords": [
+        {
+          "text": "One",
+          "startMs": 159,
+          "endMs": 340
+        },
+        {
+          "text": "ball",
+          "startMs": 419,
+          "endMs": 799
+        },
+        {
+          "text": "plus",
+          "startMs": 1519,
+          "endMs": 2079
+        },
+        {
+          "text": "one",
+          "startMs": 2480,
+          "endMs": 2740
+        },
+        {
+          "text": "ball",
+          "startMs": 2839,
+          "endMs": 3259
+        },
+        {
+          "text": "is",
+          "startMs": 4000,
+          "endMs": 4619
+        },
+        {
+          "text": "one,",
+          "startMs": 5579,
+          "endMs": 6139
+        },
+        {
+          "text": "two",
+          "startMs": 7279,
+          "endMs": 7559
+        },
+        {
+          "text": "balls",
+          "startMs": 7679,
+          "endMs": 8420
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1486,
+          2327,
+          3885,
+          5369,
+          7232
+        ],
+        "-30": [
+          1487,
+          2330,
+          3885,
+          4380,
+          5370,
+          7232
+        ],
+        "-40": [
+          1486,
+          2322,
+          3885,
+          5364,
+          7232
+        ]
+      },
+      "aAtMs": 159,
+      "joinAtMs": 1519,
+      "bAtMs": 1519,
+      "countAtMs": [
+        5579,
+        7279
+      ],
+      "sumWordAtMs": 7279
+    },
+    "add-2": {
+      "text": "[excited] Two cups... plus one cup... is... one... two... three cups!",
+      "kind": "add",
+      "transcript": "Two cups plus one cup is one, two, three cups",
+      "durMs": 7967,
+      "loudnessLufs": -18.26,
+      "sttWords": [
+        {
+          "text": "Two",
+          "startMs": 119,
+          "endMs": 280
+        },
+        {
+          "text": "cups",
+          "startMs": 379,
+          "endMs": 799
+        },
+        {
+          "text": "plus",
+          "startMs": 1319,
+          "endMs": 1559
+        },
+        {
+          "text": "one",
+          "startMs": 1759,
+          "endMs": 1939
+        },
+        {
+          "text": "cup",
+          "startMs": 2059,
+          "endMs": 2399
+        },
+        {
+          "text": "is",
+          "startMs": 2859,
+          "endMs": 3419
+        },
+        {
+          "text": "one,",
+          "startMs": 4139,
+          "endMs": 4599
+        },
+        {
+          "text": "two,",
+          "startMs": 5319,
+          "endMs": 5920
+        },
+        {
+          "text": "three",
+          "startMs": 6779,
+          "endMs": 7159
+        },
+        {
+          "text": "cups",
+          "startMs": 7319,
+          "endMs": 7819
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1284,
+          2359,
+          2775,
+          3978,
+          5223,
+          6592,
+          7629
+        ],
+        "-30": [
+          1285,
+          2800,
+          3980,
+          5223,
+          6599,
+          7629
+        ],
+        "-40": [
+          1284,
+          2359,
+          2775,
+          3976,
+          5223,
+          6580,
+          7628
+        ]
+      },
+      "aAtMs": 119,
+      "joinAtMs": 1319,
+      "bAtMs": 1319,
+      "countAtMs": [
+        4139,
+        5319,
+        6779
+      ],
+      "sumWordAtMs": 6779
+    },
+    "add-3": {
+      "text": "[excited] Two cars... plus two cars... is... one... two... three... four cars!",
+      "kind": "add",
+      "transcript": "Two cars plus two cars is one, two, three, four cars",
+      "durMs": 9091,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "Two",
+          "startMs": 99,
+          "endMs": 259
+        },
+        {
+          "text": "cars",
+          "startMs": 359,
+          "endMs": 799
+        },
+        {
+          "text": "plus",
+          "startMs": 1339,
+          "endMs": 1579
+        },
+        {
+          "text": "two",
+          "startMs": 1759,
+          "endMs": 1939
+        },
+        {
+          "text": "cars",
+          "startMs": 2079,
+          "endMs": 2559
+        },
+        {
+          "text": "is",
+          "startMs": 3179,
+          "endMs": 3659
+        },
+        {
+          "text": "one,",
+          "startMs": 4380,
+          "endMs": 4699
+        },
+        {
+          "text": "two,",
+          "startMs": 5380,
+          "endMs": 5879
+        },
+        {
+          "text": "three,",
+          "startMs": 6539,
+          "endMs": 7099
+        },
+        {
+          "text": "four",
+          "startMs": 7960,
+          "endMs": 8239
+        },
+        {
+          "text": "cars",
+          "startMs": 8380,
+          "endMs": 8980
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1305,
+          3089,
+          4219,
+          5304,
+          6369,
+          7764
+        ],
+        "-30": [
+          1305,
+          3103,
+          4223,
+          5304,
+          6405,
+          7769
+        ],
+        "-40": [
+          1303,
+          3086,
+          4217,
+          5303,
+          6364,
+          7761
+        ]
+      },
+      "aAtMs": 99,
+      "joinAtMs": 1339,
+      "bAtMs": 1339,
+      "countAtMs": [
+        4380,
+        5380,
+        6539,
+        7960
+      ],
+      "sumWordAtMs": 7960
+    },
+    "add-4": {
+      "text": "[excited] Three bears... plus one bear... is... one... two... three... four bears!",
+      "kind": "add",
+      "transcript": "Three bears plus one bear is one, two, three, four bears",
+      "durMs": 10449,
+      "loudnessLufs": -18.21,
+      "sttWords": [
+        {
+          "text": "Three",
+          "startMs": 99,
+          "endMs": 319
+        },
+        {
+          "text": "bears",
+          "startMs": 379,
+          "endMs": 879
+        },
+        {
+          "text": "plus",
+          "startMs": 1480,
+          "endMs": 1740
+        },
+        {
+          "text": "one",
+          "startMs": 1899,
+          "endMs": 2059
+        },
+        {
+          "text": "bear",
+          "startMs": 2159,
+          "endMs": 2500
+        },
+        {
+          "text": "is",
+          "startMs": 3159,
+          "endMs": 3679
+        },
+        {
+          "text": "one,",
+          "startMs": 4639,
+          "endMs": 5099
+        },
+        {
+          "text": "two,",
+          "startMs": 5980,
+          "endMs": 6519
+        },
+        {
+          "text": "three,",
+          "startMs": 7579,
+          "endMs": 8159
+        },
+        {
+          "text": "four",
+          "startMs": 9319,
+          "endMs": 9659
+        },
+        {
+          "text": "bears",
+          "startMs": 9760,
+          "endMs": 10319
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1462,
+          3048,
+          4469,
+          5901,
+          7329,
+          9066
+        ],
+        "-30": [
+          1462,
+          3073,
+          4474,
+          5901,
+          7377,
+          9085
+        ],
+        "-40": [
+          1462,
+          3048,
+          4466,
+          5901,
+          7329,
+          9058
+        ]
+      },
+      "aAtMs": 99,
+      "joinAtMs": 1480,
+      "bAtMs": 1480,
+      "countAtMs": [
+        4639,
+        5980,
+        7579,
+        9319
+      ],
+      "sumWordAtMs": 9319
+    },
+    "add-5": {
+      "text": "[excited] Three apples... plus two apples... is... one... two... three... four... five apples!",
+      "kind": "add",
+      "transcript": "Three apples plus two apples is one, two, three, four, five apples",
+      "durMs": 10919,
+      "loudnessLufs": -18.17,
+      "sttWords": [
+        {
+          "text": "Three",
+          "startMs": 140,
+          "endMs": 399
+        },
+        {
+          "text": "apples",
+          "startMs": 519,
+          "endMs": 1079
+        },
+        {
+          "text": "plus",
+          "startMs": 1539,
+          "endMs": 1759
+        },
+        {
+          "text": "two",
+          "startMs": 1939,
+          "endMs": 2159
+        },
+        {
+          "text": "apples",
+          "startMs": 2279,
+          "endMs": 2819
+        },
+        {
+          "text": "is",
+          "startMs": 3279,
+          "endMs": 3819
+        },
+        {
+          "text": "one,",
+          "startMs": 4579,
+          "endMs": 4960
+        },
+        {
+          "text": "two,",
+          "startMs": 5699,
+          "endMs": 6139
+        },
+        {
+          "text": "three,",
+          "startMs": 6920,
+          "endMs": 7460
+        },
+        {
+          "text": "four,",
+          "startMs": 8239,
+          "endMs": 8720
+        },
+        {
+          "text": "five",
+          "startMs": 9559,
+          "endMs": 10019
+        },
+        {
+          "text": "apples",
+          "startMs": 10179,
+          "endMs": 10760
+        }
+      ],
+      "silenceCrossCheck": {
+        "-35": [
+          1503,
+          3210,
+          4460,
+          5591,
+          6753,
+          8029,
+          9362
+        ],
+        "-30": [
+          1503,
+          3211,
+          4463,
+          5591,
+          6769,
+          8051,
+          9370
+        ],
+        "-40": [
+          1503,
+          3210,
+          4456,
+          5591,
+          6745,
+          8020,
+          9357
+        ]
+      },
+      "aAtMs": 140,
+      "joinAtMs": 1539,
+      "bAtMs": 1539,
+      "countAtMs": [
+        4579,
+        5699,
+        6920,
+        8239,
+        9559
+      ],
+      "sumWordAtMs": 9559
+    },
+    "count-with-me": {
+      "text": "[excited] Let's count together!",
+      "kind": "plain",
+      "transcript": "Let's count together",
+      "durMs": 1881,
+      "loudnessLufs": -18.28,
+      "sttWords": [
+        {
+          "text": "Let's",
+          "startMs": 140,
+          "endMs": 500
+        },
+        {
+          "text": "count",
+          "startMs": 500,
+          "endMs": 819
+        },
+        {
+          "text": "together",
+          "startMs": 819,
+          "endMs": 1319
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "find-that-many": {
+      "text": "[excited] Find that many!",
+      "kind": "plain",
+      "transcript": "Find that many?",
+      "durMs": 1646,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "Find",
+          "startMs": 179,
+          "endMs": 500
+        },
+        {
+          "text": "that",
+          "startMs": 519,
+          "endMs": 819
+        },
+        {
+          "text": "many?",
+          "startMs": 899,
+          "endMs": 1179
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "find-the-number": {
+      "text": "[excited] Find the number!",
+      "kind": "plain",
+      "transcript": "Find the number",
+      "durMs": 1881,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "Find",
+          "startMs": 179,
+          "endMs": 560
+        },
+        {
+          "text": "the",
+          "startMs": 599,
+          "endMs": 740
+        },
+        {
+          "text": "number",
+          "startMs": 759,
+          "endMs": 1259
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "how-many": {
+      "text": "[excited] How many can you see?",
+      "kind": "plain",
+      "transcript": "How many can you see?",
+      "durMs": 1881,
+      "loudnessLufs": -18.27,
+      "sttWords": [
+        {
+          "text": "How",
+          "startMs": 140,
+          "endMs": 319
+        },
+        {
+          "text": "many",
+          "startMs": 379,
+          "endMs": 539
+        },
+        {
+          "text": "can",
+          "startMs": 560,
+          "endMs": 659
+        },
+        {
+          "text": "you",
+          "startMs": 799,
+          "endMs": 819
+        },
+        {
+          "text": "see?",
+          "startMs": 819,
+          "endMs": 1059
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "lets-add": {
+      "text": "[excited] Let's add them up!",
+      "kind": "plain",
+      "transcript": "Let's add them up",
+      "durMs": 2194,
+      "loudnessLufs": -18.29,
+      "sttWords": [
+        {
+          "text": "Let's",
+          "startMs": 119,
+          "endMs": 419
+        },
+        {
+          "text": "add",
+          "startMs": 439,
+          "endMs": 599
+        },
+        {
+          "text": "them",
+          "startMs": 619,
+          "endMs": 779
+        },
+        {
+          "text": "up",
+          "startMs": 859,
+          "endMs": 1099
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "nice-counting": {
+      "text": "[excited] Nice counting!",
+      "kind": "plain",
+      "transcript": "Nice counting",
+      "durMs": 1646,
+      "loudnessLufs": -18.24,
+      "sttWords": [
+        {
+          "text": "Nice",
+          "startMs": 199,
+          "endMs": 519
+        },
+        {
+          "text": "counting",
+          "startMs": 579,
+          "endMs": 1179
+        }
+      ],
+      "silenceCrossCheck": null
+    },
+    "you-know-your-numbers": {
+      "text": "[excited] You know your numbers!",
+      "kind": "plain",
+      "transcript": "You know your numbers",
+      "durMs": 2351,
+      "loudnessLufs": -18.25,
+      "sttWords": [
+        {
+          "text": "You",
+          "startMs": 399,
+          "endMs": 419
+        },
+        {
+          "text": "know",
+          "startMs": 419,
+          "endMs": 579
+        },
+        {
+          "text": "your",
+          "startMs": 639,
+          "endMs": 799
+        },
+        {
+          "text": "numbers",
+          "startMs": 819,
+          "endMs": 1500
+        }
+      ],
+      "silenceCrossCheck": null
+    }
+  }
+}

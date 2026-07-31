@@ -1,4 +1,4 @@
-import { UNIT1 } from './data.js';
+import { UNITS } from './units.js';
 import * as audio from './audio.js';
 import stepHello from './steps/hello.js';
 import stepWhatsthis from './steps/whatsthis.js';
@@ -7,29 +7,32 @@ import stepPeekaboo from './steps/peekaboo.js';
 import stepStory from './steps/story.js';
 import stepBubbles from './steps/bubbles.js';
 import stepPopup from './steps/popup.js';
+import stepNumbers from './steps/numbers.js';
+import stepCount from './steps/count.js';
+import stepHowmany from './steps/howmany.js';
+import stepAddup from './steps/addup.js';
+import stepMatchup from './steps/matchup.js';
 
-const STEP_MODULES = [stepHello, stepWhatsthis, stepChant, stepPeekaboo, stepStory, stepBubbles, stepPopup];
-const STEP_ORDER = ['hello', 'whatsthis', 'chant', 'peekaboo', 'story', 'bubbles', 'popup'];
-const STEP_META = {
-  hello: { icon: '🍎', tone: 'primary' },
-  whatsthis: { icon: '❓', tone: 'reward' },
-  chant: { icon: '🎵', tone: 'celebration' },
-  peekaboo: { icon: '👀', tone: 'success' },
-  story: { icon: '📖', tone: 'grape' },
-  bubbles: { icon: '🫧', tone: 'primary' },
-  popup: { icon: '🌟', tone: 'celebration' },
-};
-
-const HUB_POINTS = [
-  { x: 120, y: 172 },
-  { x: 355, y: 430 },
-  { x: 590, y: 172 },
-  { x: 825, y: 430 },
-  { x: 1060, y: 172 },
-  { x: 1295, y: 430 },
-  { x: 1530, y: 172 },
+const STEP_MODULES = [
+  stepHello, stepWhatsthis, stepChant, stepPeekaboo, stepStory, stepBubbles, stepPopup,
+  stepNumbers, stepCount, stepHowmany, stepAddup, stepMatchup,
 ];
-const HUB_VIEWBOX = { w: 1650, h: 620 };
+
+const HUB_GAP = 235;
+const HUB_MARGIN = 120;
+const HUB_HEIGHT = 620;
+const HUB_ROW = { high: 172, low: 430 };
+
+function hubPoints(n) {
+  return Array.from({ length: n }, (_, i) => ({
+    x: HUB_MARGIN + HUB_GAP * i,
+    y: i % 2 ? HUB_ROW.low : HUB_ROW.high,
+  }));
+}
+
+function hubViewBox(n) {
+  return { w: HUB_GAP * (n - 1) + HUB_MARGIN * 2, h: HUB_HEIGHT };
+}
 
 const steps = new Map();
 
@@ -39,9 +42,14 @@ export function registerStep(id, module) {
 
 STEP_MODULES.forEach((mod) => registerStep(mod.id, mod));
 
+function mapRow(n) {
+  const unit = UNITS.find((u) => u.n === n);
+  return { n: unit.n, kind: 'unit', label: unit.label, face: unit.face, state: unit.state };
+}
+
 const UNITS_MAP = [
-  { n: 1, kind: 'unit', label: 'Aa Bb Cc', face: '🍎', state: 'current' },
-  { n: 2, kind: 'unit', label: 'Dd Ee Ff', face: '🦕', state: 'locked' },
+  mapRow(1),
+  mapRow(2),
   { n: 3, kind: 'unit', label: 'Gg Hh Ii', face: '🐘', state: 'locked' },
   { n: 'R1', kind: 'review', label: 'Review 1', face: '🏅', state: 'locked' },
   { n: 4, kind: 'unit', label: 'Jj Kk Ll', face: '🦘', state: 'locked' },
@@ -76,6 +84,13 @@ const completed = new Set();
 let cleanupCurrent = null;
 let stepPaused = false;
 let pauseListeners = [];
+let preloadedUnit = null;
+
+function preloadUnit(unit) {
+  if (preloadedUnit === unit.n) return;
+  preloadedUnit = unit.n;
+  audio.preload(unit.preload);
+}
 
 function catmullRomPath(points) {
   if (points.length < 2) return '';
@@ -102,10 +117,13 @@ export function goto(hash) {
 function parseRoute(hash) {
   const clean = hash || '#/units';
   if (clean === '#/units') return { name: 'units' };
-  if (clean === '#/unit/1') return { name: 'hub' };
-  const m = clean.match(/^#\/unit\/1\/(hello|whatsthis|chant|peekaboo|story|bubbles|popup)$/);
-  if (m) return { name: 'step', id: m[1] };
-  return { name: 'redirect' };
+  const m = clean.match(/^#\/unit\/(\d+)(?:\/([a-z]+))?$/);
+  if (!m) return { name: 'redirect' };
+  const unit = UNITS.find((u) => u.n === Number(m[1]));
+  if (!unit) return { name: 'redirect' };
+  if (!m[2]) return { name: 'hub', unit };
+  if (!unit.steps.some((step) => step.id === m[2])) return { name: 'redirect' };
+  return { name: 'step', unit, id: m[2] };
 }
 
 function render() {
@@ -116,10 +134,17 @@ function render() {
   audio.stopAll();
 
   const route = parseRoute(location.hash);
-  if (route.name === 'units') renderUnits();
-  else if (route.name === 'hub') renderHub();
-  else if (route.name === 'step') renderStep(route.id);
-  else goto('#/units');
+  if (route.name === 'units') {
+    renderUnits();
+    return;
+  }
+  if (route.name === 'redirect') {
+    goto('#/units');
+    return;
+  }
+  preloadUnit(route.unit);
+  if (route.name === 'hub') renderHub(route.unit);
+  else renderStep(route.unit, route.id);
 }
 
 window.addEventListener('hashchange', render);
@@ -149,10 +174,12 @@ function buildUnitNode(entry, point) {
   const top = ((point.y / ROAD_VIEWBOX.h) * 100).toFixed(2) + '%';
   const isCurrent = entry.state === 'current';
   const isLocked = entry.state === 'locked';
+  const isDone = entry.state === 'done';
 
   const classes = ['candy-node', 'units-node'];
   if (isCurrent) classes.push('is-current');
   if (isLocked) classes.push('is-locked');
+  if (isDone) classes.push('is-done');
 
   const node = document.createElement('div');
   node.className = classes.join(' ');
@@ -198,8 +225,15 @@ function buildUnitNode(entry, point) {
       setTimeout(() => node.classList.remove('is-shaking'), 650);
     });
   } else {
-    bubble.setAttribute('aria-label', `${spoken}. Tap to start!`);
-    bubble.addEventListener('click', () => goto('#/unit/1'));
+    bubble.setAttribute('aria-label', `${spoken}. ${isDone ? 'Completed. Tap to play again!' : 'Tap to start!'}`);
+    bubble.addEventListener('click', () => goto('#/unit/' + entry.n));
+    if (isDone) {
+      const sticker = document.createElement('span');
+      sticker.className = 'candy-node__sticker';
+      sticker.setAttribute('aria-hidden', 'true');
+      sticker.textContent = '✓';
+      bubble.appendChild(sticker);
+    }
   }
 
   node.append(pad, bubble);
@@ -263,16 +297,15 @@ function renderUnits() {
   root.appendChild(page);
 }
 
-function buildStepNode(id, i) {
-  const meta = STEP_META[id];
-  const mod = steps.get(id);
-  const isDone = completed.has(id);
-  const point = HUB_POINTS[i];
+function buildStepNode(unit, entry, i, points, viewBox) {
+  const mod = steps.get(entry.id);
+  const isDone = completed.has(`${unit.n}:${entry.id}`);
+  const point = points[i];
 
   const node = document.createElement('div');
-  node.className = 'candy-node hub-node hub-node--' + meta.tone;
-  node.style.left = ((point.x / HUB_VIEWBOX.w) * 100).toFixed(2) + '%';
-  node.style.top = ((point.y / HUB_VIEWBOX.h) * 100).toFixed(2) + '%';
+  node.className = 'candy-node hub-node hub-node--' + entry.tone;
+  node.style.left = ((point.x / viewBox.w) * 100).toFixed(2) + '%';
+  node.style.top = ((point.y / viewBox.h) * 100).toFixed(2) + '%';
   node.style.setProperty('--i', String(i));
 
   const pad = document.createElement('span');
@@ -292,7 +325,7 @@ function buildStepNode(id, i) {
   const face = document.createElement('span');
   face.className = 'candy-node__face';
   face.setAttribute('aria-hidden', 'true');
-  face.textContent = meta.icon;
+  face.textContent = entry.icon;
 
   bubble.append(num, face);
 
@@ -304,7 +337,7 @@ function buildStepNode(id, i) {
     bubble.appendChild(sticker);
   }
 
-  bubble.addEventListener('click', () => goto(`#/unit/1/${id}`));
+  bubble.addEventListener('click', () => goto(`#/unit/${unit.n}/${entry.id}`));
 
   const label = document.createElement('span');
   label.className = 'pill hub-node__label';
@@ -315,18 +348,21 @@ function buildStepNode(id, i) {
   return node;
 }
 
-function buildHubRoad() {
+function buildHubRoad(unit) {
+  const points = hubPoints(unit.steps.length);
+  const viewBox = hubViewBox(unit.steps.length);
+
   const wrap = document.createElement('div');
   wrap.className = 'hub-road';
 
   const svgNS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNS, 'svg');
   svg.setAttribute('class', 'hub-road__svg');
-  svg.setAttribute('viewBox', `0 0 ${HUB_VIEWBOX.w} ${HUB_VIEWBOX.h}`);
+  svg.setAttribute('viewBox', `0 0 ${viewBox.w} ${viewBox.h}`);
   svg.setAttribute('aria-hidden', 'true');
   svg.setAttribute('focusable', 'false');
 
-  const d = catmullRomPath(HUB_POINTS);
+  const d = catmullRomPath(points);
   ['hub-road__casing', 'hub-road__fill', 'hub-road__dots'].forEach((cls) => {
     const path = document.createElementNS(svgNS, 'path');
     path.setAttribute('class', cls);
@@ -339,14 +375,14 @@ function buildHubRoad() {
   const nodes = document.createElement('div');
   nodes.className = 'hub-road__nodes';
   nodes.setAttribute('role', 'group');
-  nodes.setAttribute('aria-label', 'Unit 1 steps');
-  STEP_ORDER.forEach((id, i) => nodes.appendChild(buildStepNode(id, i)));
+  nodes.setAttribute('aria-label', `Unit ${unit.n} steps`);
+  unit.steps.forEach((entry, i) => nodes.appendChild(buildStepNode(unit, entry, i, points, viewBox)));
   wrap.appendChild(nodes);
 
   return wrap;
 }
 
-function renderHub() {
+function renderHub(unit) {
   root.innerHTML = '';
   root.className = 'shell shell--hub';
 
@@ -364,15 +400,15 @@ function renderHub() {
 
   const title = document.createElement('h1');
   title.className = 'hub-header__title t-hero';
-  title.textContent = 'Unit 1';
+  title.textContent = unit.title || 'Unit ' + unit.n;
 
   const chips = document.createElement('div');
   chips.className = 'hub-header__chips';
   chips.setAttribute('aria-hidden', 'true');
-  ['Aa', 'Bb', 'Cc'].forEach((letters) => {
+  unit.chips.forEach((text) => {
     const chip = document.createElement('span');
     chip.className = 'chip';
-    chip.textContent = letters;
+    chip.textContent = text;
     chips.appendChild(chip);
   });
 
@@ -380,13 +416,13 @@ function renderHub() {
 
   const stage = document.createElement('div');
   stage.className = 'hub-stage';
-  stage.appendChild(buildHubRoad());
+  stage.appendChild(buildHubRoad(unit));
 
   page.append(header, stage);
   root.appendChild(page);
 }
 
-function renderStep(id) {
+function renderStep(unit, id) {
   const mod = steps.get(id);
   if (!mod) {
     goto('#/units');
@@ -409,7 +445,7 @@ function renderStep(id) {
   back.type = 'button';
   back.className = 'btn btn--ghost step-shell__back';
   back.textContent = '‹ Steps';
-  back.addEventListener('click', () => goto('#/unit/1'));
+  back.addEventListener('click', () => goto(`#/unit/${unit.n}`));
 
   const pips = document.createElement('div');
   pips.className = 'progress-pips step-shell__pips';
@@ -436,7 +472,7 @@ function renderStep(id) {
     '<div class="overlay__actions">' +
     '<button type="button" class="btn btn--primary btn--l step-shell__overlay-back">‹ Back to steps</button>' +
     '</div></div>';
-  overlay.querySelector('.step-shell__overlay-back').addEventListener('click', () => goto('#/unit/1'));
+  overlay.querySelector('.step-shell__overlay-back').addEventListener('click', () => goto(`#/unit/${unit.n}`));
 
   shell.append(header, stage);
 
@@ -467,7 +503,7 @@ function renderStep(id) {
 
   const ctx = {
     onDone() {
-      completed.add(id);
+      completed.add(`${unit.n}:${id}`);
       overlay.classList.remove('is-hidden');
     },
     setProgress(done, total) {
@@ -516,16 +552,5 @@ function armAudioUnlock() {
   document.addEventListener('keydown', handler, { once: true });
 }
 
-function preloadAssets() {
-  audio.preload([
-    ...UNIT1.map((word) => word.utter),
-    './assets/audio/chant.mp3',
-    './assets/audio/sfx/correct.mp3',
-    './assets/audio/sfx/stage-clear.mp3',
-    './assets/audio/sfx/transition-sting.mp3',
-  ]);
-}
-
 armAudioUnlock();
-preloadAssets();
 render();

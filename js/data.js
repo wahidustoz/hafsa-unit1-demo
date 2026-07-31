@@ -30,3 +30,44 @@ export const CHANT_CUES = [
   { word: 'cow', text: 'C c cow!', t: 43.292 },
   { word: 'car', text: 'C c car!', t: 47.125 }
 ]
+
+export const DIGITS = [
+  { digit: '1', name: 'one', count: 1, obj: 'ball', img: './assets/images/ball.png',
+    clip: './assets/audio/unit2/digit-1.mp3', wordAtMs: 2220, durMs: 3318 },
+  { digit: '2', name: 'two', count: 2, obj: 'cups', img: './assets/images/cup.png',
+    clip: './assets/audio/unit2/digit-2.mp3', wordAtMs: 1860, durMs: 2926 },
+  { digit: '3', name: 'three', count: 3, obj: 'apples', img: './assets/images/apple.png',
+    clip: './assets/audio/unit2/digit-3.mp3', wordAtMs: 2139, durMs: 3318 },
+  { digit: '4', name: 'four', count: 4, obj: 'cars', img: './assets/images/car.png',
+    clip: './assets/audio/unit2/digit-4.mp3', wordAtMs: 1579, durMs: 2691 },
+  { digit: '5', name: 'five', count: 5, obj: 'bears', img: './assets/images/bear.png',
+    clip: './assets/audio/unit2/digit-5.mp3', wordAtMs: 1899, durMs: 3004 },
+  { digit: '6', name: 'six', count: 6, obj: 'bags', img: './assets/images/bag.png',
+    clip: './assets/audio/unit2/digit-6.mp3', wordAtMs: 1879, durMs: 2926 },
+  { digit: '7', name: 'seven', count: 7, obj: 'cows', img: './assets/images/cow.png',
+    clip: './assets/audio/unit2/digit-7.mp3', wordAtMs: 2159, durMs: 3239 },
+  { digit: '8', name: 'eight', count: 8, obj: 'ants', img: './assets/images/ant.png',
+    clip: './assets/audio/unit2/digit-8.mp3', wordAtMs: 2579, durMs: 3631 },
+  { digit: '9', name: 'nine', count: 9, obj: 'apples', img: './assets/images/apple.png',
+    clip: './assets/audio/unit2/digit-9.mp3', wordAtMs: 2159, durMs: 4127 },
+  { digit: '0', name: 'zero', count: 0, obj: 'cars', img: './assets/images/car.png',
+    clip: './assets/audio/unit2/digit-0.mp3', wordAtMs: 2539, durMs: 3788 },
+]
+
+export const MATH_PROBLEMS = [
+  { a: 1, b: 1, sum: 2, obj: 'ball', objPlural: 'balls', img: './assets/images/ball.png',
+    clip: './assets/audio/unit2/add-1.mp3',
+    aAtMs: 159, joinAtMs: 1519, bAtMs: 1519, countAtMs: [5579, 7279], sumWordAtMs: 7279, durMs: 8673 },
+  { a: 2, b: 1, sum: 3, obj: 'cup', objPlural: 'cups', img: './assets/images/cup.png',
+    clip: './assets/audio/unit2/add-2.mp3',
+    aAtMs: 119, joinAtMs: 1319, bAtMs: 1319, countAtMs: [4139, 5319, 6779], sumWordAtMs: 6779, durMs: 7967 },
+  { a: 2, b: 2, sum: 4, obj: 'car', objPlural: 'cars', img: './assets/images/car.png',
+    clip: './assets/audio/unit2/add-3.mp3',
+    aAtMs: 99, joinAtMs: 1339, bAtMs: 1339, countAtMs: [4380, 5380, 6539, 7960], sumWordAtMs: 7960, durMs: 9091 },
+  { a: 3, b: 1, sum: 4, obj: 'bear', objPlural: 'bears', img: './assets/images/bear.png',
+    clip: './assets/audio/unit2/add-4.mp3',
+    aAtMs: 99, joinAtMs: 1480, bAtMs: 1480, countAtMs: [4639, 5980, 7579, 9319], sumWordAtMs: 9319, durMs: 10449 },
+  { a: 3, b: 2, sum: 5, obj: 'apple', objPlural: 'apples', img: './assets/images/apple.png',
+    clip: './assets/audio/unit2/add-5.mp3',
+    aAtMs: 140, joinAtMs: 1539, bAtMs: 1539, countAtMs: [4579, 5699, 6920, 8239, 9559], sumWordAtMs: 9559, durMs: 10919 },
+]

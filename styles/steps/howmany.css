@@ -1,0 +1,110 @@
+.step-howmany{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+}
+
+.hm-stage{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:min(var(--sp-5),2.8cqh);
+  width:100%;
+  height:100%;
+  min-height:0;
+  max-width:1080px;
+}
+
+.hm-prompt{
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--sp-4);
+}
+.hm-prompt__text{
+  font-size:min(var(--fs-display),9cqh);
+  line-height:1.05;
+  color:var(--ink);
+}
+
+.hm-plate{
+  --hm-obj:min(26cqh,calc(62cqw / var(--n,1)),146px);
+  flex:none;
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  justify-content:center;
+  gap:min(var(--sp-4),1.8cqw);
+  width:100%;
+  min-height:min(26cqh,150px);
+}
+.hm-plate__obj{
+  flex:none;
+  width:var(--hm-obj);
+  height:var(--hm-obj);
+  object-fit:contain;
+  filter:drop-shadow(0 8px 10px var(--ink-a16));
+  animation:pop var(--t-pop) var(--ease-pop) backwards;
+  animation-delay:calc(var(--i) * .07s);
+}
+.hm-plate.is-solved .hm-plate__obj{
+  animation:pop var(--t-cheer) var(--ease-pop);
+  animation-delay:calc(var(--i) * .06s);
+}
+
+.hm-choices{
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:min(var(--sp-6),3cqw);
+}
+.hm-card{
+  --hm-card:min(30cqh,18cqw,170px);
+  position:relative;
+  width:var(--hm-card);
+  height:var(--hm-card);
+  min-width:var(--tap-child);
+  min-height:var(--tap-child);
+  display:grid;
+  place-items:center;
+  font-family:var(--font);
+  font-weight:700;
+  font-size:calc(var(--hm-card) * .52);
+  line-height:1;
+  color:var(--ink);
+  background:var(--white);
+  border:4px solid var(--ink);
+  border-radius:var(--r-xl);
+  box-shadow:0 var(--lift) 0 var(--ink-a16),var(--shadow-panel);
+  transition:transform var(--t-quick) var(--ease-out),box-shadow var(--t-quick) var(--ease-out),opacity var(--t-move) var(--ease-out);
+  animation:pop var(--t-pop) var(--ease-pop) backwards;
+  animation-delay:calc(var(--i) * .09s);
+}
+.hm-card:hover{
+  transform:translateY(calc(-1 * var(--sp-2)));
+  box-shadow:0 calc(var(--lift) + var(--sp-2)) 0 var(--ink-a16),var(--shadow-ambient);
+}
+.hm-card:active{
+  transform:translateY(var(--sink));
+  box-shadow:0 var(--lift-pressed) 0 var(--ink-a16);
+  transition-duration:var(--t-press);
+}
+.hm-choices.is-scaffold .hm-card:not([data-correct]){
+  opacity:.4;
+  filter:saturate(.3);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .step-howmany *,
+  .step-howmany *::before,
+  .step-howmany *::after{
+    animation:none !important;
+    transition:none !important;
+  }
+}
