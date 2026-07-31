@@ -20,6 +20,7 @@ function replay(el, className) {
 }
 
 const POINTER_SRC = './assets/images/pointer.png'
+const VOICE_WHATS_THIS = './assets/audio/voice/whats-this.mp3'
 
 export default {
   id: 'whatsthis',
@@ -100,6 +101,7 @@ export default {
       root.classList.remove('is-answer')
       plinth.classList.remove('is-glowing')
       replay(plinth, 'is-popped')
+      audio.play(VOICE_WHATS_THIS)
     }
 
     function onPlinthActivate() {
@@ -108,6 +110,7 @@ export default {
       root.classList.add('is-answer')
       replay(plinth, 'is-popped')
       replay(plinth, 'is-glowing')
+      audio.stopAll()
       audio.play(currentWord().utter).then(onUtterEnded)
     }
 

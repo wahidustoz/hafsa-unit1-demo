@@ -10,9 +10,10 @@
 }
 
 .step-peekaboo .pk-stage{
-  --pk-arena:min(44cqh,380px);
+  --pk-arena:min(50cqh,420px);
   --pk-letter:min(clamp(72px,17vw,260px),20cqh);
   --pk-word:min(var(--fs-display),6.4cqh);
+  position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -22,6 +23,7 @@
   height:100%;
   min-height:0;
   max-width:1040px;
+  padding-bottom:10cqh;
 }
 
 .step-peekaboo .pk-hint{
@@ -72,6 +74,7 @@
   opacity:0;
   transform:scale(.7);
   filter:drop-shadow(0 14px 16px var(--ink-a25));
+  pointer-events:none;
 }
 .step-peekaboo .pk-object.is-flash{
   animation:pk-flash var(--pk-flash-dur) var(--ease-pop);
@@ -86,9 +89,33 @@
   position:absolute;
   inset:0;
   z-index:2;
+  display:block;
   overflow:hidden;
   border-radius:var(--r-xl);
+  border:0;
+  margin:0;
+  padding:0;
+  background:none;
+  font:inherit;
+  color:inherit;
+  appearance:none;
+  cursor:default;
+  transition:transform var(--t-press) ease;
+}
+.step-peekaboo .pk-curtain:not(:disabled){
+  cursor:pointer;
+}
+.step-peekaboo .pk-curtain:not(:disabled):hover{
+  transform:translateY(calc(-1 * var(--lift)));
+}
+.step-peekaboo .pk-curtain:not(:disabled):active{
+  transform:translateY(var(--sink));
+}
+.step-peekaboo .pk-curtain:disabled{
   pointer-events:none;
+}
+.step-peekaboo .pk-curtain:not(:disabled) .pk-curtain__mark{
+  animation:pk-mark-pulse var(--t-bob) var(--ease-idle) infinite alternate;
 }
 .step-peekaboo .pk-curtain__panel{
   position:absolute;
@@ -184,11 +211,15 @@
 }
 
 .step-peekaboo .pk-answer{
-  flex:none;
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:var(--sp-1);
+  pointer-events:none;
 }
 .step-peekaboo .pk-letters{
   display:flex;
@@ -241,18 +272,13 @@
   pointer-events:none;
   transition:opacity var(--t-quick) var(--ease-out);
 }
-.step-peekaboo .pk-actions .btn--xl{
-  --btn-h:max(var(--tap-child),12.5cqh);
-}
 .step-peekaboo .pk-actions.is-visible{
   opacity:1;
   pointer-events:auto;
 }
-.step-peekaboo .pk-reveal{
-  animation:pk-pulse-btn var(--t-bob) var(--ease-idle) infinite alternate;
-}
 
-.step-peekaboo.is-paused .pk-actions{
+.step-peekaboo.is-paused .pk-actions,
+.step-peekaboo.is-paused .pk-curtain{
   pointer-events:none;
 }
 
@@ -296,9 +322,9 @@
   60%{opacity:1;transform:scale(1.12) translateY(-4px)}
   100%{opacity:1;transform:scale(1) translateY(0)}
 }
-@keyframes pk-pulse-btn{
-  from{transform:scale(1)}
-  to{transform:scale(1.045)}
+@keyframes pk-mark-pulse{
+  from{transform:translate(-50%,-50%) scale(1)}
+  to{transform:translate(-50%,-50%) scale(1.08)}
 }
 @keyframes pk-count-pop{
   0%{opacity:0;transform:scale(.25)}

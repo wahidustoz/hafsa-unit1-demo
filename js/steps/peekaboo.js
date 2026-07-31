@@ -39,22 +39,21 @@ export default {
         '<div class="pk-arena">' +
           '<div class="pk-glow" data-glow></div>' +
           '<img class="pk-object" data-object alt="" />' +
-          '<div class="pk-curtain" data-curtain>' +
+          '<button type="button" class="pk-curtain" data-curtain aria-label="Show the word" disabled>' +
             '<div class="pk-curtain__panel pk-curtain__panel--l"></div>' +
             '<div class="pk-curtain__panel pk-curtain__panel--r"></div>' +
             '<div class="pk-curtain__mark">?</div>' +
-          '</div>' +
+          '</button>' +
           '<div class="pk-countdown">' +
             '<span class="pk-countdown__num" data-countdown-num></span>' +
           '</div>' +
         '</div>' +
+        '<div class="pk-actions" data-actions>' +
+          '<button type="button" class="pk-peek btn btn--ghost btn--s" data-peek>Peek again</button>' +
+        '</div>' +
         '<div class="pk-answer" data-answer>' +
           '<div class="pk-letters" data-letters></div>' +
           '<div class="pk-word" data-word></div>' +
-        '</div>' +
-        '<div class="pk-actions" data-actions>' +
-          '<button type="button" class="pk-peek btn btn--ghost btn--s" data-peek>Peek again</button>' +
-          '<button type="button" class="pk-reveal btn btn--celebration btn--xl" data-reveal>Reveal!</button>' +
         '</div>' +
       '</div>'
 
@@ -68,7 +67,6 @@ export default {
     const wordEl = root.querySelector('[data-word]')
     const actionsEl = root.querySelector('[data-actions]')
     const peekBtn = root.querySelector('[data-peek]')
-    const revealBtn = root.querySelector('[data-reveal]')
 
     const order = shuffle(UNIT1)
     let alive = true
@@ -154,6 +152,7 @@ export default {
 
     function prepareStage(w) {
       curtainEl.classList.remove('is-peeking', 'is-open')
+      curtainEl.disabled = true
       objectEl.classList.remove('is-flash', 'is-reveal')
       glowEl.classList.remove('is-active')
       answerEl.classList.remove('is-revealed')
@@ -200,8 +199,9 @@ export default {
     }
 
     function showRevealUI() {
-      hintEl.textContent = 'What was it?'
+      hintEl.textContent = 'What was that?'
       hintEl.classList.add('is-question')
+      curtainEl.disabled = false
       actionsEl.classList.add('is-visible')
     }
 
@@ -215,6 +215,7 @@ export default {
       if (!pendingReveal) return
       const resolve = pendingReveal
       pendingReveal = null
+      curtainEl.disabled = true
       actionsEl.classList.remove('is-visible')
       resolve()
     }
@@ -224,7 +225,7 @@ export default {
       countdownThenFlash()
     }
 
-    revealBtn.addEventListener('click', onRevealClick)
+    curtainEl.addEventListener('click', onRevealClick)
     peekBtn.addEventListener('click', onPeekClick)
 
     async function revealSequence(w) {
@@ -284,7 +285,7 @@ export default {
       alive = false
       clearAllTimers()
       audio.stopAll()
-      revealBtn.removeEventListener('click', onRevealClick)
+      curtainEl.removeEventListener('click', onRevealClick)
       peekBtn.removeEventListener('click', onPeekClick)
     }
   },
