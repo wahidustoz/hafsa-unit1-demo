@@ -30,6 +30,7 @@ function shuffle(list) {
 export default {
   id: 'peekaboo',
   title: 'Peek-a-boo',
+  noPause: true,
   mount(root, ctx) {
     root.classList.add('step-peekaboo')
     root.innerHTML =
@@ -75,6 +76,7 @@ export default {
     let isFlashing = false
     let isCountingDown = false
     let pendingReveal = null
+    let roundGen = 0
 
     const timers = new Set()
 
@@ -235,29 +237,48 @@ export default {
       audio.chime('next')
     }
 
-    async function run() {
-      for (let i = 0; i < order.length; i++) {
-        if (!alive) return
-        ctx.setProgress(i, TOTAL)
-        const w = order[i]
-        prepareStage(w)
-        await countdownThenFlash()
-        if (!alive) return
-        showRevealUI()
-        await waitForReveal()
-        if (!alive) return
-        await revealSequence(w)
-        if (!alive) return
-        await wait(HOLD_NEXT_MS)
+    async function runRound(i) {
+      const gen = roundGen
+      ctx.setProgress(i, TOTAL)
+      const w = order[i]
+      prepareStage(w)
+      await countdownThenFlash()
+      if (!alive || gen !== roundGen) return
+      showRevealUI()
+      await waitForReveal()
+      if (!alive || gen !== roundGen) return
+      await revealSequence(w)
+      if (!alive || gen !== roundGen) return
+      await wait(HOLD_NEXT_MS)
+      if (!alive || gen !== roundGen) return
+      const next = i + 1
+      if (next >= order.length) {
+        ctx.setProgress(TOTAL, TOTAL)
+        audio.chime('complete')
+        confetti(root)
+        ctx.onDone()
+      } else {
+        runRound(next)
       }
-      if (!alive) return
-      ctx.setProgress(TOTAL, TOTAL)
-      audio.chime('complete')
-      confetti(root)
-      ctx.onDone()
     }
 
-    run()
+    function stopRound() {
+      roundGen += 1
+      clearAllTimers()
+      audio.stopAll()
+      isFlashing = false
+      isCountingDown = false
+      pendingReveal = null
+    }
+
+    function seekTo(i) {
+      if (!alive) return
+      stopRound()
+      runRound(Math.max(0, Math.min(i, order.length - 1)))
+    }
+
+    ctx.onSeek(seekTo)
+    runRound(0)
 
     return function cleanup() {
       alive = false

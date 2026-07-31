@@ -143,6 +143,17 @@ export default {
       }
     })
 
+    ctx.onSeek(i => {
+      if (!active) return
+      const cue = CHANT_CUES[i]
+      if (!cue) return
+      finished = false
+      audioEl.currentTime = cue.t
+      const p = audioEl.play()
+      if (p && p.catch) p.catch(() => {})
+      render()
+    })
+
     render()
     loop()
 

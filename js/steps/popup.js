@@ -392,10 +392,21 @@ export default {
       schedule(() => speakerEl.classList.remove('is-playing'), SPEAKER_PLAY_MS)
     }
 
+    function seekTo(i) {
+      if (destroyed) return
+      roundGen += 1
+      cancelIdle()
+      clearAllTimers()
+      audio.stopAll()
+      roundIndex = Math.max(0, Math.min(i, TOTAL - 1))
+      startRound()
+    }
+
     fieldEl.addEventListener('click', onFieldClick)
     fieldEl.addEventListener('keydown', onFieldKeydown)
     speakerEl.addEventListener('click', onSpeakerClick)
 
+    ctx.onSeek(seekTo)
     startRound()
 
     return function cleanup() {

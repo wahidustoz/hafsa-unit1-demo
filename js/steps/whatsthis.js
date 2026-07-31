@@ -19,9 +19,12 @@ function replay(el, className) {
   el.classList.add(className)
 }
 
+const POINTER_SRC = './assets/images/pointer.png'
+
 export default {
   id: 'whatsthis',
   title: "What's this?",
+  noPause: true,
   mount(root, ctx) {
     root.classList.add('step-whatsthis')
 
@@ -50,11 +53,10 @@ export default {
           <div class="wt-plinth" role="button" tabindex="0" aria-label="Tap to hear this word">
             <div class="wt-glow" aria-hidden="true"></div>
             <img class="wt-object" alt="" />
-            <img class="wt-pointer" src="./assets/images/pointer.png" alt="" aria-hidden="true" />
+            <img class="wt-pointer" src="${POINTER_SRC}" alt="" aria-hidden="true" />
           </div>
           <div class="wt-shadow" aria-hidden="true"></div>
         </div>
-        <button class="wt-next btn btn--primary btn--l" type="button" hidden>Next ›</button>
       </div>
     `
 
@@ -62,7 +64,6 @@ export default {
     const wordEl = root.querySelector('.wt-word')
     const plinth = root.querySelector('.wt-plinth')
     const objectImg = root.querySelector('.wt-object')
-    const nextBtn = root.querySelector('.wt-next')
 
     function currentWord() {
       return order[index]
@@ -99,7 +100,6 @@ export default {
       root.classList.remove('is-answer')
       plinth.classList.remove('is-glowing')
       replay(plinth, 'is-popped')
-      nextBtn.hidden = true
     }
 
     function onPlinthActivate() {
@@ -115,7 +115,6 @@ export default {
       if (destroyed) return
       phase = 'holding'
       audio.chime('next')
-      nextBtn.hidden = false
       scheduleAdvance(2200)
     }
 
@@ -134,7 +133,6 @@ export default {
 
     function finish() {
       phase = 'done'
-      nextBtn.hidden = true
       audio.chime('complete')
       confetti(root)
       ctx.onDone()
@@ -152,11 +150,21 @@ export default {
       } else {
         audio.resumeAll()
         root.classList.remove('is-paused')
-        if (phase === 'holding' && !nextBtn.hidden) {
+        if (phase === 'holding') {
           advanceStartedAt = performance.now()
           advanceTimer = setTimeout(goNext, advanceRemaining)
         }
       }
+    }
+
+    function seekTo(i) {
+      if (destroyed) return
+      clearAdvanceTimer()
+      audio.stopAll()
+      index = Math.max(0, Math.min(i, total - 1))
+      ctx.setProgress(index, total)
+      loadWord()
+      showPrompt()
     }
 
     plinth.addEventListener('click', onPlinthActivate)
@@ -166,12 +174,9 @@ export default {
         onPlinthActivate()
       }
     })
-    nextBtn.addEventListener('click', () => {
-      if (phase !== 'holding' || ctx.isPaused()) return
-      goNext()
-    })
 
     ctx.onPauseChange(handlePauseChange)
+    ctx.onSeek(seekTo)
     if (ctx.isPaused()) {
       root.classList.add('is-paused')
     }

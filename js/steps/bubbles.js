@@ -392,7 +392,17 @@ export default {
       root.classList.toggle('is-paused', paused)
     }
 
+    function seekTo(i) {
+      if (destroyed) return
+      clearAllTimers()
+      clearHint()
+      audio.stopAll()
+      root.querySelectorAll('.bp-fly').forEach((el) => el.remove())
+      startRound(Math.max(0, Math.min(i, LETTERS.length - 1)))
+    }
+
     ctx.onPauseChange(setPaused)
+    ctx.onSeek(seekTo)
     if (paused) root.classList.add('is-paused')
 
     startRound(0)

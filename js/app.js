@@ -422,12 +422,6 @@ function renderStep(id) {
   const stage = document.createElement('div');
   stage.className = 'step';
 
-  const pauseBtn = document.createElement('button');
-  pauseBtn.type = 'button';
-  pauseBtn.className = 'btn btn--primary btn--xl step-shell__pause';
-  pauseBtn.textContent = 'Pause';
-  pauseBtn.setAttribute('aria-pressed', 'false');
-
   const overlay = document.createElement('div');
   overlay.className = 'overlay overlay--celebrate is-hidden step-shell__overlay';
   overlay.innerHTML =
@@ -438,18 +432,32 @@ function renderStep(id) {
     '</div></div>';
   overlay.querySelector('.step-shell__overlay-back').addEventListener('click', () => goto('#/unit/1'));
 
-  shell.append(header, stage, pauseBtn, overlay);
-  root.appendChild(shell);
+  shell.append(header, stage);
 
   stepPaused = false;
   pauseListeners = [];
 
-  pauseBtn.addEventListener('click', () => {
-    stepPaused = !stepPaused;
-    pauseBtn.textContent = stepPaused ? 'Continue' : 'Pause';
-    pauseBtn.setAttribute('aria-pressed', String(stepPaused));
-    pauseListeners.forEach((fn) => fn(stepPaused));
-  });
+  if (mod.noPause) {
+    shell.classList.add('step-shell--no-pause');
+  } else {
+    const pauseBtn = document.createElement('button');
+    pauseBtn.type = 'button';
+    pauseBtn.className = 'btn btn--primary btn--xl step-shell__pause';
+    pauseBtn.textContent = 'Pause';
+    pauseBtn.setAttribute('aria-pressed', 'false');
+    pauseBtn.addEventListener('click', () => {
+      stepPaused = !stepPaused;
+      pauseBtn.textContent = stepPaused ? 'Continue' : 'Pause';
+      pauseBtn.setAttribute('aria-pressed', String(stepPaused));
+      pauseListeners.forEach((fn) => fn(stepPaused));
+    });
+    shell.appendChild(pauseBtn);
+  }
+
+  shell.appendChild(overlay);
+  root.appendChild(shell);
+
+  let seekFn = null;
 
   const ctx = {
     onDone() {
@@ -459,9 +467,25 @@ function renderStep(id) {
     setProgress(done, total) {
       pips.innerHTML = '';
       for (let i = 0; i < total; i++) {
-        const pip = document.createElement('span');
-        pip.className = 'progress-pips__pip' + (i < done ? ' is-done' : i === done ? ' is-current' : '');
-        pips.appendChild(pip);
+        const state = i < done ? ' is-done' : i === done ? ' is-current' : '';
+        if (seekFn) {
+          const hit = document.createElement('button');
+          hit.type = 'button';
+          hit.className = 'progress-pips__hit';
+          hit.setAttribute('aria-label', `Go to word ${i + 1} of ${total}`);
+          const dot = document.createElement('span');
+          dot.className = 'progress-pips__pip' + state;
+          hit.appendChild(dot);
+          hit.addEventListener('click', () => {
+            if (stepPaused) return;
+            seekFn(i);
+          });
+          pips.appendChild(hit);
+        } else {
+          const pip = document.createElement('span');
+          pip.className = 'progress-pips__pip' + state;
+          pips.appendChild(pip);
+        }
       }
     },
     isPaused() {
@@ -469,6 +493,10 @@ function renderStep(id) {
     },
     onPauseChange(fn) {
       pauseListeners.push(fn);
+    },
+    onSeek(fn) {
+      seekFn = fn;
+      pips.classList.add('is-seekable');
     },
   };
 

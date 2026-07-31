@@ -167,7 +167,7 @@ export default {
       retrigger(wordRow, 'is-revealed')
     }
 
-    async function playWord(i) {
+    async function playWord(i, gen) {
       const w = UNIT1[i]
       ctx.setProgress(i, TOTAL)
       enterWord(w)
@@ -180,7 +180,7 @@ export default {
       })
 
       await audio.play(w.utter)
-      if (destroyed) { popTimer.cancelIt(); return }
+      if (destroyed || gen !== runGen) { popTimer.cancelIt(); return }
 
       popTimer.cancelIt()
       if (!popped) popWord(w)
@@ -189,27 +189,43 @@ export default {
       await delay(HOLD_MS)
     }
 
-    async function finishAll() {
+    async function finishAll(gen) {
       ctx.setProgress(TOTAL, TOTAL)
       audio.chime('complete')
       confetti(root)
       banner.hidden = false
       retrigger(banner, 'is-shown')
       await delay(FINISH_HOLD_MS)
-      if (destroyed) return
+      if (destroyed || gen !== runGen) return
       ctx.onDone()
     }
 
-    async function run() {
-      for (let i = 0; i < TOTAL; i++) {
-        if (destroyed) return
-        await playWord(i)
+    let runGen = 0
+
+    async function run(startIndex) {
+      const gen = runGen
+      for (let i = startIndex; i < TOTAL; i++) {
+        if (destroyed || gen !== runGen) return
+        await playWord(i, gen)
       }
-      if (destroyed) return
-      await finishAll()
+      if (destroyed || gen !== runGen) return
+      await finishAll(gen)
     }
 
-    run()
+    function seekTo(i) {
+      if (destroyed) return
+      runGen += 1
+      timers.forEach((t) => t.cancelIt())
+      timers.clear()
+      audio.stopAll()
+      banner.hidden = true
+      banner.classList.remove('is-shown')
+      run(Math.max(0, Math.min(i, TOTAL - 1)))
+    }
+
+    if (typeof ctx.onSeek === 'function') ctx.onSeek(seekTo)
+
+    run(0)
 
     return function cleanup() {
       destroyed = true

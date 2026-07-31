@@ -264,6 +264,17 @@ export default {
 
     ctx.onPauseChange(setPaused)
 
+    ctx.onSeek(i => {
+      if (!alive) return
+      const ly = LYRICS[i]
+      if (!ly) return
+      curSig = ''
+      audioEl.currentTime = ly.t
+      applyAt(audioEl.currentTime)
+      const p = audioEl.play()
+      if (p && p.catch) p.catch(() => {})
+    })
+
     const startPaused = ctx.isPaused()
     if (startPaused) root.classList.add('is-paused')
     else {
