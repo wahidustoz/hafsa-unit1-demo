@@ -221,6 +221,7 @@ body{overflow-x:hidden;justify-content:stretch}
 .step-shell__back{flex:none}
 .step-shell__title{flex:1;text-align:center;min-width:0}
 .step-shell__pips{flex:none}
+.step-shell__header--no-title{justify-content:space-between}
 .progress-pips.is-seekable{gap:0}
 .progress-pips__hit{
   display:grid;

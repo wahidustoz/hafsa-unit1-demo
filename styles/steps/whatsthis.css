@@ -22,15 +22,15 @@
 .step-whatsthis .wt-row1{
   position:relative;
   flex:none;
-  display:grid;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   width:100%;
-  justify-items:center;
   text-align:center;
 }
 
-.step-whatsthis .wt-prompt,
-.step-whatsthis .wt-answer{
-  grid-area:1/1;
+.step-whatsthis .wt-prompt{
+  position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -39,23 +39,28 @@
   opacity:1;
   transform:translateY(0) scale(1);
   transition:opacity var(--t-move) var(--ease-out),transform var(--t-move) var(--ease-out);
-}
-
-.step-whatsthis .wt-prompt{
-  justify-content:center;
   font-size:min(clamp(var(--fs-display),6vw,84px),13cqh);
   line-height:1.1;
 }
 
 .step-whatsthis .wt-answer{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:var(--sp-3);
+  color:var(--ink);
   opacity:0;
-  transform:translateY(14px) scale(.94);
+  transform:translate(-50%,14px) scale(.94);
+  transition:opacity var(--t-move) var(--ease-out),transform var(--t-move) var(--ease-out);
   pointer-events:none;
 }
 
 .step-whatsthis.is-answer .wt-answer{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:translate(-50%,0) scale(1);
   pointer-events:auto;
 }
 
@@ -165,12 +170,12 @@
 
 @keyframes wt-hand-travel{
   0%{
-    transform:translate(calc(var(--wt-plinth) * .42),calc(var(--wt-plinth) * .42)) rotate(20deg);
+    transform:translate(calc(var(--wt-plinth) * .14),calc(var(--wt-plinth) * .14)) rotate(20deg);
     opacity:0;
     animation-timing-function:var(--ease-idle);
   }
   5%{
-    transform:translate(calc(var(--wt-plinth) * .42),calc(var(--wt-plinth) * .42)) rotate(20deg);
+    transform:translate(calc(var(--wt-plinth) * .14),calc(var(--wt-plinth) * .14)) rotate(20deg);
     opacity:1;
     animation-timing-function:var(--ease-idle);
   }
@@ -203,7 +208,7 @@
     opacity:0;
   }
   100%{
-    transform:translate(calc(var(--wt-plinth) * .42),calc(var(--wt-plinth) * .42)) rotate(20deg);
+    transform:translate(calc(var(--wt-plinth) * .14),calc(var(--wt-plinth) * .14)) rotate(20deg);
     opacity:0;
   }
 }

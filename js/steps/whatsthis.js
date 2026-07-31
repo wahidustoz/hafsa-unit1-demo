@@ -26,6 +26,7 @@ export default {
   id: 'whatsthis',
   title: "What's this?",
   noPause: true,
+  noTitle: true,
   mount(root, ctx) {
     root.classList.add('step-whatsthis')
 

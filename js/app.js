@@ -401,6 +401,9 @@ function renderStep(id) {
 
   const header = document.createElement('div');
   header.className = 'step-shell__header';
+  if (mod.noTitle) {
+    header.classList.add('step-shell__header--no-title');
+  }
 
   const back = document.createElement('button');
   back.type = 'button';
@@ -408,16 +411,19 @@ function renderStep(id) {
   back.textContent = '‹ Steps';
   back.addEventListener('click', () => goto('#/unit/1'));
 
-  const title = document.createElement('h1');
-  title.className = 'step-shell__title t-title';
-  title.textContent = mod.title;
-
   const pips = document.createElement('div');
   pips.className = 'progress-pips step-shell__pips';
   pips.setAttribute('role', 'status');
   pips.setAttribute('aria-label', 'Step progress');
 
-  header.append(back, title, pips);
+  if (mod.noTitle) {
+    header.append(back, pips);
+  } else {
+    const title = document.createElement('h1');
+    title.className = 'step-shell__title t-title';
+    title.textContent = mod.title;
+    header.append(back, title, pips);
+  }
 
   const stage = document.createElement('div');
   stage.className = 'step';
