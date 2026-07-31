@@ -100,7 +100,7 @@ export default {
     function onIdle() {
       if (destroyed || !roundActive) return
       clearHint()
-      audio.play(VOICE_PROMPT)
+      audio.playVoice(VOICE_PROMPT)
       const next = fieldEl.querySelector('.ct-obj:not(.is-counted)')
       if (next) {
         hintCleanup = pointerHand(root, next)
@@ -152,7 +152,7 @@ export default {
       buildField(round)
       buildTally(round.count)
       ctx.setProgress(index, TOTAL)
-      audio.play(VOICE_PROMPT)
+      audio.playVoice(VOICE_PROMPT)
       rearmIdle()
     }
 
@@ -175,8 +175,13 @@ export default {
       }
       tallyEl.setAttribute('aria-label', counted + ' of ' + ROUNDS[roundIndex].count + ' counted')
       audio.play(SFX_POP)
-      audio.play(U2 + 'num-' + counted + '.mp3')
-      if (counted === ROUNDS[roundIndex].count) finishRound()
+      const spoken = audio.playVoice(U2 + 'num-' + counted + '.mp3')
+      if (counted === ROUNDS[roundIndex].count) {
+        roundActive = false
+        spoken.then(() => {
+          if (!destroyed) finishRound()
+        })
+      }
     }
 
     function finishRound() {
@@ -184,7 +189,7 @@ export default {
       unschedule(idleTimer)
       clearHint()
       tallyEl.classList.add('is-complete')
-      audio.play(U2 + 'total-' + ROUNDS[roundIndex].count + '.mp3').then(() => {
+      audio.playVoice(U2 + 'total-' + ROUNDS[roundIndex].count + '.mp3').then(() => {
         if (destroyed) return
         audio.chime('next')
         schedule(goNext, NEXT_DELAY_MS)
@@ -202,7 +207,7 @@ export default {
       ctx.setProgress(TOTAL, TOTAL)
       audio.chime('complete')
       confetti(root)
-      audio.play(VOICE_DONE)
+      audio.playVoice(VOICE_DONE)
       schedule(() => {
         if (destroyed) return
         ctx.onDone()
@@ -219,7 +224,7 @@ export default {
       rearmIdle()
       retrigger(speakerEl, 'is-playing')
       schedule(() => speakerEl.classList.remove('is-playing'), SPEAKER_GLOW_MS)
-      audio.play(VOICE_PROMPT)
+      audio.playVoice(VOICE_PROMPT)
     }
 
     function seekTo(i) {

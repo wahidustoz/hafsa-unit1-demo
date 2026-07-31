@@ -129,7 +129,7 @@ export default {
     function onIdle() {
       if (destroyed || !roundActive) return
       clearHint()
-      audio.play(VOICE_PROMPT)
+      audio.playVoice(VOICE_PROMPT)
       const target = choicesEl.querySelector('.hm-card[data-correct="1"]')
       if (target) {
         hintCleanup = pointerHand(root, target)
@@ -173,7 +173,7 @@ export default {
       clearHint()
       buildRound(rounds[index])
       ctx.setProgress(index, TOTAL)
-      audio.play(VOICE_PROMPT)
+      audio.playVoice(VOICE_PROMPT)
       rearmIdle()
     }
 
@@ -188,7 +188,7 @@ export default {
         retrigger(btn, 'is-correct')
         audio.play(SFX_CORRECT)
         plateEl.classList.add('is-solved')
-        audio.play(U2 + 'total-' + round.count + '.mp3').then(() => {
+        audio.playVoice(U2 + 'total-' + round.count + '.mp3').then(() => {
           if (destroyed) return
           schedule(goNext, NEXT_DELAY_MS)
         })
@@ -212,7 +212,7 @@ export default {
       ctx.setProgress(TOTAL, TOTAL)
       audio.chime('complete')
       confetti(root)
-      audio.play(VOICE_DONE)
+      audio.playVoice(VOICE_DONE)
       schedule(() => {
         if (destroyed) return
         ctx.onDone()
@@ -229,7 +229,7 @@ export default {
       rearmIdle()
       retrigger(speakerEl, 'is-playing')
       schedule(() => speakerEl.classList.remove('is-playing'), SPEAKER_GLOW_MS)
-      audio.play(VOICE_PROMPT)
+      audio.playVoice(VOICE_PROMPT)
     }
 
     function seekTo(i) {

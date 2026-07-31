@@ -69,7 +69,26 @@ export function chime(kind) {
   }
 }
 
+let currentVoice = null;
+
+export function playVoice(src) {
+  if (currentVoice && currentVoice !== getAudio(src)) {
+    try {
+      currentVoice.pause();
+      currentVoice.currentTime = 0;
+    } catch (err) {}
+    untrack(currentVoice);
+  }
+  const a = getAudio(src);
+  currentVoice = a;
+  return play(src).then((v) => {
+    if (currentVoice === a) currentVoice = null;
+    return v;
+  });
+}
+
 export function stopAll() {
+  currentVoice = null;
   playing.forEach((a) => {
     try {
       a.pause();

@@ -178,7 +178,7 @@ export default {
     function onIdle() {
       if (destroyed || paused || !roundActive) return
       clearHint()
-      audio.play(voiceFor(rounds[roundIndex]))
+      audio.playVoice(voiceFor(rounds[roundIndex]))
       const target = optionsEl.querySelector('.mu-option[data-correct="1"]')
       if (target) {
         hintCleanup = pointerHand(root, target)
@@ -251,7 +251,7 @@ export default {
       buildRound(rounds[index])
       starEls.forEach((el, i) => el.classList.toggle('is-filled', i < index))
       ctx.setProgress(index, TOTAL)
-      audio.play(voiceFor(rounds[index]))
+      audio.playVoice(voiceFor(rounds[index]))
       rearmIdle()
     }
 
@@ -267,7 +267,7 @@ export default {
         audio.play(SFX_CORRECT)
         const star = starEls[roundIndex]
         if (star) star.classList.add('is-filled')
-        audio.play(U2 + 'num-' + round.count + '.mp3')
+        audio.playVoice(U2 + 'num-' + round.count + '.mp3')
         schedule(goNext, NEXT_DELAY_MS)
         return
       }
@@ -288,7 +288,7 @@ export default {
       ctx.setProgress(TOTAL, TOTAL)
       audio.chime('complete')
       confetti(root)
-      audio.play(VOICE_DONE)
+      audio.playVoice(VOICE_DONE)
       schedule(() => {
         if (destroyed) return
         ctx.onDone()
@@ -305,7 +305,7 @@ export default {
       rearmIdle()
       retrigger(speakerEl, 'is-playing')
       schedule(() => speakerEl.classList.remove('is-playing'), SPEAKER_GLOW_MS)
-      audio.play(voiceFor(rounds[roundIndex]))
+      audio.playVoice(voiceFor(rounds[roundIndex]))
     }
 
     function seekTo(i) {
