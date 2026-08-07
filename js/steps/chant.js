@@ -1,163 +1,212 @@
-import { UNIT1, CHANT_CUES } from '../data.js'
+import { findUnit } from '../units.js'
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
-function curIdx(t){
-  let i = -1
-  for (let k = 0; k < CHANT_CUES.length; k++){
-    if (t >= CHANT_CUES[k].t) i = k
+const SEEK_EPSILON = 0.01
+
+function routeUnit() {
+  const match = /#\/unit\/(\d+)/.exec(location.hash || '')
+  return findUnit(match ? Number(match[1]) : 1)
+}
+
+function lastIndexAt(cues, key, time) {
+  let found = -1
+  for (let i = 0; i < cues.length; i++) {
+    if (time >= cues[i][key]) found = i
     else break
   }
-  return i
+  return found
+}
+
+function make(tag, cls) {
+  const el = document.createElement(tag)
+  el.className = cls
+  return el
+}
+
+function retrigger(el, cls) {
+  el.classList.remove(cls)
+  void el.offsetWidth
+  el.classList.add(cls)
 }
 
 export default {
   id: 'chant',
   title: 'Chanting',
-  mount(root, ctx){
+  mount(root, ctx) {
     root.classList.add('step-chant')
 
-    const caption = document.createElement('div')
-    caption.className = 'chant-caption'
-    caption.setAttribute('aria-live', 'polite')
+    const unit = routeUnit()
+    const cues = unit.chant.cues
+    const total = cues.length
 
-    const captionCurrent = document.createElement('p')
-    captionCurrent.className = 'chant-caption__current'
-    const captionNext = document.createElement('p')
-    captionNext.className = 'chant-caption__next'
-    caption.append(captionCurrent, captionNext)
+    const stage = make('div', 'chant-stage is-intro')
 
-    const karaoke = document.createElement('div')
-    karaoke.className = 'chant-karaoke'
-    karaoke.setAttribute('role', 'status')
-    karaoke.setAttribute('aria-label', 'Chant progress')
-    const karaokeFill = document.createElement('div')
-    karaokeFill.className = 'chant-karaoke__fill'
-    karaoke.appendChild(karaokeFill)
+    const lettersRow = make('div', 'chant-letters')
 
-    const grid = document.createElement('div')
-    grid.className = 'chant-grid'
-    grid.setAttribute('role', 'group')
-    grid.setAttribute('aria-label', 'Unit 1 words')
+    const objectRow = make('div', 'chant-object')
+    const burst = make('span', 'chant-object__burst')
+    const float = make('span', 'chant-object__float')
+    const objectImg = make('img', 'chant-object__img')
+    objectImg.alt = ''
+    float.append(objectImg)
+    objectRow.append(burst, float)
 
-    const tiles = UNIT1.map(item => {
-      const tile = document.createElement('div')
-      tile.className = 'chant-tile'
+    const wordRow = make('p', 'chant-word')
+    wordRow.setAttribute('aria-live', 'polite')
 
-      const art = document.createElement('div')
-      art.className = 'chant-tile__art'
-      const img = document.createElement('img')
-      img.src = item.img
-      img.alt = item.word
-      art.appendChild(img)
+    stage.append(lettersRow, objectRow, wordRow)
 
-      const word = document.createElement('p')
-      word.className = 'chant-tile__word'
-      word.innerHTML = `<b>${item.word[0]}</b>${item.word.slice(1)}`
+    const startOverlay = make('div', 'chant-start is-hidden')
+    const startBtn = make('button', 'btn btn--celebration btn--l')
+    startBtn.type = 'button'
+    startBtn.textContent = 'Tap to start'
+    startOverlay.append(startBtn)
 
-      tile.append(art, word)
-      grid.appendChild(tile)
-      return tile
+    root.append(stage, startOverlay)
+
+    cues.forEach((cue) => {
+      const warm = new Image()
+      warm.src = cue.img
     })
 
-    root.append(caption, karaoke, grid)
-
-    const audioEl = new Audio('./assets/audio/chant.mp3')
+    const audioEl = new Audio(unit.chant.audio)
     audioEl.preload = 'auto'
 
     let active = true
     let rafId = null
     let finished = false
-    let lastIdx = -2
-    let lastFinished = false
+    let lettersShown = ''
+    let beatShown = -2
+    let wordShown = -2
+    let doneShown = -1
 
-    function render(){
-      const t = audioEl.currentTime || 0
-      const idx = finished ? CHANT_CUES.length - 1 : curIdx(t)
-
-      const pct = audioEl.duration ? Math.min(100, (t / audioEl.duration) * 100) : 0
-      karaoke.style.setProperty('--p', Math.round(pct) + '%')
-
-      if (idx === lastIdx && finished === lastFinished) return
-      lastIdx = idx
-      lastFinished = finished
-
-      tiles.forEach((tile, i) => {
-        tile.classList.toggle('is-current', !finished && i === idx)
-        tile.classList.toggle('is-sung', finished || i < idx)
+    function buildLetters(cue) {
+      lettersShown = cue.letters
+      lettersRow.innerHTML = ''
+      cue.letters.trim().split(/\s+/).forEach((glyph, i) => {
+        const span = make('span', 'chant-letters__glyph')
+        span.style.setProperty('--i', String(i))
+        span.textContent = glyph
+        lettersRow.append(span)
       })
-
-      const sungCount = finished ? UNIT1.length : Math.max(0, idx)
-      ctx.setProgress(sungCount, UNIT1.length)
-
-      if (finished){
-        captionCurrent.textContent = 'Great chanting!'
-        captionNext.textContent = 'Unit 1 chant complete!'
-      } else if (idx < 0){
-        captionCurrent.textContent = 'Here we go!'
-        captionNext.textContent = CHANT_CUES[0].text
-      } else {
-        captionCurrent.textContent = CHANT_CUES[idx].text
-        captionNext.textContent = idx + 1 < CHANT_CUES.length ? CHANT_CUES[idx + 1].text : 'Last word — nearly there!'
-      }
-
-      captionCurrent.classList.remove('is-popping')
-      void captionCurrent.offsetWidth
-      captionCurrent.classList.add('is-popping')
+      retrigger(lettersRow, 'is-changing')
     }
 
-    function loop(){
+    function sayLetters(cue) {
+      if (cue.letters !== lettersShown) buildLetters(cue)
+      lettersRow.style.setProperty('--say-step', ((cue.t - cue.beat) / 2).toFixed(3) + 's')
+      retrigger(lettersRow, 'is-saying')
+    }
+
+    function showWord(cue) {
+      stage.classList.remove('is-intro')
+      objectImg.src = cue.img
+      wordRow.innerHTML = ''
+      Array.from(cue.word).forEach((letter, i) => {
+        const span = make('span', 'chant-word__glyph')
+        span.style.setProperty('--i', String(i))
+        span.textContent = letter
+        wordRow.append(span)
+      })
+      retrigger(objectRow, 'is-live')
+      retrigger(wordRow, 'is-live')
+    }
+
+    function hideWord() {
+      objectRow.classList.remove('is-live')
+      wordRow.classList.remove('is-live')
+    }
+
+    function render(force) {
+      if (force) {
+        beatShown = -2
+        lettersShown = ''
+      }
+
+      const time = audioEl.currentTime || 0
+      const beatIdx = lastIndexAt(cues, 'beat', time)
+      const wordIdx = lastIndexAt(cues, 't', time)
+
+      if (beatIdx !== beatShown) {
+        beatShown = beatIdx
+        if (beatIdx >= 0) sayLetters(cues[beatIdx])
+      }
+
+      if (wordIdx !== wordShown) {
+        wordShown = wordIdx
+        if (wordIdx >= 0) showWord(cues[wordIdx])
+        else hideWord()
+      }
+
+      const done = finished ? total : Math.max(0, beatIdx)
+      if (done !== doneShown) {
+        doneShown = done
+        ctx.setProgress(done, total)
+      }
+    }
+
+    function loop() {
       if (!active) return
-      render()
+      render(false)
       rafId = requestAnimationFrame(loop)
     }
 
-    function onEnded(){
+    function onEnded() {
       if (!active) return
       finished = true
-      render()
+      render(false)
       audio.chime('complete')
       confetti(root)
       ctx.onDone()
     }
 
-    function onPlay(){
+    function onPlay() {
       finished = false
+      startOverlay.classList.add('is-hidden')
     }
+
+    function tryPlay() {
+      const p = audioEl.play()
+      if (p && p.catch) p.catch(() => startOverlay.classList.remove('is-hidden'))
+    }
+
+    startBtn.addEventListener('click', tryPlay)
 
     audioEl.addEventListener('ended', onEnded)
     audioEl.addEventListener('play', onPlay)
 
-    if (!ctx.isPaused()){
-      const p = audioEl.play()
-      if (p && p.catch) p.catch(() => {})
+    function setPaused(paused) {
+      root.classList.toggle('is-paused', paused)
+      if (paused) {
+        audioEl.pause()
+        return
+      }
+      tryPlay()
     }
 
-    ctx.onPauseChange(paused => {
+    ctx.onPauseChange((paused) => {
       if (!active) return
-      if (paused){
-        audioEl.pause()
-      } else {
-        const p = audioEl.play()
-        if (p && p.catch) p.catch(() => {})
-      }
+      setPaused(paused)
     })
 
-    ctx.onSeek(i => {
+    ctx.onSeek((i) => {
       if (!active) return
-      const cue = CHANT_CUES[i]
+      const cue = cues[i]
       if (!cue) return
       finished = false
-      audioEl.currentTime = cue.t
-      const p = audioEl.play()
-      if (p && p.catch) p.catch(() => {})
-      render()
+      audioEl.currentTime = cue.beat + SEEK_EPSILON
+      tryPlay()
+      render(true)
     })
 
-    render()
+    buildLetters(cues[0])
+    render(false)
     loop()
 
-    return function cleanup(){
+    setPaused(ctx.isPaused())
+
+    return function cleanup() {
       active = false
       if (rafId) cancelAnimationFrame(rafId)
       audioEl.pause()
@@ -165,5 +214,5 @@ export default {
       audioEl.removeEventListener('play', onPlay)
       audio.stopAll()
     }
-  }
+  },
 }

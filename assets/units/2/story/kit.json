@@ -1,0 +1,319 @@
+{
+  "unit": 2,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 8.22,
+  "end": 29.54,
+  "objects": [
+    {
+      "key": "doll",
+      "mode": "cutout",
+      "cut": "objects/doll.png",
+      "halo": "objects/doll.halo.png",
+      "box": [
+        569,
+        1014,
+        178,
+        196
+      ],
+      "territory": [
+        575,
+        1020,
+        166,
+        184
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "door",
+      "mode": "cutout",
+      "cut": "objects/door.png",
+      "halo": "objects/door.halo.png",
+      "box": [
+        552,
+        897,
+        123,
+        153
+      ],
+      "territory": [
+        558,
+        903,
+        111,
+        141
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "duck",
+      "mode": "cutout",
+      "cut": "objects/duck.with.png",
+      "halo": "objects/duck.with.halo.png",
+      "box": [
+        192,
+        951,
+        146,
+        214
+      ],
+      "territory": [
+        198,
+        957,
+        112,
+        202
+      ],
+      "song": true,
+      "role": "carrier"
+    },
+    {
+      "key": "egg",
+      "mode": "cutout",
+      "cut": "objects/egg.png",
+      "halo": "objects/egg.halo.png",
+      "box": [
+        387,
+        1004,
+        64,
+        81
+      ],
+      "territory": [
+        393,
+        1010,
+        52,
+        69
+      ],
+      "song": true,
+      "role": "item"
+    },
+    {
+      "key": "elephant",
+      "mode": "cutout",
+      "cut": "objects/elephant.with.png",
+      "halo": "objects/elephant.with.halo.png",
+      "box": [
+        313,
+        901,
+        192,
+        225
+      ],
+      "territory": [
+        319,
+        907,
+        180,
+        213
+      ],
+      "song": true,
+      "role": "carrier"
+    },
+    {
+      "key": "fish",
+      "mode": "cutout",
+      "cut": "objects/fish.png",
+      "halo": "objects/fish.halo.png",
+      "box": [
+        287,
+        962,
+        51,
+        94
+      ],
+      "territory": [
+        293,
+        968,
+        39,
+        82
+      ],
+      "song": true,
+      "role": "item"
+    },
+    {
+      "key": "frog",
+      "mode": "cutout",
+      "cut": "objects/frog.png",
+      "halo": "objects/frog.halo.png",
+      "box": [
+        471,
+        1027,
+        147,
+        133
+      ],
+      "territory": [
+        477,
+        1033,
+        135,
+        121
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "fork",
+      "mode": "arrow",
+      "cut": "",
+      "halo": "",
+      "box": [
+        499,
+        998,
+        52,
+        70
+      ],
+      "territory": [
+        505,
+        1004,
+        40,
+        58
+      ],
+      "song": true,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 8.4,
+      "key": "duck",
+      "line": "The duck has a fish",
+      "hl": "duck"
+    },
+    {
+      "t": 9.43,
+      "key": "fish",
+      "line": "The duck has a fish",
+      "hl": "fish"
+    },
+    {
+      "t": 10.49,
+      "key": "elephant",
+      "line": "The elephant has an egg",
+      "hl": "elephant"
+    },
+    {
+      "t": 11.59,
+      "key": "egg",
+      "line": "The elephant has an egg",
+      "hl": "egg"
+    },
+    {
+      "t": 12.49,
+      "key": "frog",
+      "line": "The frog has a fork",
+      "hl": "frog"
+    },
+    {
+      "t": 13.55,
+      "key": "fork",
+      "line": "The frog has a fork",
+      "hl": "fork"
+    },
+    {
+      "t": 20.83,
+      "key": "duck",
+      "line": "The duck has a fish",
+      "hl": "duck"
+    },
+    {
+      "t": 21.85,
+      "key": "fish",
+      "line": "The duck has a fish",
+      "hl": "fish"
+    },
+    {
+      "t": 22.93,
+      "key": "elephant",
+      "line": "The elephant has an egg",
+      "hl": "elephant"
+    },
+    {
+      "t": 24.01,
+      "key": "egg",
+      "line": "The elephant has an egg",
+      "hl": "egg"
+    },
+    {
+      "t": 24.91,
+      "key": "frog",
+      "line": "The frog has a fork",
+      "hl": "frog"
+    },
+    {
+      "t": 25.99,
+      "key": "fork",
+      "line": "The frog has a fork",
+      "hl": "fork"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 7.5,
+      "text": "The duck has a fish.",
+      "hl": "duck"
+    },
+    {
+      "t": 8.53,
+      "text": "The duck has a fish.",
+      "hl": "fish"
+    },
+    {
+      "t": 9.59,
+      "text": "The elephant has an egg.",
+      "hl": "elephant"
+    },
+    {
+      "t": 10.69,
+      "text": "The elephant has an egg.",
+      "hl": "egg"
+    },
+    {
+      "t": 11.59,
+      "text": "The frog has a fork.",
+      "hl": "frog"
+    },
+    {
+      "t": 12.65,
+      "text": "The frog has a fork.",
+      "hl": "fork"
+    },
+    {
+      "t": 15.1,
+      "text": "Yum, yum, yum!",
+      "hl": null
+    },
+    {
+      "t": 19.93,
+      "text": "The duck has a fish.",
+      "hl": "duck"
+    },
+    {
+      "t": 20.95,
+      "text": "The duck has a fish.",
+      "hl": "fish"
+    },
+    {
+      "t": 22.03,
+      "text": "The elephant has an egg.",
+      "hl": "elephant"
+    },
+    {
+      "t": 23.11,
+      "text": "The elephant has an egg.",
+      "hl": "egg"
+    },
+    {
+      "t": 24.01,
+      "text": "The frog has a fork.",
+      "hl": "frog"
+    },
+    {
+      "t": 25.09,
+      "text": "The frog has a fork.",
+      "hl": "fork"
+    },
+    {
+      "t": 27.5,
+      "text": "Yum, yum, yum!",
+      "hl": null
+    }
+  ]
+}

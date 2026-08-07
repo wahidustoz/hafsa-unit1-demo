@@ -1,0 +1,265 @@
+{
+  "unit": 8,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 6.86,
+  "end": 46.52,
+  "objects": [
+    {
+      "key": "umbrella",
+      "mode": "cutout",
+      "cut": "objects/umbrella.png",
+      "halo": "objects/umbrella.halo.png",
+      "box": [
+        306,
+        757,
+        245,
+        202
+      ],
+      "territory": [
+        312,
+        763,
+        233,
+        190
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "uncle",
+      "mode": "cutout",
+      "cut": "objects/uncle.with.png",
+      "halo": "objects/uncle.with.halo.png",
+      "box": [
+        380,
+        841,
+        171,
+        322
+      ],
+      "territory": [
+        386,
+        847,
+        159,
+        310
+      ],
+      "song": false,
+      "role": "carrier"
+    },
+    {
+      "key": "van",
+      "mode": "cutout",
+      "cut": "objects/van.png",
+      "halo": "objects/van.halo.png",
+      "box": [
+        154,
+        969,
+        226,
+        202
+      ],
+      "territory": [
+        160,
+        975,
+        214,
+        190
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "vest",
+      "mode": "cutout",
+      "cut": "objects/vest.png",
+      "halo": "objects/vest.halo.png",
+      "box": [
+        414,
+        948,
+        103,
+        113
+      ],
+      "territory": [
+        420,
+        954,
+        91,
+        101
+      ],
+      "song": false,
+      "role": "item"
+    },
+    {
+      "key": "violin",
+      "mode": "cutout",
+      "cut": "objects/violin.png",
+      "halo": "objects/violin.halo.png",
+      "box": [
+        444,
+        1109,
+        150,
+        172
+      ],
+      "territory": [
+        450,
+        1115,
+        138,
+        160
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "wand",
+      "mode": "cutout",
+      "cut": "objects/wand.png",
+      "halo": "objects/wand.halo.png",
+      "box": [
+        563,
+        1133,
+        117,
+        150
+      ],
+      "territory": [
+        569,
+        1139,
+        105,
+        138
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "watch",
+      "mode": "cutout",
+      "cut": "objects/watch.png",
+      "halo": "objects/watch.halo.png",
+      "box": [
+        311,
+        1108,
+        113,
+        158
+      ],
+      "territory": [
+        317,
+        1114,
+        101,
+        146
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "window",
+      "mode": "cutout",
+      "cut": "objects/window.png",
+      "halo": "objects/window.halo.png",
+      "box": [
+        577,
+        829,
+        70,
+        75
+      ],
+      "territory": [
+        583,
+        835,
+        58,
+        63
+      ],
+      "song": false,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 10.2,
+      "key": "umbrella",
+      "line": "Do you have an umbrella",
+      "hl": "umbrella"
+    },
+    {
+      "t": 14.32,
+      "key": "wand",
+      "line": "Do you have a wand",
+      "hl": "wand"
+    },
+    {
+      "t": 19.12,
+      "key": "violin",
+      "line": "Do you have a violin",
+      "hl": "violin"
+    },
+    {
+      "t": 22.66,
+      "key": "watch",
+      "line": "Yes, I have a watch too",
+      "hl": "watch"
+    },
+    {
+      "t": 30.9,
+      "key": "umbrella",
+      "line": "Do you have an umbrella",
+      "hl": "umbrella"
+    },
+    {
+      "t": 35.02,
+      "key": "wand",
+      "line": "Do you have a wand",
+      "hl": "wand"
+    },
+    {
+      "t": 40.04,
+      "key": "violin",
+      "line": "Do you have a violin",
+      "hl": "violin"
+    },
+    {
+      "t": 43.32,
+      "key": "watch",
+      "line": "Yes, I have a watch too",
+      "hl": "watch"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 9.3,
+      "text": "Do you have an umbrella?",
+      "hl": "umbrella"
+    },
+    {
+      "t": 13.42,
+      "text": "Do you have a wand?",
+      "hl": "wand"
+    },
+    {
+      "t": 18.22,
+      "text": "Do you have a violin?",
+      "hl": "violin"
+    },
+    {
+      "t": 21.76,
+      "text": "Yes, I have a watch too!",
+      "hl": "watch"
+    },
+    {
+      "t": 30.0,
+      "text": "Do you have an umbrella?",
+      "hl": "umbrella"
+    },
+    {
+      "t": 34.12,
+      "text": "Do you have a wand?",
+      "hl": "wand"
+    },
+    {
+      "t": 39.14,
+      "text": "Do you have a violin?",
+      "hl": "violin"
+    },
+    {
+      "t": 42.42,
+      "text": "Yes, I have a watch too!",
+      "hl": "watch"
+    }
+  ]
+}

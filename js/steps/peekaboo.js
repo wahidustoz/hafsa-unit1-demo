@@ -1,8 +1,6 @@
-import { UNIT1 } from '../data.js'
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
-const TOTAL = UNIT1.length
 const FLASH_MS = 380
 const HOLD_NEXT_MS = 1600
 const COUNTDOWN_STEPS = [3, 2, 1]
@@ -68,7 +66,8 @@ export default {
     const actionsEl = root.querySelector('[data-actions]')
     const peekBtn = root.querySelector('[data-peek]')
 
-    const order = shuffle(UNIT1)
+    const order = shuffle(ctx.unit.words)
+    const total = order.length
     let alive = true
     let paused = ctx.isPaused()
     let isFlashing = false
@@ -240,7 +239,7 @@ export default {
 
     async function runRound(i) {
       const gen = roundGen
-      ctx.setProgress(i, TOTAL)
+      ctx.setProgress(i, total)
       const w = order[i]
       prepareStage(w)
       await countdownThenFlash()
@@ -253,8 +252,8 @@ export default {
       await wait(HOLD_NEXT_MS)
       if (!alive || gen !== roundGen) return
       const next = i + 1
-      if (next >= order.length) {
-        ctx.setProgress(TOTAL, TOTAL)
+      if (next >= total) {
+        ctx.setProgress(total, total)
         audio.chime('complete')
         confetti(root)
         ctx.onDone()
@@ -275,7 +274,7 @@ export default {
     function seekTo(i) {
       if (!alive) return
       stopRound()
-      runRound(Math.max(0, Math.min(i, order.length - 1)))
+      runRound(Math.max(0, Math.min(i, total - 1)))
     }
 
     ctx.onSeek(seekTo)

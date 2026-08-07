@@ -1,10 +1,8 @@
-import { UNIT1 } from '../data.js'
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
 const HOLD_MS = 1600
 const FINISH_HOLD_MS = 1200
-const TOTAL = UNIT1.length
 
 function retrigger(el, cls) {
   el.classList.remove(cls)
@@ -17,6 +15,9 @@ export default {
   title: 'Hello',
   mount(root, ctx) {
     root.classList.add('step-hello')
+
+    const words = ctx.unit.words
+    const total = words.length
 
     const stage = document.createElement('div')
     stage.className = 'hello-stage'
@@ -60,7 +61,7 @@ export default {
 
     const bannerCard = document.createElement('p')
     bannerCard.className = 'hello-banner__title'
-    bannerCard.textContent = 'Unit 1 words — all done!'
+    bannerCard.textContent = 'Unit ' + ctx.unit.n + ' words — all done!'
     banner.append(bannerCard)
 
     root.append(stage, banner)
@@ -127,7 +128,7 @@ export default {
     if (typeof ctx.onPauseChange === 'function') ctx.onPauseChange(setPaused)
 
     function preloadNext(i) {
-      const next = UNIT1[i + 1]
+      const next = words[i + 1]
       if (!next) return
       audio.preload([next.utter])
       const warm = new Image()
@@ -168,8 +169,8 @@ export default {
     }
 
     async function playWord(i, gen) {
-      const w = UNIT1[i]
-      ctx.setProgress(i, TOTAL)
+      const w = words[i]
+      ctx.setProgress(i, total)
       enterWord(w)
       preloadNext(i)
 
@@ -190,7 +191,7 @@ export default {
     }
 
     async function finishAll(gen) {
-      ctx.setProgress(TOTAL, TOTAL)
+      ctx.setProgress(total, total)
       audio.chime('complete')
       confetti(root)
       banner.hidden = false
@@ -204,7 +205,7 @@ export default {
 
     async function run(startIndex) {
       const gen = runGen
-      for (let i = startIndex; i < TOTAL; i++) {
+      for (let i = startIndex; i < total; i++) {
         if (destroyed || gen !== runGen) return
         await playWord(i, gen)
       }
@@ -220,7 +221,7 @@ export default {
       audio.stopAll()
       banner.hidden = true
       banner.classList.remove('is-shown')
-      run(Math.max(0, Math.min(i, TOTAL - 1)))
+      run(Math.max(0, Math.min(i, total - 1)))
     }
 
     if (typeof ctx.onSeek === 'function') ctx.onSeek(seekTo)

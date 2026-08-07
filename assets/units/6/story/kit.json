@@ -1,0 +1,276 @@
+{
+  "unit": 6,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 7.69,
+  "end": 30.81,
+  "objects": [
+    {
+      "key": "pear",
+      "mode": "cutout",
+      "cut": "objects/pear.png",
+      "halo": "objects/pear.halo.png",
+      "box": [
+        541,
+        1098,
+        76,
+        85
+      ],
+      "territory": [
+        547,
+        1104,
+        64,
+        73
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "pig",
+      "mode": "cutout",
+      "cut": "objects/pig.png",
+      "halo": "objects/pig.halo.png",
+      "box": [
+        233,
+        894,
+        148,
+        211
+      ],
+      "territory": [
+        239,
+        900,
+        136,
+        199
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "queen",
+      "mode": "cutout",
+      "cut": "objects/queen.png",
+      "halo": "objects/queen.halo.png",
+      "box": [
+        395,
+        819,
+        193,
+        297
+      ],
+      "territory": [
+        401,
+        825,
+        181,
+        285
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "rabbit",
+      "mode": "cutout",
+      "cut": "objects/rabbit.png",
+      "halo": "objects/rabbit.halo.png",
+      "box": [
+        571,
+        886,
+        129,
+        236
+      ],
+      "territory": [
+        577,
+        892,
+        117,
+        224
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "rose",
+      "mode": "cutout",
+      "cut": "objects/rose.png",
+      "halo": "objects/rose.halo.png",
+      "box": [
+        471,
+        1124,
+        70,
+        71
+      ],
+      "territory": [
+        477,
+        1130,
+        58,
+        59
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "quilt",
+      "mode": "cutout",
+      "cut": "objects/quilt.png",
+      "halo": "objects/quilt.halo.png",
+      "box": [
+        294,
+        1069,
+        192,
+        129
+      ],
+      "territory": [
+        300,
+        1075,
+        180,
+        117
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "ring",
+      "mode": "arrow",
+      "cut": "",
+      "halo": "",
+      "box": [
+        394,
+        946,
+        42,
+        46
+      ],
+      "territory": [
+        400,
+        952,
+        30,
+        34
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "pen",
+      "mode": "cutout",
+      "cut": "objects/pen.png",
+      "halo": "objects/pen.halo.png",
+      "box": [
+        585,
+        1109,
+        164,
+        101
+      ],
+      "territory": [
+        591,
+        1115,
+        152,
+        89
+      ],
+      "song": false,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.13,
+      "key": "quilt",
+      "line": "Look at the quilt",
+      "hl": "quilt"
+    },
+    {
+      "t": 11.23,
+      "key": "ring",
+      "line": "Look at the ring",
+      "hl": "ring"
+    },
+    {
+      "t": 13.29,
+      "key": "queen",
+      "line": "Look at the queen",
+      "hl": "queen"
+    },
+    {
+      "t": 15.13,
+      "key": "queen",
+      "line": "Look at the queen",
+      "hl": "queen"
+    },
+    {
+      "t": 21.57,
+      "key": "queen",
+      "line": "Look at the queen",
+      "hl": "queen"
+    },
+    {
+      "t": 22.21,
+      "key": "quilt",
+      "line": "Look at the quilt",
+      "hl": "quilt"
+    },
+    {
+      "t": 23.67,
+      "key": "ring",
+      "line": "Look at the ring",
+      "hl": "ring"
+    },
+    {
+      "t": 25.67,
+      "key": "queen",
+      "line": "Look at the queen",
+      "hl": "queen"
+    },
+    {
+      "t": 27.61,
+      "key": "queen",
+      "line": "Look at the queen",
+      "hl": "queen"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 8.23,
+      "text": "Look at the quilt.",
+      "hl": "quilt"
+    },
+    {
+      "t": 10.33,
+      "text": "Look at the ring.",
+      "hl": "ring"
+    },
+    {
+      "t": 12.39,
+      "text": "Look at the queen.",
+      "hl": "queen"
+    },
+    {
+      "t": 14.23,
+      "text": "What a pretty queen!",
+      "hl": "queen"
+    },
+    {
+      "t": 20.67,
+      "text": "Look at the queen.",
+      "hl": "queen"
+    },
+    {
+      "t": 21.31,
+      "text": "Look at the quilt.",
+      "hl": "quilt"
+    },
+    {
+      "t": 22.77,
+      "text": "Look at the ring.",
+      "hl": "ring"
+    },
+    {
+      "t": 24.77,
+      "text": "Look at the queen.",
+      "hl": "queen"
+    },
+    {
+      "t": 26.71,
+      "text": "What a pretty queen!",
+      "hl": "queen"
+    }
+  ]
+}

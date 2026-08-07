@@ -1,10 +1,4 @@
 .step-story{
-  --story-canvas-w:941;
-  --story-canvas-h:1672;
-  --story-crop-x:0;
-  --story-crop-y:700;
-  --story-crop-w:941;
-  --story-crop-h:770;
   position:relative;
   display:flex;
   align-items:center;
@@ -23,7 +17,6 @@
   border:4px solid var(--ink);
   overflow:hidden;
   background-color:var(--ink);
-  background-image:url('../../assets/story/scene.jpg');
   background-repeat:no-repeat;
   background-size:
     calc(100% * var(--story-canvas-w) / var(--story-crop-w))
@@ -62,6 +55,15 @@
 }
 .step-story .story-obj.is-lit .story-obj__halo{
   animation:story-halo-pulse 1.1s ease-in-out infinite;
+}
+.step-story .story-obj__arrow{
+  display:block;
+  width:100%;
+  height:100%;
+  filter:drop-shadow(0 4px 6px var(--ink-a16));
+}
+.step-story .story-obj.is-lit .story-obj__arrow{
+  animation:story-arrow-bounce .6s ease-in-out infinite;
 }
 
 .step-story .story-badge{
@@ -121,6 +123,10 @@
 @keyframes story-halo-pulse{
   0%,100%{opacity:.12}
   50%{opacity:.9}
+}
+@keyframes story-arrow-bounce{
+  0%,100%{transform:translateY(-9%)}
+  50%{transform:translateY(15%)}
 }
 
 .step-story.is-paused,

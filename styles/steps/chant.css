@@ -1,170 +1,191 @@
 .step-chant{
+  position:relative;
   display:flex;
-  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   width:100%;
   height:100%;
-  box-sizing:border-box;
-  padding:var(--sp-4) var(--sp-8) var(--sp-6);
-  gap:min(var(--sp-5),2.2cqh);
-  overflow:hidden;
 }
 
-.step-chant .chant-caption{
-  flex:none;
+.chant-stage{
+  --chant-letter:min(clamp(56px,13vw,224px),19cqh);
+  --chant-word:min(clamp(var(--fs-title),4.8vw,var(--fs-hero)),9cqh);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:var(--sp-1);
-  min-height:min(108px,18cqh);
-  padding:min(var(--sp-4),2cqh) var(--sp-6);
-  text-align:center;
-  background:var(--paper);
-  border:3px solid var(--ink);
-  border-radius:var(--r-xl);
-  box-shadow:0 6px 0 var(--ink-a16), var(--shadow-panel);
-}
-
-.step-chant .chant-caption__current{
-  min-height:1.2em;
-  font-size:clamp(30px, 4vw, 52px);
-  font-weight:700;
-  line-height:1.15;
-  color:var(--ink);
-}
-
-.step-chant .chant-caption__current.is-popping{
-  animation:pop var(--t-pop) var(--ease-pop);
-}
-
-.step-chant .chant-caption__next{
-  min-height:1.3em;
-  font-size:clamp(16px, 1.8vw, 24px);
-  font-weight:600;
-  color:var(--ink-soft);
-  opacity:.85;
-}
-
-.step-chant .chant-karaoke{
-  position:relative;
-  flex:none;
-  height:26px;
-  border-radius:var(--r-pill);
-  background:var(--white);
-  border:3px solid var(--ink);
-  box-shadow:inset 0 3px 0 var(--ink-a08);
-  overflow:hidden;
-}
-
-.step-chant .chant-karaoke__fill{
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  width:var(--p, 0%);
-  background:linear-gradient(180deg, var(--reward-lt), var(--reward));
-  border-right:3px solid var(--ink);
-  transition:width .3s linear;
-}
-
-.step-chant .chant-grid{
-  flex:1;
-  display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  grid-template-rows:repeat(3, 1fr);
-  gap:var(--sp-4);
-  width:min(100%,160cqh);
-  margin-inline:auto;
-  min-height:0;
-}
-
-.step-chant .chant-tile{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:var(--sp-2);
-  min-width:0;
-  min-height:0;
-  padding:var(--sp-2) var(--sp-3);
-  background:var(--paper);
-  border:3px solid var(--ink);
-  border-radius:var(--r-xl);
-  box-shadow:0 6px 0 var(--ink-a16), var(--shadow-panel);
-  transition:transform var(--t-move) var(--ease-out), box-shadow var(--t-move) var(--ease-out);
-}
-
-.step-chant .chant-tile__art{
-  flex:1;
-  width:100%;
-  min-height:0;
-}
-
-.step-chant .chant-tile__art img{
+  gap:min(var(--sp-4),1.8cqh);
   width:100%;
   height:100%;
-  object-fit:contain;
-  filter:drop-shadow(0 8px 10px var(--ink-a16));
+  max-width:min(1100px,170cqh);
 }
 
-.step-chant .chant-tile__word{
+.chant-letters{
   flex:none;
-  font-size:clamp(18px, 2vw, 28px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(var(--sp-5),3vw,var(--sp-10));
+  min-height:calc(var(--chant-letter) * 1.05);
+  opacity:1;
+  transform:translateY(0);
+}
+.chant-letters.is-changing{
+  animation:chant-letters-in var(--t-pop) var(--ease-pop) backwards;
+}
+.chant-letters__glyph{
+  display:inline-block;
+  font-family:var(--font);
   font-weight:700;
-  line-height:1.15;
+  font-size:var(--chant-letter);
+  line-height:1;
   color:var(--ink);
+  transform:scale(1);
+}
+.chant-letters.is-saying .chant-letters__glyph{
+  animation:chant-glyph-say var(--t-pop) var(--ease-pop) backwards;
+  animation-delay:calc(var(--i) * var(--say-step,var(--t-quick)));
 }
 
-.step-chant .chant-tile__word b{
-  color:var(--primary);
+.chant-object{
+  position:relative;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:60cqh;
+  opacity:0;
+  transition:height var(--t-pop) var(--ease-out);
 }
+.chant-object.is-live{opacity:1}
+.chant-stage.is-intro .chant-object{height:0}
 
-.step-chant .chant-tile.is-current{
-  border-color:var(--primary);
-  transform:translateY(-6px);
-  box-shadow:0 10px 0 var(--primary-hard), var(--shadow-ambient);
-}
-
-.step-chant .chant-tile.is-current .chant-tile__art img{
-  animation:bob 1s var(--ease-idle) infinite alternate;
-}
-
-.step-chant .chant-tile.is-current::before,
-.step-chant .chant-tile.is-current::after{
-  content:"";
+.chant-object__burst{
   position:absolute;
-  inset:-6px;
-  border-radius:inherit;
-  border:4px solid rgba(255,154,31,.55);
-  pointer-events:none;
-  animation:pulse var(--t-pulse) ease-out infinite;
-}
-
-.step-chant .chant-tile.is-current::after{
-  animation-delay:1s;
-}
-
-.step-chant .chant-tile.is-sung{
-  opacity:.92;
-}
-
-.step-chant .chant-tile.is-sung::after{
-  content:"✓";
-  position:absolute;
-  top:-10px;
-  right:-10px;
-  z-index:2;
-  width:30px;
-  height:30px;
+  z-index:0;
+  top:50%;
+  left:50%;
+  height:100%;
+  aspect-ratio:1;
   border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:var(--state-correct);
-  border:2.5px solid var(--white);
-  color:var(--white);
-  font-size:16px;
+  transform:translate(-50%,-50%) scale(1);
+  background:radial-gradient(circle,var(--reward-lt) 0%,transparent 68%);
+  opacity:0;
+  pointer-events:none;
+}
+.chant-object.is-live .chant-object__burst{
+  animation:chant-burst var(--t-cheer) var(--ease-out);
+}
+
+.chant-object__float{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  max-width:100%;
+  animation:chant-float var(--t-bob) var(--ease-idle) infinite;
+}
+
+.chant-object__img{
+  height:100%;
+  width:auto;
+  max-width:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 14px var(--ink-a16));
+  transform:scale(1);
+}
+.chant-object.is-live .chant-object__img{
+  animation:chant-object-in var(--t-pop) var(--ease-pop);
+}
+
+.chant-word{
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:nowrap;
+  max-width:100%;
+  min-height:calc(var(--chant-word) * 1.25);
+  font-family:var(--font);
   font-weight:700;
-  box-shadow:0 3px 0 var(--success-hard);
-  animation:pop var(--t-pop) var(--ease-pop);
+  font-size:var(--chant-word);
+  line-height:1.1;
+  color:var(--ink);
+  opacity:0;
+  transition:min-height var(--t-pop) var(--ease-out);
+}
+.chant-word.is-live{opacity:1}
+.chant-stage.is-intro .chant-word{min-height:0}
+.chant-word__glyph{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(12px) scale(.5);
+}
+.chant-word__glyph:first-child{color:var(--primary)}
+.chant-word.is-live .chant-word__glyph{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  animation:chant-word-glyph var(--t-quick) var(--ease-pop) backwards;
+  animation-delay:calc(var(--i) * .05s);
+}
+
+.chant-start{
+  position:absolute;
+  z-index:60;
+  left:0;
+  right:0;
+  bottom:22cqh;
+  display:flex;
+  justify-content:center;
+}
+.chant-start.is-hidden{display:none}
+
+@keyframes chant-letters-in{
+  0%{opacity:0;transform:translateY(20px) scale(.84)}
+  60%{opacity:1;transform:translateY(0) scale(1.06)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes chant-glyph-say{
+  0%{transform:translateY(0) scale(1)}
+  38%{transform:translateY(-.11em) scale(1.14)}
+  70%{transform:translateY(0) scale(.97)}
+  100%{transform:translateY(0) scale(1)}
+}
+@keyframes chant-object-in{
+  0%{transform:translateY(4%) scale(.58)}
+  55%{transform:translateY(0) scale(1.1)}
+  78%{transform:translateY(0) scale(.97)}
+  100%{transform:translateY(0) scale(1)}
+}
+@keyframes chant-burst{
+  0%{opacity:.9;transform:translate(-50%,-50%) scale(.55)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.15)}
+}
+@keyframes chant-float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-1.8%)}
+  100%{transform:translateY(0)}
+}
+@keyframes chant-word-glyph{
+  0%{opacity:0;transform:translateY(12px) scale(.4)}
+  62%{opacity:1;transform:translateY(-4px) scale(1.14)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.step-chant.is-paused *,
+.step-chant.is-paused *::before,
+.step-chant.is-paused *::after{
+  animation-play-state:paused !important;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .step-chant *,
+  .step-chant *::before,
+  .step-chant *::after{
+    animation:none !important;
+    transition:none !important;
+  }
 }

@@ -73,19 +73,10 @@ body{overflow-x:hidden;justify-content:stretch}
 
 .candy-node.units-node{position:absolute;transform:translate(-50%,-50%);z-index:2;--node-s:132px}
 .candy-node.units-node.is-current{z-index:3;--node-s:168px}
-.candy-node.units-node.is-locked{z-index:2;--node-s:112px;filter:saturate(.35)}
-.units-node.is-locked .candy-node__bubble{cursor:not-allowed}
 .candy-node.units-node .candy-node__face{font-size:clamp(34px,3.4vw,52px)}
 .candy-node.units-node.is-current .candy-node__face{
   font-size:clamp(46px,4.6vw,68px);
   animation:bob 2.4s var(--ease-idle) infinite alternate;
-}
-.units-node.is-shaking .candy-node__bubble{animation:wiggle .5s ease-in-out}
-.units-node .candy-node__sticker{
-  top:calc(var(--node-s) * -.06);right:calc(var(--node-s) * -.07);
-  width:calc(var(--node-s) * .27);height:calc(var(--node-s) * .27);
-  font-size:calc(var(--node-s) * .15);
-  color:var(--success-dk);
 }
 
 .units-node__start{

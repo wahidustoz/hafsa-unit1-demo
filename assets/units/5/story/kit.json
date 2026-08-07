@@ -1,0 +1,245 @@
+{
+  "unit": 5,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 7.68,
+  "end": 31.52,
+  "objects": [
+    {
+      "key": "hen",
+      "mode": "cutout",
+      "cut": "objects/hen.png",
+      "halo": "objects/hen.halo.png",
+      "box": [
+        508,
+        914,
+        212,
+        248
+      ],
+      "territory": [
+        514,
+        920,
+        200,
+        236
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "melon",
+      "mode": "cutout",
+      "cut": "objects/melon.png",
+      "halo": "objects/melon.halo.png",
+      "box": [
+        329,
+        1130,
+        126,
+        91
+      ],
+      "territory": [
+        335,
+        1136,
+        114,
+        79
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "milk",
+      "mode": "cutout",
+      "cut": "objects/milk.png",
+      "halo": "objects/milk.halo.png",
+      "box": [
+        431,
+        1046,
+        71,
+        138
+      ],
+      "territory": [
+        437,
+        1052,
+        59,
+        126
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "nut",
+      "mode": "cutout",
+      "cut": "objects/nut.png",
+      "halo": "objects/nut.halo.png",
+      "box": [
+        470,
+        1137,
+        109,
+        90
+      ],
+      "territory": [
+        476,
+        1143,
+        97,
+        78
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "onion",
+      "mode": "cutout",
+      "cut": "objects/onion.png",
+      "halo": "objects/onion.halo.png",
+      "box": [
+        422,
+        1173,
+        74,
+        79
+      ],
+      "territory": [
+        428,
+        1179,
+        62,
+        67
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "orange",
+      "mode": "cutout",
+      "cut": "objects/orange.png",
+      "halo": "objects/orange.halo.png",
+      "box": [
+        568,
+        1131,
+        143,
+        114
+      ],
+      "territory": [
+        574,
+        1137,
+        131,
+        102
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "ox",
+      "mode": "cutout",
+      "cut": "objects/ox.png",
+      "halo": "objects/ox.halo.png",
+      "box": [
+        215,
+        899,
+        241,
+        266
+      ],
+      "territory": [
+        221,
+        905,
+        229,
+        254
+      ],
+      "song": true,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.16,
+      "key": "milk",
+      "line": "Do you want some milk",
+      "hl": "milk"
+    },
+    {
+      "t": 11.22,
+      "key": "orange",
+      "line": "Do you want some oranges",
+      "hl": "oranges"
+    },
+    {
+      "t": 13.36,
+      "key": "nut",
+      "line": "Do you want some nuts",
+      "hl": "nuts"
+    },
+    {
+      "t": 15.9,
+      "key": "ox",
+      "line": "No, I want an ox",
+      "hl": "ox"
+    },
+    {
+      "t": 21.6,
+      "key": "milk",
+      "line": "Do you want some milk",
+      "hl": "milk"
+    },
+    {
+      "t": 23.64,
+      "key": "orange",
+      "line": "Do you want some oranges",
+      "hl": "oranges"
+    },
+    {
+      "t": 25.74,
+      "key": "nut",
+      "line": "Do you want some nuts",
+      "hl": "nuts"
+    },
+    {
+      "t": 28.32,
+      "key": "ox",
+      "line": "No, I want an ox",
+      "hl": "ox"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 8.26,
+      "text": "Do you want some milk?",
+      "hl": "milk"
+    },
+    {
+      "t": 10.32,
+      "text": "Do you want some oranges?",
+      "hl": "orange"
+    },
+    {
+      "t": 12.46,
+      "text": "Do you want some nuts?",
+      "hl": "nut"
+    },
+    {
+      "t": 15.0,
+      "text": "No, I want an ox!",
+      "hl": "ox"
+    },
+    {
+      "t": 20.7,
+      "text": "Do you want some milk?",
+      "hl": "milk"
+    },
+    {
+      "t": 22.74,
+      "text": "Do you want some oranges?",
+      "hl": "orange"
+    },
+    {
+      "t": 24.84,
+      "text": "Do you want some nuts?",
+      "hl": "nut"
+    },
+    {
+      "t": 27.42,
+      "text": "No, I want an ox!",
+      "hl": "ox"
+    }
+  ]
+}

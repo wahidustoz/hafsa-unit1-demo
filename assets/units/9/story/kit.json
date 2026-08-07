@@ -1,0 +1,265 @@
+{
+  "unit": 9,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 7.86,
+  "end": 31.02,
+  "objects": [
+    {
+      "key": "yak",
+      "mode": "cutout",
+      "cut": "objects/yak.png",
+      "halo": "objects/yak.halo.png",
+      "box": [
+        60,
+        858,
+        267,
+        317
+      ],
+      "territory": [
+        66,
+        864,
+        255,
+        305
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "fox",
+      "mode": "cutout",
+      "cut": "objects/fox.png",
+      "halo": "objects/fox.halo.png",
+      "box": [
+        312,
+        848,
+        165,
+        271
+      ],
+      "territory": [
+        318,
+        854,
+        153,
+        259
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "zebra",
+      "mode": "cutout",
+      "cut": "objects/zebra.png",
+      "halo": "objects/zebra.halo.png",
+      "box": [
+        550,
+        815,
+        171,
+        309
+      ],
+      "territory": [
+        556,
+        821,
+        159,
+        297
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "x-ray",
+      "mode": "cutout",
+      "cut": "objects/x-ray.png",
+      "halo": "objects/x-ray.halo.png",
+      "box": [
+        365,
+        715,
+        282,
+        263
+      ],
+      "territory": [
+        371,
+        721,
+        270,
+        251
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "flower",
+      "mode": "cutout",
+      "cut": "objects/flower.png",
+      "halo": "objects/flower.halo.png",
+      "box": [
+        286,
+        1348,
+        78,
+        66
+      ],
+      "territory": [
+        292,
+        1354,
+        66,
+        54
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "axe",
+      "mode": "cutout",
+      "cut": "objects/axe.png",
+      "halo": "objects/axe.halo.png",
+      "box": [
+        513,
+        1155,
+        177,
+        124
+      ],
+      "territory": [
+        519,
+        1161,
+        165,
+        112
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "zipper",
+      "mode": "cutout",
+      "cut": "objects/zipper.png",
+      "halo": "objects/zipper.halo.png",
+      "box": [
+        715,
+        1053,
+        119,
+        145
+      ],
+      "territory": [
+        721,
+        1059,
+        107,
+        133
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "yo-yo",
+      "mode": "cutout",
+      "cut": "objects/yo-yo.png",
+      "halo": "objects/yo-yo.halo.png",
+      "box": [
+        265,
+        1172,
+        158,
+        112
+      ],
+      "territory": [
+        271,
+        1178,
+        146,
+        100
+      ],
+      "song": false,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.5,
+      "key": "x-ray",
+      "line": null,
+      "hl": null
+    },
+    {
+      "t": 11.1,
+      "key": "yak",
+      "line": "Is it a yak",
+      "hl": "yak"
+    },
+    {
+      "t": 13.1,
+      "key": "fox",
+      "line": "Is it a fox",
+      "hl": "fox"
+    },
+    {
+      "t": 15.4,
+      "key": "zebra",
+      "line": "No, it's a zebra",
+      "hl": "zebra"
+    },
+    {
+      "t": 21.7,
+      "key": "x-ray",
+      "line": null,
+      "hl": null
+    },
+    {
+      "t": 23.3,
+      "key": "yak",
+      "line": "Is it a yak",
+      "hl": "yak"
+    },
+    {
+      "t": 25.5,
+      "key": "fox",
+      "line": "Is it a fox",
+      "hl": "fox"
+    },
+    {
+      "t": 27.8,
+      "key": "zebra",
+      "line": "No, it's a zebra",
+      "hl": "zebra"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 8.6,
+      "text": "Whose X-ray is it?",
+      "hl": "x-ray"
+    },
+    {
+      "t": 10.2,
+      "text": "Is it a yak?",
+      "hl": "yak"
+    },
+    {
+      "t": 12.2,
+      "text": "Is it a fox?",
+      "hl": "fox"
+    },
+    {
+      "t": 14.5,
+      "text": "No, it's a zebra!",
+      "hl": "zebra"
+    },
+    {
+      "t": 20.8,
+      "text": "Whose X-ray is it?",
+      "hl": "x-ray"
+    },
+    {
+      "t": 22.4,
+      "text": "Is it a yak?",
+      "hl": "yak"
+    },
+    {
+      "t": 24.6,
+      "text": "Is it a fox?",
+      "hl": "fox"
+    },
+    {
+      "t": 26.9,
+      "text": "No, it's a zebra!",
+      "hl": "zebra"
+    }
+  ]
+}

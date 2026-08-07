@@ -1,8 +1,7 @@
-import { UNIT1 } from '../data.js'
 import * as audio from '../audio.js'
 import { confetti, pointerHand } from '../fx.js'
 
-const LETTERS = ['A', 'B', 'C']
+const FIELD_SIZE = 6
 const IDLE_MS = 6000
 const HINT_MS = 2600
 const MISS_SCAFFOLD_AT = 2
@@ -37,12 +36,12 @@ function retrigger(el, cls) {
   el.classList.add(cls)
 }
 
-function wordsFor(letter) {
-  return UNIT1.filter((w) => w.letter === letter)
+function wordsFor(words, letter) {
+  return words.filter((w) => w.letter === letter)
 }
 
-function pickDistractors(letter) {
-  return shuffle(UNIT1.filter((w) => w.letter !== letter)).slice(0, 3)
+function pickDistractors(words, letter, count) {
+  return shuffle(words.filter((w) => w.letter !== letter)).slice(0, count)
 }
 
 function voiceFor(letter) {
@@ -69,11 +68,7 @@ export default {
         '</div>' +
         '<div class="bp-field" data-field role="group"></div>' +
         '<div class="bp-tray-zone">' +
-          '<div class="tray" data-tray role="status">' +
-            '<span class="tray__slot" data-slot></span>' +
-            '<span class="tray__slot" data-slot></span>' +
-            '<span class="tray__slot" data-slot></span>' +
-          '</div>' +
+          '<div class="tray" data-tray role="status"></div>' +
         '</div>' +
       '</div>' +
       '<div class="overlay overlay--celebrate is-hidden bp-clear" data-clear role="dialog" aria-modal="true">' +
@@ -99,16 +94,20 @@ export default {
     const speakerBtn = root.querySelector('[data-speaker]')
     const fieldEl = root.querySelector('[data-field]')
     const trayEl = root.querySelector('[data-tray]')
-    const slotEls = Array.from(root.querySelectorAll('[data-slot]'))
     const clearEl = root.querySelector('[data-clear]')
     const clearTitleEl = root.querySelector('[data-clear-title]')
     const clearTextEl = root.querySelector('[data-clear-text]')
     const clearNextBtn = root.querySelector('[data-clear-next]')
 
+    const words = ctx.unit.words
+    const letters = ctx.unit.letters
+
     let destroyed = false
     let paused = ctx.isPaused()
     let letterIndex = 0
     let bubbles = []
+    let slotEls = []
+    let targetCount = 0
     let collected = 0
     let missCount = 0
     let roundActive = false
@@ -167,7 +166,7 @@ export default {
 
     function onIdle() {
       if (destroyed || paused || !roundActive) return
-      audio.play(voiceFor(LETTERS[letterIndex]))
+      audio.play(voiceFor(letters[letterIndex]))
       clearHint()
       const target = bubbles.find((b) => b.correct && !b.popped)
       if (target) {
@@ -230,14 +229,15 @@ export default {
 
     function startRound(index) {
       letterIndex = index
-      const letter = LETTERS[index]
+      const letter = letters[index]
       collected = 0
       missCount = 0
       roundActive = true
       clearHint()
 
-      const correctWords = wordsFor(letter)
-      const distractors = pickDistractors(letter)
+      const correctWords = wordsFor(words, letter)
+      targetCount = correctWords.length
+      const distractors = pickDistractors(words, letter, FIELD_SIZE - targetCount)
       const pool = shuffle(
         correctWords.map((w) => ({ w, correct: true }))
           .concat(distractors.map((w) => ({ w, correct: false })))
@@ -251,14 +251,17 @@ export default {
       letterEl.textContent = letter
       promptTextEl.textContent = 'Pop the ' + letter + ' bubbles!'
       trayEl.classList.remove('is-complete')
-      trayEl.setAttribute('aria-label', '0 of 3 ' + letter + ' words collected')
-      slotEls.forEach((s) => {
-        s.innerHTML = ''
-        s.classList.remove('is-filled')
+      trayEl.setAttribute('aria-label', '0 of ' + targetCount + ' ' + letter + ' words collected')
+      trayEl.innerHTML = ''
+      slotEls = correctWords.map(() => {
+        const slot = document.createElement('span')
+        slot.className = 'tray__slot'
+        trayEl.appendChild(slot)
+        return slot
       })
       clearEl.classList.add('is-hidden')
 
-      ctx.setProgress(index, LETTERS.length)
+      ctx.setProgress(index, letters.length)
       audio.play(voiceFor(letter))
       rearmIdle()
     }
@@ -284,7 +287,7 @@ export default {
       bubble.popped = true
       collected += 1
       bubble.slotIndex = collected - 1
-      const isLast = collected === 3
+      const isLast = collected === targetCount
       if (isLast) {
         roundActive = false
         unschedule(idleTimer)
@@ -334,7 +337,7 @@ export default {
         slot.appendChild(slotImg)
         slot.classList.add('is-filled')
         const filledCount = slotEls.filter((s) => s.classList.contains('is-filled')).length
-        trayEl.setAttribute('aria-label', filledCount + ' of 3 ' + LETTERS[letterIndex] + ' words collected')
+        trayEl.setAttribute('aria-label', filledCount + ' of ' + targetCount + ' ' + letters[letterIndex] + ' words collected')
         audio.play(bubble.word.utter)
         if (isLast) {
           trayEl.classList.add('is-complete')
@@ -344,22 +347,22 @@ export default {
     }
 
     function showClear() {
-      const letter = LETTERS[letterIndex]
-      const isLast = letterIndex === LETTERS.length - 1
+      const letter = letters[letterIndex]
+      const isLast = letterIndex === letters.length - 1
       audio.chime('complete')
       confetti(root)
       clearTitleEl.textContent = 'All popped!'
       clearTextEl.textContent = 'Letter ' + letter + ' — every bubble found'
-      clearNextBtn.textContent = isLast ? 'Great job!' : 'Letter ' + LETTERS[letterIndex + 1] + '!'
+      clearNextBtn.textContent = isLast ? 'Great job!' : 'Letter ' + letters[letterIndex + 1] + '!'
       clearEl.classList.remove('is-hidden')
     }
 
     function onClearNext() {
       if (destroyed) return
-      const isLast = letterIndex === LETTERS.length - 1
+      const isLast = letterIndex === letters.length - 1
       clearEl.classList.add('is-hidden')
       if (isLast) {
-        ctx.setProgress(LETTERS.length, LETTERS.length)
+        ctx.setProgress(letters.length, letters.length)
         ctx.onDone()
       } else {
         startRound(letterIndex + 1)
@@ -371,7 +374,7 @@ export default {
       rearmIdle()
       retrigger(speakerBtn, 'is-playing')
       schedule(() => speakerBtn.classList.remove('is-playing'), SPEAKER_GLOW_MS)
-      audio.play(voiceFor(LETTERS[letterIndex]))
+      audio.play(voiceFor(letters[letterIndex]))
     }
 
     clearNextBtn.addEventListener('click', onClearNext)
@@ -398,7 +401,7 @@ export default {
       clearHint()
       audio.stopAll()
       root.querySelectorAll('.bp-fly').forEach((el) => el.remove())
-      startRound(Math.max(0, Math.min(i, LETTERS.length - 1)))
+      startRound(Math.max(0, Math.min(i, letters.length - 1)))
     }
 
     ctx.onPauseChange(setPaused)

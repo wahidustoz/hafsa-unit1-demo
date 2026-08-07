@@ -1,0 +1,236 @@
+{
+  "unit": 7,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 7.71,
+  "end": 30.75,
+  "objects": [
+    {
+      "key": "sock",
+      "mode": "cutout",
+      "cut": "objects/sock.png",
+      "halo": "objects/sock.halo.png",
+      "box": [
+        500,
+        1141,
+        151,
+        108
+      ],
+      "territory": [
+        506,
+        1147,
+        139,
+        96
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "sun",
+      "mode": "cutout",
+      "cut": "objects/sun.png",
+      "halo": "objects/sun.halo.png",
+      "box": [
+        637,
+        499,
+        96,
+        98
+      ],
+      "territory": [
+        643,
+        505,
+        84,
+        86
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "tent",
+      "mode": "cutout",
+      "cut": "objects/tent.png",
+      "halo": "objects/tent.halo.png",
+      "box": [
+        400,
+        767,
+        253,
+        327
+      ],
+      "territory": [
+        406,
+        773,
+        241,
+        315
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "tiger",
+      "mode": "cutout",
+      "cut": "objects/tiger.png",
+      "halo": "objects/tiger.halo.png",
+      "box": [
+        207,
+        887,
+        193,
+        246
+      ],
+      "territory": [
+        213,
+        893,
+        181,
+        234
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "turtle",
+      "mode": "cutout",
+      "cut": "objects/turtle.png",
+      "halo": "objects/turtle.halo.png",
+      "box": [
+        282,
+        1042,
+        221,
+        146
+      ],
+      "territory": [
+        288,
+        1048,
+        209,
+        134
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "toe",
+      "mode": "arrow",
+      "cut": "",
+      "halo": "",
+      "box": [
+        586,
+        1074,
+        48,
+        40
+      ],
+      "territory": [
+        592,
+        1080,
+        36,
+        28
+      ],
+      "song": true,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.17,
+      "key": "tent",
+      "line": "There is a tent",
+      "hl": "tent"
+    },
+    {
+      "t": 11.23,
+      "key": "sock",
+      "line": "There is a sock",
+      "hl": "sock"
+    },
+    {
+      "t": 13.29,
+      "key": "toe",
+      "line": "There is a toe",
+      "hl": "toe"
+    },
+    {
+      "t": 15.21,
+      "key": "toe",
+      "line": "There is a toe",
+      "hl": "toe"
+    },
+    {
+      "t": 21.63,
+      "key": "toe",
+      "line": "There is a toe",
+      "hl": "toe"
+    },
+    {
+      "t": 22.07,
+      "key": "tent",
+      "line": "There is a tent",
+      "hl": "tent"
+    },
+    {
+      "t": 23.71,
+      "key": "sock",
+      "line": "There is a sock",
+      "hl": "sock"
+    },
+    {
+      "t": 25.77,
+      "key": "toe",
+      "line": "There is a toe",
+      "hl": "toe"
+    },
+    {
+      "t": 27.55,
+      "key": "toe",
+      "line": "There is a toe",
+      "hl": "toe"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 8.27,
+      "text": "There is a tent.",
+      "hl": "tent"
+    },
+    {
+      "t": 10.33,
+      "text": "There is a sock.",
+      "hl": "sock"
+    },
+    {
+      "t": 12.39,
+      "text": "There is a toe.",
+      "hl": "toe"
+    },
+    {
+      "t": 14.31,
+      "text": "What a big toe!",
+      "hl": "toe"
+    },
+    {
+      "t": 20.73,
+      "text": "There is a toe.",
+      "hl": "toe"
+    },
+    {
+      "t": 21.17,
+      "text": "There is a tent.",
+      "hl": "tent"
+    },
+    {
+      "t": 22.81,
+      "text": "There is a sock.",
+      "hl": "sock"
+    },
+    {
+      "t": 24.87,
+      "text": "There is a toe.",
+      "hl": "toe"
+    },
+    {
+      "t": 26.65,
+      "text": "What a big toe!",
+      "hl": "toe"
+    }
+  ]
+}

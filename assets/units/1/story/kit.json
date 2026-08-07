@@ -1,0 +1,285 @@
+{
+  "unit": 1,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 8.71,
+  "end": 29.94,
+  "objects": [
+    {
+      "key": "cow",
+      "mode": "cutout",
+      "cut": "objects/cow.with.png",
+      "halo": "objects/cow.with.halo.png",
+      "box": [
+        152,
+        919,
+        197,
+        268
+      ],
+      "territory": [
+        158,
+        925,
+        185,
+        256
+      ],
+      "song": true,
+      "role": "carrier"
+    },
+    {
+      "key": "alligator",
+      "mode": "cutout",
+      "cut": "objects/alligator.png",
+      "halo": "objects/alligator.halo.png",
+      "box": [
+        550,
+        1020,
+        285,
+        203
+      ],
+      "territory": [
+        556,
+        1026,
+        273,
+        191
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "bear",
+      "mode": "cutout",
+      "cut": "objects/bear.with.png",
+      "halo": "objects/bear.with.halo.png",
+      "box": [
+        384,
+        888,
+        188,
+        252
+      ],
+      "territory": [
+        390,
+        894,
+        176,
+        240
+      ],
+      "song": true,
+      "role": "carrier"
+    },
+    {
+      "key": "ant",
+      "mode": "cutout",
+      "cut": "objects/ant.png",
+      "halo": "objects/ant.halo.png",
+      "box": [
+        256,
+        1159,
+        84,
+        103
+      ],
+      "territory": [
+        262,
+        1165,
+        72,
+        91
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "apple",
+      "mode": "cutout",
+      "cut": "objects/apple.png",
+      "halo": "objects/apple.halo.png",
+      "box": [
+        389,
+        958,
+        52,
+        50
+      ],
+      "territory": [
+        395,
+        964,
+        40,
+        38
+      ],
+      "song": false,
+      "role": "item"
+    },
+    {
+      "key": "ball",
+      "mode": "cutout",
+      "cut": "objects/ball.png",
+      "halo": "objects/ball.halo.png",
+      "box": [
+        590,
+        1243,
+        108,
+        112
+      ],
+      "territory": [
+        596,
+        1249,
+        96,
+        100
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "cup",
+      "mode": "cutout",
+      "cut": "objects/cup.png",
+      "halo": "objects/cup.halo.png",
+      "box": [
+        282,
+        1025,
+        49,
+        59
+      ],
+      "territory": [
+        288,
+        1031,
+        37,
+        47
+      ],
+      "song": false,
+      "role": "item"
+    },
+    {
+      "key": "car",
+      "mode": "cutout",
+      "cut": "objects/car.png",
+      "halo": "objects/car.halo.png",
+      "box": [
+        150,
+        771,
+        146,
+        113
+      ],
+      "territory": [
+        156,
+        777,
+        134,
+        101
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "bag",
+      "mode": "cutout",
+      "cut": "objects/bag.png",
+      "halo": "objects/bag.halo.png",
+      "box": [
+        717,
+        962,
+        120,
+        127
+      ],
+      "territory": [
+        723,
+        968,
+        108,
+        115
+      ],
+      "song": false,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.39,
+      "key": "cow",
+      "line": "I see a cow",
+      "hl": "cow"
+    },
+    {
+      "t": 11.53,
+      "key": "alligator",
+      "line": "I see an alligator",
+      "hl": "alligator"
+    },
+    {
+      "t": 13.59,
+      "key": "bear",
+      "line": "I see a bear",
+      "hl": "bear"
+    },
+    {
+      "t": 15.77,
+      "key": "ant",
+      "line": "I see an ant",
+      "hl": "ant"
+    },
+    {
+      "t": 21.85,
+      "key": "cow",
+      "line": "I see a cow",
+      "hl": "cow"
+    },
+    {
+      "t": 24.0,
+      "key": "alligator",
+      "line": "I see an alligator",
+      "hl": "alligator"
+    },
+    {
+      "t": 26.02,
+      "key": "bear",
+      "line": "I see a bear",
+      "hl": "bear"
+    },
+    {
+      "t": 28.14,
+      "key": "ant",
+      "line": "I see an ant",
+      "hl": "ant"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 8.49,
+      "text": "I see a cow.",
+      "hl": "cow"
+    },
+    {
+      "t": 10.63,
+      "text": "I see an alligator.",
+      "hl": "alligator"
+    },
+    {
+      "t": 12.69,
+      "text": "I see a bear.",
+      "hl": "bear"
+    },
+    {
+      "t": 14.87,
+      "text": "I see an ant.",
+      "hl": "ant"
+    },
+    {
+      "t": 20.95,
+      "text": "I see a cow.",
+      "hl": "cow"
+    },
+    {
+      "t": 23.1,
+      "text": "I see an alligator.",
+      "hl": "alligator"
+    },
+    {
+      "t": 25.12,
+      "text": "I see a bear.",
+      "hl": "bear"
+    },
+    {
+      "t": 27.24,
+      "text": "I see an ant.",
+      "hl": "ant"
+    }
+  ]
+}

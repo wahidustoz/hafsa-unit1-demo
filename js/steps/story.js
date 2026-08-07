@@ -1,56 +1,57 @@
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
-const CROP = { x: 0, y: 700, w: 941, h: 770 }
 const PAD = 6
-const LEAD = 0.8
 const HL = 2.5
 const DUR = 0.85
 const STEP = 0.5
 const ATTRACT_TAIL = 1.5
-const ATTRACT_END = 8.71
-const ATTRACT_STOP = Math.max(0.5, ATTRACT_END - ATTRACT_TAIL)
+const FRAME_ASPECT = 941 / 770
+const ARROW_MIN_W = 0.065
+const ARROW_W_SCALE = 1.1
+const ARROW_LIFT = 1.55
+const ARROW_RATIO = 1.3
+const ARROW_SVG =
+  '<svg class="story-obj__arrow" viewBox="0 0 100 130" aria-hidden="true" focusable="false">' +
+  '<path d="M35 10 h30 v52 h22 L50 122 L13 62 h22 Z" fill="var(--primary)" stroke="var(--white)" stroke-width="7" stroke-linejoin="round"/>' +
+  '</svg>'
 
-const OBJECTS = [
-  { key: 'cow', cut: './assets/story/objects/cow.with.png', halo: './assets/story/objects/cow.with.halo.png', box: [152, 919, 197, 268] },
-  { key: 'alligator', cut: './assets/story/objects/alligator.png', halo: './assets/story/objects/alligator.halo.png', box: [550, 1020, 285, 203] },
-  { key: 'bear', cut: './assets/story/objects/bear.with.png', halo: './assets/story/objects/bear.with.halo.png', box: [384, 888, 188, 252] },
-  { key: 'ant', cut: './assets/story/objects/ant.png', halo: './assets/story/objects/ant.halo.png', box: [256, 1159, 84, 103] },
-  { key: 'apple', cut: './assets/story/objects/apple.png', halo: './assets/story/objects/apple.halo.png', box: [389, 958, 52, 50] },
-  { key: 'ball', cut: './assets/story/objects/ball.png', halo: './assets/story/objects/ball.halo.png', box: [590, 1243, 108, 112] },
-  { key: 'cup', cut: './assets/story/objects/cup.png', halo: './assets/story/objects/cup.halo.png', box: [282, 1025, 49, 59] },
-  { key: 'car', cut: './assets/story/objects/car.png', halo: './assets/story/objects/car.halo.png', box: [150, 771, 146, 113] },
-  { key: 'bag', cut: './assets/story/objects/bag.png', halo: './assets/story/objects/bag.halo.png', box: [717, 962, 120, 127] },
-]
+function arrowRect(object, canvasW, canvasH) {
+  const territory = object.territory
+  const w = Math.max(territory[2] * ARROW_W_SCALE, canvasW * ARROW_MIN_W)
+  return [
+    territory[0] + territory[2] / 2 - w / 2,
+    territory[1] - (w / canvasW) * ARROW_LIFT * canvasH,
+    w,
+    w * ARROW_RATIO,
+  ]
+}
 
-const BEATS = [
-  { t: 9.39, key: 'cow' },
-  { t: 11.53, key: 'alligator' },
-  { t: 13.59, key: 'bear' },
-  { t: 15.77, key: 'ant' },
-  { t: 21.85, key: 'cow' },
-  { t: 24.0, key: 'alligator' },
-  { t: 26.02, key: 'bear' },
-  { t: 28.14, key: 'ant' },
-]
+function rectFor(object, canvasW, canvasH) {
+  return object.mode === 'arrow' ? arrowRect(object, canvasW, canvasH) : object.box
+}
 
-const LYRICS = [
-  { t: 8.49, text: 'I see a cow.', hl: 'cow' },
-  { t: 10.63, text: 'I see an alligator.', hl: 'alligator' },
-  { t: 12.69, text: 'I see a bear.', hl: 'bear' },
-  { t: 14.87, text: 'I see an ant.', hl: 'ant' },
-  { t: 20.95, text: 'I see a cow.', hl: 'cow' },
-  { t: 23.1, text: 'I see an alligator.', hl: 'alligator' },
-  { t: 25.12, text: 'I see a bear.', hl: 'bear' },
-  { t: 27.24, text: 'I see an ant.', hl: 'ant' },
-]
+function cropFor(story) {
+  const canvasW = story.canvas[0]
+  const canvasH = story.canvas[1]
+  const h = Math.min(canvasH, canvasW / FRAME_ASPECT)
+  let top = canvasH
+  let bottom = 0
+  story.objects.forEach((object) => {
+    const rect = rectFor(object, canvasW, canvasH)
+    if (rect[1] < top) top = rect[1]
+    if (rect[1] + rect[3] > bottom) bottom = rect[1] + rect[3]
+  })
+  const y = Math.min(Math.max((top + bottom) / 2 - h / 2, 0), canvasH - h)
+  return { x: 0, y, w: canvasW, h }
+}
 
-function pct(box) {
+function pct(rect, crop) {
   return {
-    l: ((box[0] - CROP.x) / CROP.w) * 100,
-    t: ((box[1] - CROP.y) / CROP.h) * 100,
-    w: (box[2] / CROP.w) * 100,
-    h: (box[3] / CROP.h) * 100,
+    l: ((rect[0] - crop.x) / crop.w) * 100,
+    t: ((rect[1] - crop.y) / crop.h) * 100,
+    w: (rect[2] / crop.w) * 100,
+    h: (rect[3] / crop.h) * 100,
   }
 }
 
@@ -65,13 +66,13 @@ function shuffle(list) {
   return out
 }
 
-function buildSchedule() {
-  const keys = OBJECTS.map((o) => o.key)
+function buildSchedule(story, attractStop) {
+  const keys = story.objects.map((o) => o.key)
   let pool = shuffle(keys)
   let pi = 0
   let t = 0.4
   const sched = []
-  while (t < ATTRACT_STOP - 0.15) {
+  while (t < attractStop - 0.15) {
     const n = Math.random() < 0.35 ? 2 : 1
     const group = []
     for (let j = 0; j < n; j++) {
@@ -95,18 +96,18 @@ function attractActive(t, sched) {
   return active
 }
 
-function lastBeatKey(t) {
+function lastBeatKey(t, beats, lead) {
   let b = null
-  for (const beat of BEATS) {
-    if (t >= beat.t - LEAD) b = beat
+  for (const beat of beats) {
+    if (t >= beat.t - lead) b = beat
   }
   if (!b) return null
-  return t - (b.t - LEAD) < HL ? b.key : null
+  return t - (b.t - lead) < HL ? b.key : null
 }
 
-function curLyric(t) {
+function curLyric(t, lyrics) {
   let L = null
-  for (const ly of LYRICS) {
+  for (const ly of lyrics) {
     if (t >= ly.t) L = ly
   }
   return L
@@ -122,8 +123,23 @@ export default {
   mount(root, ctx) {
     root.classList.add('step-story')
 
+    const story = ctx.unit.story
+    const canvasW = story.canvas[0]
+    const canvasH = story.canvas[1]
+    const crop = cropFor(story)
+    const attractStop = Math.max(0.5, story.attractEnd - ATTRACT_TAIL)
+    const beats = story.beats
+    const lyrics = story.lyrics
+
+    root.style.setProperty('--story-crop-w', String(crop.w))
+    root.style.setProperty('--story-crop-h', String(crop.h))
+    root.style.setProperty('--story-canvas-w', String(canvasW))
+    root.style.setProperty('--story-canvas-h', String(canvasH))
+    root.style.setProperty('--story-crop-y', String(crop.y))
+
     const frame = document.createElement('div')
     frame.className = 'story-frame'
+    frame.style.backgroundImage = 'url("' + story.scene + '")'
 
     const badgeEl = document.createElement('div')
     badgeEl.className = 'story-badge'
@@ -132,31 +148,36 @@ export default {
     frame.appendChild(badgeEl)
 
     const wrappers = {}
-    OBJECTS.forEach((o) => {
+    story.objects.forEach((o) => {
       const wrap = document.createElement('div')
       wrap.className = 'story-obj'
       wrap.setAttribute('aria-hidden', 'true')
-      const b = pct(o.box)
+      const b = pct(rectFor(o, canvasW, canvasH), crop)
       wrap.style.left = b.l + '%'
       wrap.style.top = b.t + '%'
       wrap.style.width = b.w + '%'
       wrap.style.height = b.h + '%'
 
-      const halo = document.createElement('img')
-      halo.className = 'story-obj__halo'
-      halo.src = o.halo
-      halo.alt = ''
+      if (o.mode === 'arrow') {
+        wrap.innerHTML = ARROW_SVG
+      } else {
+        const halo = document.createElement('img')
+        halo.className = 'story-obj__halo'
+        halo.src = o.halo
+        halo.alt = ''
 
-      const cut = document.createElement('img')
-      cut.className = 'story-obj__cut'
-      cut.src = o.cut
-      cut.alt = ''
-      cut.style.left = (PAD / o.box[2]) * 100 + '%'
-      cut.style.top = (PAD / o.box[3]) * 100 + '%'
-      cut.style.width = ((o.box[2] - 2 * PAD) / o.box[2]) * 100 + '%'
-      cut.style.height = 'auto'
+        const cut = document.createElement('img')
+        cut.className = 'story-obj__cut'
+        cut.src = o.cut
+        cut.alt = ''
+        cut.style.left = (PAD / o.box[2]) * 100 + '%'
+        cut.style.top = (PAD / o.box[3]) * 100 + '%'
+        cut.style.width = ((o.box[2] - 2 * PAD) / o.box[2]) * 100 + '%'
+        cut.style.height = 'auto'
 
-      wrap.append(halo, cut)
+        wrap.append(halo, cut)
+      }
+
       frame.appendChild(wrap)
       wrappers[o.key] = wrap
     })
@@ -171,17 +192,17 @@ export default {
 
     root.appendChild(frame)
 
-    const audioEl = new Audio('./assets/story/narration.mp3')
+    const audioEl = new Audio(story.audio)
     audioEl.preload = 'auto'
 
     let alive = true
     let rafId = null
-    let sched = buildSchedule()
+    let sched = buildSchedule(story, attractStop)
     let curSig = ''
     let lastProgress = -1
 
     function setLit(activeKeys) {
-      for (const o of OBJECTS) {
+      for (const o of story.objects) {
         wrappers[o.key].classList.toggle('is-lit', activeKeys.has(o.key))
       }
     }
@@ -201,7 +222,7 @@ export default {
     }
 
     function applyAt(t) {
-      if (t < ATTRACT_STOP) {
+      if (t < attractStop) {
         badgeEl.classList.add('is-on')
         const active = attractActive(t, sched)
         const sig = 'A' + [...active].sort().join(',')
@@ -212,8 +233,8 @@ export default {
         }
       } else {
         badgeEl.classList.remove('is-on')
-        const activeKey = lastBeatKey(t)
-        const ly = curLyric(t)
+        const activeKey = lastBeatKey(t, beats, story.lead)
+        const ly = curLyric(t, lyrics)
         const sig = 'C' + (activeKey || '') + '|' + (ly ? ly.t : '')
         if (sig !== curSig) {
           curSig = sig
@@ -223,10 +244,10 @@ export default {
       }
 
       let done = 0
-      for (const b of BEATS) if (t >= b.t) done++
+      for (const b of beats) if (t >= b.t) done++
       if (done !== lastProgress) {
         lastProgress = done
-        ctx.setProgress(done, BEATS.length)
+        ctx.setProgress(done, beats.length)
       }
     }
 
@@ -243,7 +264,7 @@ export default {
       setLit(new Set())
       renderCaption(null)
       badgeEl.classList.remove('is-on')
-      ctx.setProgress(BEATS.length, BEATS.length)
+      ctx.setProgress(beats.length, beats.length)
       audio.chime('complete')
       confetti(root)
       ctx.onDone()
@@ -264,12 +285,12 @@ export default {
 
     ctx.onPauseChange(setPaused)
 
-    ctx.onSeek(i => {
+    ctx.onSeek((i) => {
       if (!alive) return
-      const ly = LYRICS[i]
-      if (!ly) return
+      const beat = beats[i]
+      if (!beat) return
       curSig = ''
-      audioEl.currentTime = ly.t
+      audioEl.currentTime = Math.max(0, beat.t - story.lead)
       applyAt(audioEl.currentTime)
       const p = audioEl.play()
       if (p && p.catch) p.catch(() => {})
@@ -282,7 +303,7 @@ export default {
       if (p && p.catch) p.catch(() => {})
     }
 
-    ctx.setProgress(0, BEATS.length)
+    ctx.setProgress(0, beats.length)
     applyAt(audioEl.currentTime || 0)
     rafId = requestAnimationFrame(tick)
 

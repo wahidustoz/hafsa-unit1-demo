@@ -1,0 +1,265 @@
+{
+  "unit": 4,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 7.81,
+  "end": 30.47,
+  "objects": [
+    {
+      "key": "jacket",
+      "mode": "cutout",
+      "cut": "objects/jacket.png",
+      "halo": "objects/jacket.halo.png",
+      "box": [
+        266,
+        1197,
+        155,
+        109
+      ],
+      "territory": [
+        272,
+        1203,
+        143,
+        97
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "jar",
+      "mode": "cutout",
+      "cut": "objects/jar.png",
+      "halo": "objects/jar.halo.png",
+      "box": [
+        500,
+        1156,
+        81,
+        125
+      ],
+      "territory": [
+        506,
+        1162,
+        69,
+        113
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "kangaroo",
+      "mode": "cutout",
+      "cut": "objects/kangaroo.png",
+      "halo": "objects/kangaroo.halo.png",
+      "box": [
+        226,
+        894,
+        183,
+        283
+      ],
+      "territory": [
+        232,
+        900,
+        171,
+        271
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "key",
+      "mode": "cutout",
+      "cut": "objects/key.png",
+      "halo": "objects/key.halo.png",
+      "box": [
+        399,
+        1240,
+        103,
+        71
+      ],
+      "territory": [
+        405,
+        1246,
+        91,
+        59
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "lamp",
+      "mode": "cutout",
+      "cut": "objects/lamp.png",
+      "halo": "objects/lamp.halo.png",
+      "box": [
+        208,
+        1106,
+        82,
+        143
+      ],
+      "territory": [
+        214,
+        1112,
+        70,
+        131
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "lemon",
+      "mode": "cutout",
+      "cut": "objects/lemon.png",
+      "halo": "objects/lemon.halo.png",
+      "box": [
+        564,
+        1204,
+        90,
+        80
+      ],
+      "territory": [
+        570,
+        1210,
+        78,
+        68
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "lion",
+      "mode": "cutout",
+      "cut": "objects/lion.png",
+      "halo": "objects/lion.halo.png",
+      "box": [
+        409,
+        952,
+        150,
+        227
+      ],
+      "territory": [
+        415,
+        958,
+        138,
+        215
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "jet",
+      "mode": "cutout",
+      "cut": "objects/jet.png",
+      "halo": "objects/jet.halo.png",
+      "box": [
+        662,
+        1190,
+        122,
+        102
+      ],
+      "territory": [
+        668,
+        1196,
+        110,
+        90
+      ],
+      "song": false,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.15,
+      "key": "key",
+      "line": "I like the key",
+      "hl": "key"
+    },
+    {
+      "t": 11.21,
+      "key": "lamp",
+      "line": "I like the lamp",
+      "hl": "lamp"
+    },
+    {
+      "t": 13.33,
+      "key": "jacket",
+      "line": "I like the jacket",
+      "hl": "jacket"
+    },
+    {
+      "t": 14.87,
+      "key": "kangaroo",
+      "line": "I like kangaroos",
+      "hl": "kangaroos"
+    },
+    {
+      "t": 21.59,
+      "key": "key",
+      "line": "I like the key",
+      "hl": "key"
+    },
+    {
+      "t": 23.61,
+      "key": "lamp",
+      "line": "I like the lamp",
+      "hl": "lamp"
+    },
+    {
+      "t": 25.73,
+      "key": "jacket",
+      "line": "I like the jacket",
+      "hl": "jacket"
+    },
+    {
+      "t": 27.27,
+      "key": "kangaroo",
+      "line": "I like kangaroos",
+      "hl": "kangaroos"
+    }
+  ],
+  "lyrics": [
+    {
+      "t": 8.25,
+      "text": "I like the key.",
+      "hl": "key"
+    },
+    {
+      "t": 10.31,
+      "text": "I like the lamp.",
+      "hl": "lamp"
+    },
+    {
+      "t": 12.43,
+      "text": "I like the jacket.",
+      "hl": "jacket"
+    },
+    {
+      "t": 13.97,
+      "text": "I like kangaroos.",
+      "hl": "kangaroo"
+    },
+    {
+      "t": 20.69,
+      "text": "I like the key.",
+      "hl": "key"
+    },
+    {
+      "t": 22.71,
+      "text": "I like the lamp.",
+      "hl": "lamp"
+    },
+    {
+      "t": 24.83,
+      "text": "I like the jacket.",
+      "hl": "jacket"
+    },
+    {
+      "t": 26.37,
+      "text": "I like kangaroos.",
+      "hl": "kangaroo"
+    }
+  ]
+}

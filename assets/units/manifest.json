@@ -1,0 +1,1317 @@
+{
+  "generated": "2026-08-07",
+  "about": "Every asset the nine letter units need, copied out of the parent repo at /Users/wahid/hafsa and laid out under assets/units. Written by the asset agent; assets/units is the only tree it owns.",
+  "layout": {
+    "root": "./assets/units",
+    "wordImage": "./assets/units/<unit>/words/<slug>.png",
+    "wordAudio": "./assets/units/<unit>/audio/<slug>.mp3",
+    "chant": "./assets/units/<unit>/chant.mp3",
+    "storyKit": "./assets/units/<unit>/story/kit.json",
+    "storyScene": "./assets/units/<unit>/story/scene.jpg",
+    "storyNarration": "./assets/units/<unit>/story/narration.mp3",
+    "storyObjects": "./assets/units/<unit>/story/objects/<name>.png",
+    "pathsAreRelativeTo": "index.html, matching the existing ./assets/... style in js/data.js",
+    "slug": "the word lowercased with spaces turned into hyphens - \"X-ray\" is x-ray, \"yo-yo\" is yo-yo, \"Indian\" is indian"
+  },
+  "audioIntegrity": {
+    "method": "All 80 word utterances were transcribed with ElevenLabs speech-to-text and each transcript was checked against the word its filename claims. Clips whose first pass was doubtful were transcribed a second time with automatic language detection, and where that was still doubtful the word portion alone was sliced out at its detected onset and transcribed on its own, which removes the letter-sound priming that causes most of the misreads.",
+    "unitsClean": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "unitsWithMismatches": [
+      1
+    ],
+    "mismatchCount": 3,
+    "ambiguous": [
+      {
+        "unit": 7,
+        "word": "sea",
+        "why": "sea / see / the letter C are exact homophones - transcription cannot decide this one either way. No evidence of a problem."
+      },
+      {
+        "unit": 2,
+        "word": "egg",
+        "why": "transcribes as the plural \"eggs\" in every pass. Right letter, right word family; may genuinely be spoken as a plural."
+      }
+    ],
+    "imagesChecked": "Unit 1 cup.png, cow.png and car.png were opened and each shows the object its name claims, so the rotation is audio-only. Word art for the other units was not verified by eye."
+  },
+  "wordOnsets": {
+    "what": "durMs is the clip length; wordAtMs is when the spoken word begins, after the letter name and the letter sound.",
+    "method": "ffmpeg silencedetect=noise=-35dB:d=0.12 on the copied file. Each clip yields three silence blocks - lead-in, the pause before the letter sound, and the pause before the word - and some also yield a trailing block from the natural tail. wordAtMs is the last silence_end that falls before 85 percent of the clip, which drops the trailing block.",
+    "audioIsUnprocessed": "The mp3s are byte-for-byte copies of the parent repo sources. No loudness normalisation, no padding, no re-encode. The demo's older assets/audio/utterances set for unit 1 WAS normalised and padded, so its numbers are about 120ms longer than the ones here - do not mix the two sets.",
+    "loudnessSpread": {
+      "measuredWith": "ffmpeg loudnorm print_format=json, input_i",
+      "minLufs": -21.86,
+      "maxLufs": -17.04,
+      "spreadLu": 4.82,
+      "note": "A 4.8 LU spread across the 80 clips is audible but was left alone - normalising was not part of this job. Quietest is unit 6 quilt at -21.86, loudest is unit 7 sand at -17.04."
+    }
+  },
+  "storyKits": {
+    "sceneCompression": "Each scene.png was 941x1672 and about 2MB. Every one was resized to 788x1400 and saved as progressive JPEG at quality 90, which is the recipe that produced the 321KB unit-1 scene.jpg already in the demo. 17.7MB became 2.0MB across the nine units.",
+    "kitEdits": "The only change made to any kit.json is that \"scene\" now reads scene.jpg instead of scene.png and \"audio\" now reads narration.mp3 instead of its original relative path. canvas, objects, box, territory, beats and lyrics are untouched. canvas stays [941, 1672] even though the JPEG is 788x1400 - object rects are in canvas space and the scene is meant to be drawn scaled to it.",
+    "objectModes": "Objects are mode \"cutout\" with cut and halo PNGs, except a few that are mode \"arrow\" and carry no images at all: fork in unit 2, ring in unit 6, toe in unit 7. Only the PNGs a kit actually references were copied.",
+    "leadSeconds": 0.8,
+    "leadSecondsNote": "Production lead constant for driving beats off narration time, handed down with the task. The 0.5 baked into design/prototypes/story-3d/unit1/story.html is stale, and so are the rest of that file's numbers - kit.json is authoritative.",
+    "storyKeysAreNotWordKeys": "Story object keys are scene props, not the unit word list. Unit 5 has a hen, unit 6 a rose, unit 9 a flower, and unit 9 spells its axe with an e while the word list says ax."
+  },
+  "units": [
+    {
+      "unit": 1,
+      "letters": [
+        "A",
+        "B",
+        "C"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "ant",
+          "slug": "ant",
+          "letter": "A",
+          "image": "./assets/units/1/words/ant.png",
+          "audio": "./assets/units/1/audio/ant.mp3",
+          "durMs": 2158,
+          "wordAtMs": 1435,
+          "transcript": "Ah, ah, ant"
+        },
+        {
+          "word": "apple",
+          "slug": "apple",
+          "letter": "A",
+          "image": "./assets/units/1/words/apple.png",
+          "audio": "./assets/units/1/audio/apple.mp3",
+          "durMs": 2106,
+          "wordAtMs": 1510,
+          "transcript": "A, a, apple"
+        },
+        {
+          "word": "alligator",
+          "slug": "alligator",
+          "letter": "A",
+          "image": "./assets/units/1/words/alligator.png",
+          "audio": "./assets/units/1/audio/alligator.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1462,
+          "transcript": "A, a, alligator"
+        },
+        {
+          "word": "ball",
+          "slug": "ball",
+          "letter": "B",
+          "image": "./assets/units/1/words/ball.png",
+          "audio": "./assets/units/1/audio/ball.mp3",
+          "durMs": 2054,
+          "wordAtMs": 1332,
+          "transcript": "B-b, ball"
+        },
+        {
+          "word": "bear",
+          "slug": "bear",
+          "letter": "B",
+          "image": "./assets/units/1/words/bear.png",
+          "audio": "./assets/units/1/audio/bear.mp3",
+          "durMs": 2106,
+          "wordAtMs": 1377,
+          "transcript": "B-b bear"
+        },
+        {
+          "word": "bag",
+          "slug": "bag",
+          "letter": "B",
+          "image": "./assets/units/1/words/bag.png",
+          "audio": "./assets/units/1/audio/bag.mp3",
+          "durMs": 2210,
+          "wordAtMs": 1347,
+          "transcript": "B-b, bag"
+        },
+        {
+          "word": "cup",
+          "slug": "cup",
+          "letter": "C",
+          "image": "./assets/units/1/words/cup.png",
+          "audio": "./assets/units/1/audio/car.mp3",
+          "durMs": 1950,
+          "wordAtMs": 1372,
+          "transcript": "C-c-cup",
+          "remappedFrom": "./assets/units/1/audio/cup.mp3",
+          "remappedFromTranscript": "C, c, cow",
+          "remapNote": "cup.mp3 does not say \"cup\" - it says \"cow\". The clip that actually says \"cup\" is car.mp3, and that is what \"audio\" points at. \"transcript\" above is car.mp3, the clip in use."
+        },
+        {
+          "word": "cow",
+          "slug": "cow",
+          "letter": "C",
+          "image": "./assets/units/1/words/cow.png",
+          "audio": "./assets/units/1/audio/cup.mp3",
+          "durMs": 2106,
+          "wordAtMs": 1470,
+          "transcript": "C, c, cow",
+          "remappedFrom": "./assets/units/1/audio/cow.mp3",
+          "remappedFromTranscript": "C-c-car",
+          "remapNote": "cow.mp3 does not say \"cow\" - it says \"car\". The clip that actually says \"cow\" is cup.mp3, and that is what \"audio\" points at. \"transcript\" above is cup.mp3, the clip in use."
+        },
+        {
+          "word": "car",
+          "slug": "car",
+          "letter": "C",
+          "image": "./assets/units/1/words/car.png",
+          "audio": "./assets/units/1/audio/cow.mp3",
+          "durMs": 2158,
+          "wordAtMs": 1499,
+          "transcript": "C-c-car",
+          "remappedFrom": "./assets/units/1/audio/car.mp3",
+          "remappedFromTranscript": "C-c-cup",
+          "remapNote": "car.mp3 does not say \"car\" - it says \"cup\". The clip that actually says \"car\" is cow.mp3, and that is what \"audio\" points at. \"transcript\" above is cow.mp3, the clip in use."
+        }
+      ],
+      "audioVerdict": "ROTATED - three C-word clips are mislabelled at source and are remapped by content below",
+      "chant": {
+        "path": "./assets/units/1/chant.mp3",
+        "duration": 55.902,
+        "durationFromChantCues": 55.875,
+        "source": "assets/audio/chants/unit1-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==1] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/1/story/kit.json",
+        "scene": "./assets/units/1/story/scene.jpg",
+        "narration": "./assets/units/1/story/narration.mp3",
+        "objectsDir": "./assets/units/1/story/objects",
+        "objects": [
+          "./assets/units/1/story/objects/alligator.halo.png",
+          "./assets/units/1/story/objects/alligator.png",
+          "./assets/units/1/story/objects/ant.halo.png",
+          "./assets/units/1/story/objects/ant.png",
+          "./assets/units/1/story/objects/apple.halo.png",
+          "./assets/units/1/story/objects/apple.png",
+          "./assets/units/1/story/objects/bag.halo.png",
+          "./assets/units/1/story/objects/bag.png",
+          "./assets/units/1/story/objects/ball.halo.png",
+          "./assets/units/1/story/objects/ball.png",
+          "./assets/units/1/story/objects/bear.with.halo.png",
+          "./assets/units/1/story/objects/bear.with.png",
+          "./assets/units/1/story/objects/car.halo.png",
+          "./assets/units/1/story/objects/car.png",
+          "./assets/units/1/story/objects/cow.with.halo.png",
+          "./assets/units/1/story/objects/cow.with.png",
+          "./assets/units/1/story/objects/cup.halo.png",
+          "./assets/units/1/story/objects/cup.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 29.936
+      },
+      "audioRemap": {
+        "cup": "./assets/units/1/audio/car.mp3",
+        "cow": "./assets/units/1/audio/cup.mp3",
+        "car": "./assets/units/1/audio/cow.mp3"
+      },
+      "audioRemapReason": "The source directory assets/audio/words/unit1 carries a three-way filename rotation: the file named cup.mp3 speaks \"cow\", cow.mp3 speaks \"car\", and car.mp3 speaks \"cup\". Confirmed here by ElevenLabs transcription of all nine unit-1 clips, and it still ships in the parent SwiftUI app. The files under assets/units/1/audio keep their source names, so the file name is NOT trustworthy for unit 1. Resolve unit-1 audio through the per-word \"audio\" field in this manifest and never by building a path from the word. The word art is unaffected - cup.png, cow.png and car.png were checked visually and each shows the right object."
+    },
+    {
+      "unit": 2,
+      "letters": [
+        "D",
+        "E",
+        "F"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "duck",
+          "slug": "duck",
+          "letter": "D",
+          "image": "./assets/units/2/words/duck.png",
+          "audio": "./assets/units/2/audio/duck.mp3",
+          "durMs": 2060,
+          "wordAtMs": 1406,
+          "transcript": "Duh, duh, duck"
+        },
+        {
+          "word": "doll",
+          "slug": "doll",
+          "letter": "D",
+          "image": "./assets/units/2/words/doll.png",
+          "audio": "./assets/units/2/audio/doll.mp3",
+          "durMs": 1920,
+          "wordAtMs": 1296,
+          "transcript": "D, d, doll"
+        },
+        {
+          "word": "door",
+          "slug": "door",
+          "letter": "D",
+          "image": "./assets/units/2/words/door.png",
+          "audio": "./assets/units/2/audio/door.mp3",
+          "durMs": 1889,
+          "wordAtMs": 1341,
+          "transcript": "D, d, door"
+        },
+        {
+          "word": "egg",
+          "slug": "egg",
+          "letter": "E",
+          "image": "./assets/units/2/words/egg.png",
+          "audio": "./assets/units/2/audio/egg.mp3",
+          "durMs": 1775,
+          "wordAtMs": 1317,
+          "transcript": "Eh, eh, eggs",
+          "isolatedWordTranscript": "Eggs (word-only slice from 1.27s)",
+          "transcriptNote": "Both the full clip and the isolated word slice transcribe as the plural \"eggs\". Content is the right word family and the right letter; flagged as a wording nuance, not a mislabel."
+        },
+        {
+          "word": "elephant",
+          "slug": "elephant",
+          "letter": "E",
+          "image": "./assets/units/2/words/elephant.png",
+          "audio": "./assets/units/2/audio/elephant.mp3",
+          "durMs": 2048,
+          "wordAtMs": 1316,
+          "transcript": "Eh, eh, elephant"
+        },
+        {
+          "word": "elbow",
+          "slug": "elbow",
+          "letter": "E",
+          "image": "./assets/units/2/words/elbow.png",
+          "audio": "./assets/units/2/audio/elbow.mp3",
+          "durMs": 2019,
+          "wordAtMs": 1337,
+          "transcript": "Eh, eh, elbow"
+        },
+        {
+          "word": "fish",
+          "slug": "fish",
+          "letter": "F",
+          "image": "./assets/units/2/words/fish.png",
+          "audio": "./assets/units/2/audio/fish.mp3",
+          "durMs": 2006,
+          "wordAtMs": 1337,
+          "transcript": "F, F, fish"
+        },
+        {
+          "word": "fork",
+          "slug": "fork",
+          "letter": "F",
+          "image": "./assets/units/2/words/fork.png",
+          "audio": "./assets/units/2/audio/fork.mp3",
+          "durMs": 2042,
+          "wordAtMs": 1359,
+          "transcript": "F-F-fork"
+        },
+        {
+          "word": "frog",
+          "slug": "frog",
+          "letter": "F",
+          "image": "./assets/units/2/words/frog.png",
+          "audio": "./assets/units/2/audio/frog.mp3",
+          "durMs": 2048,
+          "wordAtMs": 1343,
+          "transcript": "F, f, frog"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/2/chant.mp3",
+        "duration": 55.85,
+        "durationFromChantCues": 56.042,
+        "source": "assets/audio/chants/unit2-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==2] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/2/story/kit.json",
+        "scene": "./assets/units/2/story/scene.jpg",
+        "narration": "./assets/units/2/story/narration.mp3",
+        "objectsDir": "./assets/units/2/story/objects",
+        "objects": [
+          "./assets/units/2/story/objects/doll.halo.png",
+          "./assets/units/2/story/objects/doll.png",
+          "./assets/units/2/story/objects/door.halo.png",
+          "./assets/units/2/story/objects/door.png",
+          "./assets/units/2/story/objects/duck.with.halo.png",
+          "./assets/units/2/story/objects/duck.with.png",
+          "./assets/units/2/story/objects/egg.halo.png",
+          "./assets/units/2/story/objects/egg.png",
+          "./assets/units/2/story/objects/elephant.with.halo.png",
+          "./assets/units/2/story/objects/elephant.with.png",
+          "./assets/units/2/story/objects/fish.halo.png",
+          "./assets/units/2/story/objects/fish.png",
+          "./assets/units/2/story/objects/frog.halo.png",
+          "./assets/units/2/story/objects/frog.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 29.544
+      }
+    },
+    {
+      "unit": 3,
+      "letters": [
+        "G",
+        "H",
+        "I"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "girl",
+          "slug": "girl",
+          "letter": "G",
+          "image": "./assets/units/3/words/girl.png",
+          "audio": "./assets/units/3/audio/girl.mp3",
+          "durMs": 2210,
+          "wordAtMs": 1555,
+          "transcript": "G, g, girl"
+        },
+        {
+          "word": "glove",
+          "slug": "glove",
+          "letter": "G",
+          "image": "./assets/units/3/words/glove.png",
+          "audio": "./assets/units/3/audio/glove.mp3",
+          "durMs": 2210,
+          "wordAtMs": 1426,
+          "transcript": "Guh, guh, glove"
+        },
+        {
+          "word": "green",
+          "slug": "green",
+          "letter": "G",
+          "image": "./assets/units/3/words/green.png",
+          "audio": "./assets/units/3/audio/green.mp3",
+          "durMs": 2158,
+          "wordAtMs": 1397,
+          "transcript": "G, g, green"
+        },
+        {
+          "word": "hand",
+          "slug": "hand",
+          "letter": "H",
+          "image": "./assets/units/3/words/hand.png",
+          "audio": "./assets/units/3/audio/hand.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1600,
+          "transcript": "H-h-hand"
+        },
+        {
+          "word": "hat",
+          "slug": "hat",
+          "letter": "H",
+          "image": "./assets/units/3/words/hat.png",
+          "audio": "./assets/units/3/audio/hat.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1620,
+          "transcript": "H-h-hat"
+        },
+        {
+          "word": "hippo",
+          "slug": "hippo",
+          "letter": "H",
+          "image": "./assets/units/3/words/hippo.png",
+          "audio": "./assets/units/3/audio/hippo.mp3",
+          "durMs": 2366,
+          "wordAtMs": 1613,
+          "transcript": "Ha, ha, hippo"
+        },
+        {
+          "word": "ink",
+          "slug": "ink",
+          "letter": "I",
+          "image": "./assets/units/3/words/ink.png",
+          "audio": "./assets/units/3/audio/ink.mp3",
+          "durMs": 2210,
+          "wordAtMs": 1567,
+          "transcript": "Eh, eh, ink"
+        },
+        {
+          "word": "igloo",
+          "slug": "igloo",
+          "letter": "I",
+          "image": "./assets/units/3/words/igloo.png",
+          "audio": "./assets/units/3/audio/igloo.mp3",
+          "durMs": 2262,
+          "wordAtMs": 1522,
+          "transcript": "I, I, igloo"
+        },
+        {
+          "word": "Indian",
+          "slug": "indian",
+          "letter": "I",
+          "image": "./assets/units/3/words/indian.png",
+          "audio": "./assets/units/3/audio/indian.mp3",
+          "durMs": 2314,
+          "wordAtMs": 1521,
+          "transcript": "I, I, Indian"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/3/chant.mp3",
+        "duration": 56.059,
+        "durationFromChantCues": 56.042,
+        "source": "assets/audio/chants/unit3-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==3] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/3/story/kit.json",
+        "scene": "./assets/units/3/story/scene.jpg",
+        "narration": "./assets/units/3/story/narration.mp3",
+        "objectsDir": "./assets/units/3/story/objects",
+        "objects": [
+          "./assets/units/3/story/objects/girl.halo.png",
+          "./assets/units/3/story/objects/girl.png",
+          "./assets/units/3/story/objects/glove.halo.png",
+          "./assets/units/3/story/objects/glove.png",
+          "./assets/units/3/story/objects/hand.halo.png",
+          "./assets/units/3/story/objects/hand.png",
+          "./assets/units/3/story/objects/hat.halo.png",
+          "./assets/units/3/story/objects/hat.png",
+          "./assets/units/3/story/objects/hippo.halo.png",
+          "./assets/units/3/story/objects/hippo.png",
+          "./assets/units/3/story/objects/igloo.halo.png",
+          "./assets/units/3/story/objects/igloo.png",
+          "./assets/units/3/story/objects/ink.halo.png",
+          "./assets/units/3/story/objects/ink.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 31.321
+      }
+    },
+    {
+      "unit": 4,
+      "letters": [
+        "J",
+        "K",
+        "L"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "jet",
+          "slug": "jet",
+          "letter": "J",
+          "image": "./assets/units/4/words/jet.png",
+          "audio": "./assets/units/4/audio/jet.mp3",
+          "durMs": 2470,
+          "wordAtMs": 1798,
+          "transcript": "J, J, jet"
+        },
+        {
+          "word": "jar",
+          "slug": "jar",
+          "letter": "J",
+          "image": "./assets/units/4/words/jar.png",
+          "audio": "./assets/units/4/audio/jar.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1709,
+          "transcript": "Juh, juh, jar"
+        },
+        {
+          "word": "jacket",
+          "slug": "jacket",
+          "letter": "J",
+          "image": "./assets/units/4/words/jacket.png",
+          "audio": "./assets/units/4/audio/jacket.mp3",
+          "durMs": 2314,
+          "wordAtMs": 1553,
+          "transcript": "Ja, ja, jacket"
+        },
+        {
+          "word": "key",
+          "slug": "key",
+          "letter": "K",
+          "image": "./assets/units/4/words/key.png",
+          "audio": "./assets/units/4/audio/key.mp3",
+          "durMs": 2210,
+          "wordAtMs": 1588,
+          "transcript": "K, k, key"
+        },
+        {
+          "word": "king",
+          "slug": "king",
+          "letter": "K",
+          "image": "./assets/units/4/words/king.png",
+          "audio": "./assets/units/4/audio/king.mp3",
+          "durMs": 2262,
+          "wordAtMs": 1599,
+          "transcript": "K, k, king"
+        },
+        {
+          "word": "kangaroo",
+          "slug": "kangaroo",
+          "letter": "K",
+          "image": "./assets/units/4/words/kangaroo.png",
+          "audio": "./assets/units/4/audio/kangaroo.mp3",
+          "durMs": 2366,
+          "wordAtMs": 1510,
+          "transcript": "K. K. Kangaroo"
+        },
+        {
+          "word": "lion",
+          "slug": "lion",
+          "letter": "L",
+          "image": "./assets/units/4/words/lion.png",
+          "audio": "./assets/units/4/audio/lion.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1636,
+          "transcript": "L, L, lion"
+        },
+        {
+          "word": "lamp",
+          "slug": "lamp",
+          "letter": "L",
+          "image": "./assets/units/4/words/lamp.png",
+          "audio": "./assets/units/4/audio/lamp.mp3",
+          "durMs": 2210,
+          "wordAtMs": 1546,
+          "transcript": "L, L, lamp"
+        },
+        {
+          "word": "lemon",
+          "slug": "lemon",
+          "letter": "L",
+          "image": "./assets/units/4/words/lemon.png",
+          "audio": "./assets/units/4/audio/lemon.mp3",
+          "durMs": 2262,
+          "wordAtMs": 1538,
+          "transcript": "Le, le, lemon"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/4/chant.mp3",
+        "duration": 56.059,
+        "durationFromChantCues": 56.042,
+        "source": "assets/audio/chants/unit4-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==4] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/4/story/kit.json",
+        "scene": "./assets/units/4/story/scene.jpg",
+        "narration": "./assets/units/4/story/narration.mp3",
+        "objectsDir": "./assets/units/4/story/objects",
+        "objects": [
+          "./assets/units/4/story/objects/jacket.halo.png",
+          "./assets/units/4/story/objects/jacket.png",
+          "./assets/units/4/story/objects/jar.halo.png",
+          "./assets/units/4/story/objects/jar.png",
+          "./assets/units/4/story/objects/jet.halo.png",
+          "./assets/units/4/story/objects/jet.png",
+          "./assets/units/4/story/objects/kangaroo.halo.png",
+          "./assets/units/4/story/objects/kangaroo.png",
+          "./assets/units/4/story/objects/key.halo.png",
+          "./assets/units/4/story/objects/key.png",
+          "./assets/units/4/story/objects/lamp.halo.png",
+          "./assets/units/4/story/objects/lamp.png",
+          "./assets/units/4/story/objects/lemon.halo.png",
+          "./assets/units/4/story/objects/lemon.png",
+          "./assets/units/4/story/objects/lion.halo.png",
+          "./assets/units/4/story/objects/lion.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 30.511
+      }
+    },
+    {
+      "unit": 5,
+      "letters": [
+        "M",
+        "N",
+        "O"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "mom",
+          "slug": "mom",
+          "letter": "M",
+          "image": "./assets/units/5/words/mom.png",
+          "audio": "./assets/units/5/audio/mom.mp3",
+          "durMs": 2366,
+          "wordAtMs": 1678,
+          "transcript": "M, M, mom"
+        },
+        {
+          "word": "milk",
+          "slug": "milk",
+          "letter": "M",
+          "image": "./assets/units/5/words/milk.png",
+          "audio": "./assets/units/5/audio/milk.mp3",
+          "durMs": 2470,
+          "wordAtMs": 1787,
+          "transcript": "Muh, muh, milk"
+        },
+        {
+          "word": "melon",
+          "slug": "melon",
+          "letter": "M",
+          "image": "./assets/units/5/words/melon.png",
+          "audio": "./assets/units/5/audio/melon.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1677,
+          "transcript": "M, m, melon"
+        },
+        {
+          "word": "nut",
+          "slug": "nut",
+          "letter": "N",
+          "image": "./assets/units/5/words/nut.png",
+          "audio": "./assets/units/5/audio/nut.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1772,
+          "transcript": "Nuh, nuh, nut"
+        },
+        {
+          "word": "nail",
+          "slug": "nail",
+          "letter": "N",
+          "image": "./assets/units/5/words/nail.png",
+          "audio": "./assets/units/5/audio/nail.mp3",
+          "durMs": 2470,
+          "wordAtMs": 1712,
+          "transcript": "N, n, nail"
+        },
+        {
+          "word": "neck",
+          "slug": "neck",
+          "letter": "N",
+          "image": "./assets/units/5/words/neck.png",
+          "audio": "./assets/units/5/audio/neck.mp3",
+          "durMs": 2366,
+          "wordAtMs": 1716,
+          "transcript": "Na, na, neck",
+          "isolatedWordTranscript": "neck (second pass, auto language detect)",
+          "transcriptNote": "First pass with language_code=eng returned \"next\"; a second pass with automatic language detection returned \"neck\". Treated as clean."
+        },
+        {
+          "word": "onion",
+          "slug": "onion",
+          "letter": "O",
+          "image": "./assets/units/5/words/onion.png",
+          "audio": "./assets/units/5/audio/onion.mp3",
+          "durMs": 2626,
+          "wordAtMs": 1895,
+          "transcript": "Ah, ah, onion"
+        },
+        {
+          "word": "ox",
+          "slug": "ox",
+          "letter": "O",
+          "image": "./assets/units/5/words/ox.png",
+          "audio": "./assets/units/5/audio/ox.mp3",
+          "durMs": 2834,
+          "wordAtMs": 2081,
+          "transcript": "Ah, ah, ox"
+        },
+        {
+          "word": "orange",
+          "slug": "orange",
+          "letter": "O",
+          "image": "./assets/units/5/words/orange.png",
+          "audio": "./assets/units/5/audio/orange.mp3",
+          "durMs": 2834,
+          "wordAtMs": 2076,
+          "transcript": "Ah. Ah. Orange"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/5/chant.mp3",
+        "duration": 56.059,
+        "durationFromChantCues": 56.042,
+        "source": "assets/audio/chants/unit5-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==5] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/5/story/kit.json",
+        "scene": "./assets/units/5/story/scene.jpg",
+        "narration": "./assets/units/5/story/narration.mp3",
+        "objectsDir": "./assets/units/5/story/objects",
+        "objects": [
+          "./assets/units/5/story/objects/hen.halo.png",
+          "./assets/units/5/story/objects/hen.png",
+          "./assets/units/5/story/objects/melon.halo.png",
+          "./assets/units/5/story/objects/melon.png",
+          "./assets/units/5/story/objects/milk.halo.png",
+          "./assets/units/5/story/objects/milk.png",
+          "./assets/units/5/story/objects/nut.halo.png",
+          "./assets/units/5/story/objects/nut.png",
+          "./assets/units/5/story/objects/onion.halo.png",
+          "./assets/units/5/story/objects/onion.png",
+          "./assets/units/5/story/objects/orange.halo.png",
+          "./assets/units/5/story/objects/orange.png",
+          "./assets/units/5/story/objects/ox.halo.png",
+          "./assets/units/5/story/objects/ox.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 31.556
+      }
+    },
+    {
+      "unit": 6,
+      "letters": [
+        "P",
+        "Q",
+        "R"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "pig",
+          "slug": "pig",
+          "letter": "P",
+          "image": "./assets/units/6/words/pig.png",
+          "audio": "./assets/units/6/audio/pig.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1861,
+          "transcript": "Puh, puh, pig"
+        },
+        {
+          "word": "pen",
+          "slug": "pen",
+          "letter": "P",
+          "image": "./assets/units/6/words/pen.png",
+          "audio": "./assets/units/6/audio/pen.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1820,
+          "transcript": "Puh, puh, pen"
+        },
+        {
+          "word": "pear",
+          "slug": "pear",
+          "letter": "P",
+          "image": "./assets/units/6/words/pear.png",
+          "audio": "./assets/units/6/audio/pear.mp3",
+          "durMs": 2470,
+          "wordAtMs": 1863,
+          "transcript": "Puh, puh, pear"
+        },
+        {
+          "word": "queen",
+          "slug": "queen",
+          "letter": "Q",
+          "image": "./assets/units/6/words/queen.png",
+          "audio": "./assets/units/6/audio/queen.mp3",
+          "durMs": 2574,
+          "wordAtMs": 1938,
+          "transcript": "Qua, qua, queen"
+        },
+        {
+          "word": "quilt",
+          "slug": "quilt",
+          "letter": "Q",
+          "image": "./assets/units/6/words/quilt.png",
+          "audio": "./assets/units/6/audio/quilt.mp3",
+          "durMs": 2522,
+          "wordAtMs": 1872,
+          "transcript": "Qua, qua, quilt"
+        },
+        {
+          "word": "quiet",
+          "slug": "quiet",
+          "letter": "Q",
+          "image": "./assets/units/6/words/quiet.png",
+          "audio": "./assets/units/6/audio/quiet.mp3",
+          "durMs": 2678,
+          "wordAtMs": 1881,
+          "transcript": "Qua, qua, quiet"
+        },
+        {
+          "word": "ring",
+          "slug": "ring",
+          "letter": "R",
+          "image": "./assets/units/6/words/ring.png",
+          "audio": "./assets/units/6/audio/ring.mp3",
+          "durMs": 2626,
+          "wordAtMs": 1931,
+          "transcript": "Ra, ra, ring."
+        },
+        {
+          "word": "red",
+          "slug": "red",
+          "letter": "R",
+          "image": "./assets/units/6/words/red.png",
+          "audio": "./assets/units/6/audio/red.mp3",
+          "durMs": 2574,
+          "wordAtMs": 1891,
+          "transcript": "Ruh, ruh, red"
+        },
+        {
+          "word": "rabbit",
+          "slug": "rabbit",
+          "letter": "R",
+          "image": "./assets/units/6/words/rabbit.png",
+          "audio": "./assets/units/6/audio/rabbit.mp3",
+          "durMs": 2730,
+          "wordAtMs": 1916,
+          "transcript": "Ruh, ruh, rabbit"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/6/chant.mp3",
+        "duration": 55.954,
+        "durationFromChantCues": 55.958,
+        "source": "assets/audio/chants/unit6-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==6] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/6/story/kit.json",
+        "scene": "./assets/units/6/story/scene.jpg",
+        "narration": "./assets/units/6/story/narration.mp3",
+        "objectsDir": "./assets/units/6/story/objects",
+        "objects": [
+          "./assets/units/6/story/objects/pear.halo.png",
+          "./assets/units/6/story/objects/pear.png",
+          "./assets/units/6/story/objects/pen.halo.png",
+          "./assets/units/6/story/objects/pen.png",
+          "./assets/units/6/story/objects/pig.halo.png",
+          "./assets/units/6/story/objects/pig.png",
+          "./assets/units/6/story/objects/queen.halo.png",
+          "./assets/units/6/story/objects/queen.png",
+          "./assets/units/6/story/objects/quilt.halo.png",
+          "./assets/units/6/story/objects/quilt.png",
+          "./assets/units/6/story/objects/rabbit.halo.png",
+          "./assets/units/6/story/objects/rabbit.png",
+          "./assets/units/6/story/objects/rose.halo.png",
+          "./assets/units/6/story/objects/rose.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 30.851
+      }
+    },
+    {
+      "unit": 7,
+      "letters": [
+        "S",
+        "T"
+      ],
+      "wordCount": 8,
+      "words": [
+        {
+          "word": "sun",
+          "slug": "sun",
+          "letter": "S",
+          "image": "./assets/units/7/words/sun.png",
+          "audio": "./assets/units/7/audio/sun.mp3",
+          "durMs": 2418,
+          "wordAtMs": 1865,
+          "transcript": "Sir, sir, son",
+          "isolatedWordTranscript": "Sun (word-only slice from 1.81s)",
+          "transcriptNote": "Full clip transcribed \"son\", a homophone of \"sun\". The isolated word slice returns \"Sun\". Clean."
+        },
+        {
+          "word": "sand",
+          "slug": "sand",
+          "letter": "S",
+          "image": "./assets/units/7/words/sand.png",
+          "audio": "./assets/units/7/audio/sand.mp3",
+          "durMs": 2678,
+          "wordAtMs": 1917,
+          "transcript": "S, s, sand"
+        },
+        {
+          "word": "sock",
+          "slug": "sock",
+          "letter": "S",
+          "image": "./assets/units/7/words/sock.png",
+          "audio": "./assets/units/7/audio/sock.mp3",
+          "durMs": 2626,
+          "wordAtMs": 1899,
+          "transcript": "Sir. Sir. Sark",
+          "isolatedWordTranscript": "Sock (word-only slice from 1.85s)",
+          "transcriptNote": "Full clip transcribed \"Sark\" twice, an ASR artefact caused by the preceding letter-sound. The isolated word slice returns \"Sock\". Clean."
+        },
+        {
+          "word": "sea",
+          "slug": "sea",
+          "letter": "S",
+          "image": "./assets/units/7/words/sea.png",
+          "audio": "./assets/units/7/audio/sea.mp3",
+          "durMs": 2574,
+          "wordAtMs": 1909,
+          "transcript": "Sir. Sir. See",
+          "isolatedWordTranscript": "C (word-only slice from 1.86s)",
+          "transcriptNote": "AMBIGUOUS TO ASR. \"sea\", \"see\" and the letter \"C\" are exact homophones, so no transcription can settle this by sound alone. The clip is the only S-word in unit 7 not otherwise accounted for, the letter-sound prefix is S, and the isolated slice returns \"C\" (i.e. /si:/). No evidence of mislabelling, but this one cannot be proven by transcription."
+        },
+        {
+          "word": "tent",
+          "slug": "tent",
+          "letter": "T",
+          "image": "./assets/units/7/words/tent.png",
+          "audio": "./assets/units/7/audio/tent.mp3",
+          "durMs": 2522,
+          "wordAtMs": 1881,
+          "transcript": "T, t, tent"
+        },
+        {
+          "word": "toe",
+          "slug": "toe",
+          "letter": "T",
+          "image": "./assets/units/7/words/toe.png",
+          "audio": "./assets/units/7/audio/toe.mp3",
+          "durMs": 2522,
+          "wordAtMs": 1894,
+          "transcript": "Tuh, tuh, toh",
+          "isolatedWordTranscript": "Toe (word-only slice from 1.84s)",
+          "transcriptNote": "Full clip transcribed \"toh\". The isolated word slice returns \"Toe\". Clean."
+        },
+        {
+          "word": "tiger",
+          "slug": "tiger",
+          "letter": "T",
+          "image": "./assets/units/7/words/tiger.png",
+          "audio": "./assets/units/7/audio/tiger.mp3",
+          "durMs": 2678,
+          "wordAtMs": 1916,
+          "transcript": "T. T. Tiger"
+        },
+        {
+          "word": "turtle",
+          "slug": "turtle",
+          "letter": "T",
+          "image": "./assets/units/7/words/turtle.png",
+          "audio": "./assets/units/7/audio/turtle.mp3",
+          "durMs": 2626,
+          "wordAtMs": 1936,
+          "transcript": "Tuh, tuh, turtle"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/7/chant.mp3",
+        "duration": 48.405,
+        "durationFromChantCues": 48.542,
+        "source": "assets/audio/chants/unit7-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==7] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/7/story/kit.json",
+        "scene": "./assets/units/7/story/scene.jpg",
+        "narration": "./assets/units/7/story/narration.mp3",
+        "objectsDir": "./assets/units/7/story/objects",
+        "objects": [
+          "./assets/units/7/story/objects/sock.halo.png",
+          "./assets/units/7/story/objects/sock.png",
+          "./assets/units/7/story/objects/sun.halo.png",
+          "./assets/units/7/story/objects/sun.png",
+          "./assets/units/7/story/objects/tent.halo.png",
+          "./assets/units/7/story/objects/tent.png",
+          "./assets/units/7/story/objects/tiger.halo.png",
+          "./assets/units/7/story/objects/tiger.png",
+          "./assets/units/7/story/objects/turtle.halo.png",
+          "./assets/units/7/story/objects/turtle.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 30.798
+      }
+    },
+    {
+      "unit": 8,
+      "letters": [
+        "U",
+        "V",
+        "W"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "uncle",
+          "slug": "uncle",
+          "letter": "U",
+          "image": "./assets/units/8/words/uncle.png",
+          "audio": "./assets/units/8/audio/uncle.mp3",
+          "durMs": 2574,
+          "wordAtMs": 1915,
+          "transcript": "Ah, ah, uncle"
+        },
+        {
+          "word": "under",
+          "slug": "under",
+          "letter": "U",
+          "image": "./assets/units/8/words/under.png",
+          "audio": "./assets/units/8/audio/under.mp3",
+          "durMs": 2730,
+          "wordAtMs": 2036,
+          "transcript": "Uh, uh, under"
+        },
+        {
+          "word": "umbrella",
+          "slug": "umbrella",
+          "letter": "U",
+          "image": "./assets/units/8/words/umbrella.png",
+          "audio": "./assets/units/8/audio/umbrella.mp3",
+          "durMs": 2782,
+          "wordAtMs": 1983,
+          "transcript": "Uh, uh, umbrella"
+        },
+        {
+          "word": "van",
+          "slug": "van",
+          "letter": "V",
+          "image": "./assets/units/8/words/van.png",
+          "audio": "./assets/units/8/audio/van.mp3",
+          "durMs": 2782,
+          "wordAtMs": 2032,
+          "transcript": "Vuh, vuh. Van"
+        },
+        {
+          "word": "vest",
+          "slug": "vest",
+          "letter": "V",
+          "image": "./assets/units/8/words/vest.png",
+          "audio": "./assets/units/8/audio/vest.mp3",
+          "durMs": 2782,
+          "wordAtMs": 2029,
+          "transcript": "V, V. Vest"
+        },
+        {
+          "word": "violin",
+          "slug": "violin",
+          "letter": "V",
+          "image": "./assets/units/8/words/violin.png",
+          "audio": "./assets/units/8/audio/violin.mp3",
+          "durMs": 2938,
+          "wordAtMs": 1970,
+          "transcript": "V, V, violin"
+        },
+        {
+          "word": "watch",
+          "slug": "watch",
+          "letter": "W",
+          "image": "./assets/units/8/words/watch.png",
+          "audio": "./assets/units/8/audio/watch.mp3",
+          "durMs": 2886,
+          "wordAtMs": 2102,
+          "transcript": "Wuh, wuh, watch"
+        },
+        {
+          "word": "wand",
+          "slug": "wand",
+          "letter": "W",
+          "image": "./assets/units/8/words/wand.png",
+          "audio": "./assets/units/8/audio/wand.mp3",
+          "durMs": 2730,
+          "wordAtMs": 1972,
+          "transcript": "Wuh, wuh, wand"
+        },
+        {
+          "word": "window",
+          "slug": "window",
+          "letter": "W",
+          "image": "./assets/units/8/words/window.png",
+          "audio": "./assets/units/8/audio/window.mp3",
+          "durMs": 2730,
+          "wordAtMs": 1944,
+          "transcript": "Wa, wa, window"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/8/chant.mp3",
+        "duration": 56.033,
+        "durationFromChantCues": 56.042,
+        "source": "assets/audio/chants/unit8-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==8] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/8/story/kit.json",
+        "scene": "./assets/units/8/story/scene.jpg",
+        "narration": "./assets/units/8/story/narration.mp3",
+        "objectsDir": "./assets/units/8/story/objects",
+        "objects": [
+          "./assets/units/8/story/objects/umbrella.halo.png",
+          "./assets/units/8/story/objects/umbrella.png",
+          "./assets/units/8/story/objects/uncle.with.halo.png",
+          "./assets/units/8/story/objects/uncle.with.png",
+          "./assets/units/8/story/objects/van.halo.png",
+          "./assets/units/8/story/objects/van.png",
+          "./assets/units/8/story/objects/vest.halo.png",
+          "./assets/units/8/story/objects/vest.png",
+          "./assets/units/8/story/objects/violin.halo.png",
+          "./assets/units/8/story/objects/violin.png",
+          "./assets/units/8/story/objects/wand.halo.png",
+          "./assets/units/8/story/objects/wand.png",
+          "./assets/units/8/story/objects/watch.halo.png",
+          "./assets/units/8/story/objects/watch.png",
+          "./assets/units/8/story/objects/window.halo.png",
+          "./assets/units/8/story/objects/window.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 46.55
+      }
+    },
+    {
+      "unit": 9,
+      "letters": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "wordCount": 9,
+      "words": [
+        {
+          "word": "ax",
+          "slug": "ax",
+          "letter": "X",
+          "image": "./assets/units/9/words/ax.png",
+          "audio": "./assets/units/9/audio/ax.mp3",
+          "durMs": 2782,
+          "wordAtMs": 2113,
+          "transcript": "Kss, kss, axe",
+          "transcriptNote": "Transcribed \"axe\", the alternate British spelling of the same word. Clean."
+        },
+        {
+          "word": "fox",
+          "slug": "fox",
+          "letter": "X",
+          "image": "./assets/units/9/words/fox.png",
+          "audio": "./assets/units/9/audio/fox.mp3",
+          "durMs": 2574,
+          "wordAtMs": 1826,
+          "transcript": "Kss, kss, fox"
+        },
+        {
+          "word": "X-ray",
+          "slug": "x-ray",
+          "letter": "X",
+          "image": "./assets/units/9/words/x-ray.png",
+          "audio": "./assets/units/9/audio/x-ray.mp3",
+          "durMs": 2678,
+          "wordAtMs": 1854,
+          "transcript": "X, X, X-ray"
+        },
+        {
+          "word": "yak",
+          "slug": "yak",
+          "letter": "Y",
+          "image": "./assets/units/9/words/yak.png",
+          "audio": "./assets/units/9/audio/yak.mp3",
+          "durMs": 2626,
+          "wordAtMs": 1972,
+          "transcript": "Yeah. Yeah. Yak"
+        },
+        {
+          "word": "yellow",
+          "slug": "yellow",
+          "letter": "Y",
+          "image": "./assets/units/9/words/yellow.png",
+          "audio": "./assets/units/9/audio/yellow.mp3",
+          "durMs": 2574,
+          "wordAtMs": 1896,
+          "transcript": "Yuh, yuh, yellow"
+        },
+        {
+          "word": "yo-yo",
+          "slug": "yo-yo",
+          "letter": "Y",
+          "image": "./assets/units/9/words/yo-yo.png",
+          "audio": "./assets/units/9/audio/yo-yo.mp3",
+          "durMs": 2678,
+          "wordAtMs": 1908,
+          "transcript": "Yeah. Yeah. Yow yow",
+          "isolatedWordTranscript": "Yo-yo (word-only slice from 1.86s)",
+          "transcriptNote": "Full clip transcribed \"Yow yow\". The isolated word slice returns \"Yo-yo\". Clean."
+        },
+        {
+          "word": "zebra",
+          "slug": "zebra",
+          "letter": "Z",
+          "image": "./assets/units/9/words/zebra.png",
+          "audio": "./assets/units/9/audio/zebra.mp3",
+          "durMs": 2782,
+          "wordAtMs": 2017,
+          "transcript": "Z, Z, zebra"
+        },
+        {
+          "word": "zero",
+          "slug": "zero",
+          "letter": "Z",
+          "image": "./assets/units/9/words/zero.png",
+          "audio": "./assets/units/9/audio/zero.mp3",
+          "durMs": 2782,
+          "wordAtMs": 1962,
+          "transcript": "Z, z, zero"
+        },
+        {
+          "word": "zipper",
+          "slug": "zipper",
+          "letter": "Z",
+          "image": "./assets/units/9/words/zipper.png",
+          "audio": "./assets/units/9/audio/zipper.mp3",
+          "durMs": 2678,
+          "wordAtMs": 1955,
+          "transcript": "Z. Z. Zipper"
+        }
+      ],
+      "audioVerdict": "clean",
+      "chant": {
+        "path": "./assets/units/9/chant.mp3",
+        "duration": 55.98,
+        "durationFromChantCues": 55.958,
+        "source": "assets/audio/chants/unit9-word-chant.mp3",
+        "cues": "Timing lives in app/Hafsa/Resources/Generated/chant-cues.json in the parent repo under units[unit==9] - wordCues (t, beat, echoStart, echoEnd) and letterCues. That file is authoritative; it was not copied into the demo."
+      },
+      "story": {
+        "kit": "./assets/units/9/story/kit.json",
+        "scene": "./assets/units/9/story/scene.jpg",
+        "narration": "./assets/units/9/story/narration.mp3",
+        "objectsDir": "./assets/units/9/story/objects",
+        "objects": [
+          "./assets/units/9/story/objects/axe.halo.png",
+          "./assets/units/9/story/objects/axe.png",
+          "./assets/units/9/story/objects/flower.halo.png",
+          "./assets/units/9/story/objects/flower.png",
+          "./assets/units/9/story/objects/fox.halo.png",
+          "./assets/units/9/story/objects/fox.png",
+          "./assets/units/9/story/objects/x-ray.halo.png",
+          "./assets/units/9/story/objects/x-ray.png",
+          "./assets/units/9/story/objects/yak.halo.png",
+          "./assets/units/9/story/objects/yak.png",
+          "./assets/units/9/story/objects/yo-yo.halo.png",
+          "./assets/units/9/story/objects/yo-yo.png",
+          "./assets/units/9/story/objects/zebra.halo.png",
+          "./assets/units/9/story/objects/zebra.png",
+          "./assets/units/9/story/objects/zipper.halo.png",
+          "./assets/units/9/story/objects/zipper.png"
+        ],
+        "canvas": [
+          941,
+          1672
+        ],
+        "narrationDuration": 31.06
+      }
+    }
+  ]
+}

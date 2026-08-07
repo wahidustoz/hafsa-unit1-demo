@@ -42,39 +42,17 @@ export function registerStep(id, module) {
 
 STEP_MODULES.forEach((mod) => registerStep(mod.id, mod));
 
-function mapRow(n) {
-  const unit = UNITS.find((u) => u.n === n);
-  return { n: unit.n, kind: 'unit', label: unit.label, face: unit.face, state: unit.state };
-}
-
-const UNITS_MAP = [
-  mapRow(1),
-  mapRow(2),
-  { n: 3, kind: 'unit', label: 'Gg Hh Ii', face: '🐘', state: 'locked' },
-  { n: 'R1', kind: 'review', label: 'Review 1', face: '🏅', state: 'locked' },
-  { n: 4, kind: 'unit', label: 'Jj Kk Ll', face: '🦘', state: 'locked' },
-  { n: 5, kind: 'unit', label: 'Mm Nn Oo', face: '🌙', state: 'locked' },
-  { n: 6, kind: 'unit', label: 'Pp Qq Rr', face: '👑', state: 'locked' },
-  { n: 'R2', kind: 'review', label: 'Review 2', face: '🏅', state: 'locked' },
-  { n: 7, kind: 'unit', label: 'Ss Tt Uu', face: '☀️', state: 'locked' },
-  { n: 8, kind: 'unit', label: 'Vv Ww Xx', face: '🚂', state: 'locked' },
-  { n: 9, kind: 'unit', label: 'Yy Zz', face: '🦓', state: 'locked' },
-  { n: 'R3', kind: 'review', label: 'Review 3', face: '🏆', state: 'locked' },
-];
-
 const ROAD_POINTS = [
-  { x: 150, y: 150 },
-  { x: 430, y: 95 },
-  { x: 700, y: 150 },
-  { x: 1010, y: 110 },
-  { x: 1010, y: 330 },
-  { x: 730, y: 290 },
-  { x: 450, y: 350 },
-  { x: 170, y: 310 },
-  { x: 170, y: 530 },
-  { x: 450, y: 575 },
-  { x: 730, y: 525 },
-  { x: 1010, y: 565 },
+  { x: 150, y: 196 },
+  { x: 365, y: 146 },
+  { x: 580, y: 192 },
+  { x: 795, y: 144 },
+  { x: 1010, y: 190 },
+  { x: 1010, y: 472 },
+  { x: 795, y: 516 },
+  { x: 580, y: 470 },
+  { x: 365, y: 514 },
+  { x: 150, y: 468 },
 ];
 const ROAD_VIEWBOX = { w: 1180, h: 660 };
 
@@ -169,22 +147,13 @@ function buildTopBar() {
   return bar;
 }
 
-function buildUnitNode(entry, point) {
-  const left = ((point.x / ROAD_VIEWBOX.w) * 100).toFixed(2) + '%';
-  const top = ((point.y / ROAD_VIEWBOX.h) * 100).toFixed(2) + '%';
-  const isCurrent = entry.state === 'current';
-  const isLocked = entry.state === 'locked';
-  const isDone = entry.state === 'done';
-
-  const classes = ['candy-node', 'units-node'];
-  if (isCurrent) classes.push('is-current');
-  if (isLocked) classes.push('is-locked');
-  if (isDone) classes.push('is-done');
+function buildUnitNode(unit, point) {
+  const isCurrent = unit.state === 'current';
 
   const node = document.createElement('div');
-  node.className = classes.join(' ');
-  node.style.left = left;
-  node.style.top = top;
+  node.className = 'candy-node units-node' + (isCurrent ? ' is-current' : '');
+  node.style.left = ((point.x / ROAD_VIEWBOX.w) * 100).toFixed(2) + '%';
+  node.style.top = ((point.y / ROAD_VIEWBOX.h) * 100).toFixed(2) + '%';
 
   const pad = document.createElement('span');
   pad.className = 'candy-node__pad';
@@ -193,49 +162,20 @@ function buildUnitNode(entry, point) {
   const bubble = document.createElement('button');
   bubble.type = 'button';
   bubble.className = 'candy-node__bubble';
+  bubble.setAttribute('aria-label', `Unit ${unit.n} — ${unit.label}. Tap to start!`);
+  bubble.addEventListener('click', () => goto('#/unit/' + unit.n));
 
-  if (entry.kind === 'unit') {
-    const num = document.createElement('span');
-    num.className = 'candy-node__num';
-    num.setAttribute('aria-hidden', 'true');
-    num.textContent = String(entry.n);
-    bubble.appendChild(num);
-  }
+  const num = document.createElement('span');
+  num.className = 'candy-node__num';
+  num.setAttribute('aria-hidden', 'true');
+  num.textContent = String(unit.n);
 
   const face = document.createElement('span');
   face.className = 'candy-node__face';
   face.setAttribute('aria-hidden', 'true');
-  face.textContent = entry.face;
-  bubble.appendChild(face);
+  face.textContent = unit.face;
 
-  const spoken = entry.kind === 'review' ? entry.label : `Unit ${entry.n} — ${entry.label}`;
-
-  if (isLocked) {
-    bubble.setAttribute('aria-disabled', 'true');
-    bubble.setAttribute('aria-label', `${spoken}. Locked.`);
-    const lock = document.createElement('span');
-    lock.className = 'candy-node__lock';
-    lock.setAttribute('aria-hidden', 'true');
-    lock.textContent = '🔒';
-    bubble.appendChild(lock);
-    bubble.addEventListener('click', () => {
-      node.classList.remove('is-shaking');
-      void node.offsetWidth;
-      node.classList.add('is-shaking');
-      setTimeout(() => node.classList.remove('is-shaking'), 650);
-    });
-  } else {
-    bubble.setAttribute('aria-label', `${spoken}. ${isDone ? 'Completed. Tap to play again!' : 'Tap to start!'}`);
-    bubble.addEventListener('click', () => goto('#/unit/' + entry.n));
-    if (isDone) {
-      const sticker = document.createElement('span');
-      sticker.className = 'candy-node__sticker';
-      sticker.setAttribute('aria-hidden', 'true');
-      sticker.textContent = '✓';
-      bubble.appendChild(sticker);
-    }
-  }
-
+  bubble.append(num, face);
   node.append(pad, bubble);
 
   if (isCurrent) {
@@ -247,9 +187,9 @@ function buildUnitNode(entry, point) {
   }
 
   const label = document.createElement('span');
-  label.className = 'pill node-pill' + (isLocked ? ' pill--muted' : '');
+  label.className = 'pill node-pill';
   label.setAttribute('aria-hidden', 'true');
-  label.textContent = entry.label;
+  label.textContent = unit.label;
   node.appendChild(label);
 
   return node;
@@ -279,8 +219,8 @@ function buildRoad() {
   const nodes = document.createElement('div');
   nodes.className = 'units-road__nodes';
   nodes.setAttribute('role', 'group');
-  nodes.setAttribute('aria-label', 'Learning path — 9 units and 3 reviews');
-  UNITS_MAP.forEach((entry, i) => nodes.appendChild(buildUnitNode(entry, ROAD_POINTS[i])));
+  nodes.setAttribute('aria-label', `Learning path — ${UNITS.length} units`);
+  UNITS.forEach((unit, i) => nodes.appendChild(buildUnitNode(unit, ROAD_POINTS[i])));
   wrap.appendChild(nodes);
 
   return wrap;
@@ -502,6 +442,7 @@ function renderStep(unit, id) {
   let seekFn = null;
 
   const ctx = {
+    unit,
     onDone() {
       completed.add(`${unit.n}:${id}`);
       overlay.classList.remove('is-hidden');

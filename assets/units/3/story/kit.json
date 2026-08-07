@@ -1,0 +1,246 @@
+{
+  "unit": 3,
+  "canvas": [
+    941,
+    1672
+  ],
+  "scene": "scene.jpg",
+  "audio": "narration.mp3",
+  "attractEnd": 7.86,
+  "end": 31.27,
+  "objects": [
+    {
+      "key": "girl",
+      "mode": "cutout",
+      "cut": "objects/girl.png",
+      "halo": "objects/girl.halo.png",
+      "box": [
+        471,
+        912,
+        157,
+        253
+      ],
+      "territory": [
+        477,
+        918,
+        145,
+        241
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "glove",
+      "mode": "cutout",
+      "cut": "objects/glove.png",
+      "halo": "objects/glove.halo.png",
+      "box": [
+        465,
+        964,
+        42,
+        44
+      ],
+      "territory": [
+        471,
+        970,
+        30,
+        32
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "hand",
+      "mode": "cutout",
+      "cut": "objects/hand.png",
+      "halo": "objects/hand.halo.png",
+      "box": [
+        465,
+        964,
+        42,
+        44
+      ],
+      "territory": [
+        471,
+        970,
+        30,
+        32
+      ],
+      "song": false,
+      "role": "simple"
+    },
+    {
+      "key": "hippo",
+      "mode": "cutout",
+      "cut": "objects/hippo.png",
+      "halo": "objects/hippo.halo.png",
+      "box": [
+        277,
+        887,
+        174,
+        267
+      ],
+      "territory": [
+        283,
+        893,
+        162,
+        255
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "igloo",
+      "mode": "cutout",
+      "cut": "objects/igloo.png",
+      "halo": "objects/igloo.halo.png",
+      "box": [
+        458,
+        841,
+        352,
+        266
+      ],
+      "territory": [
+        464,
+        847,
+        340,
+        254
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "hat",
+      "mode": "cutout",
+      "cut": "objects/hat.png",
+      "halo": "objects/hat.halo.png",
+      "box": [
+        391,
+        1128,
+        100,
+        85
+      ],
+      "territory": [
+        397,
+        1134,
+        88,
+        73
+      ],
+      "song": true,
+      "role": "simple"
+    },
+    {
+      "key": "ink",
+      "mode": "cutout",
+      "cut": "objects/ink.png",
+      "halo": "objects/ink.halo.png",
+      "box": [
+        582,
+        1165,
+        82,
+        83
+      ],
+      "territory": [
+        588,
+        1171,
+        70,
+        71
+      ],
+      "song": true,
+      "role": "simple"
+    }
+  ],
+  "beats": [
+    {
+      "t": 9.21,
+      "key": "igloo",
+      "line": "Welcome to my igloo",
+      "hl": "igloo"
+    },
+    {
+      "t": 11.25,
+      "key": "hippo",
+      "line": "This is my hippo",
+      "hl": "hippo"
+    },
+    {
+      "t": 13.35,
+      "key": "ink",
+      "line": "This is my ink",
+      "hl": "ink"
+    },
+    {
+      "t": 15.63,
+      "key": "hat",
+      "line": "This is my green hat",
+      "hl": "hat"
+    },
+    {
+      "t": 21.61,
+      "key": "igloo",
+      "line": "Welcome to my igloo",
+      "hl": "igloo"
+    },
+    {
+      "t": 23.65,
+      "key": "hippo",
+      "line": "This is my hippo",
+      "hl": "hippo"
+    },
+    {
+      "t": 25.75,
+      "key": "ink",
+      "line": "This is my ink",
+      "hl": "ink"
+    },
+    {
+      "t": 28.07,
+      "key": "hat",
+      "line": "This is my green hat",
+      "hl": "hat"
+    }
+  ],
+  "glow": "#2fd44a",
+  "lyrics": [
+    {
+      "t": 8.31,
+      "text": "Welcome to my igloo.",
+      "hl": "igloo"
+    },
+    {
+      "t": 10.35,
+      "text": "This is my hippo.",
+      "hl": "hippo"
+    },
+    {
+      "t": 12.45,
+      "text": "This is my ink.",
+      "hl": "ink"
+    },
+    {
+      "t": 14.73,
+      "text": "This is my green hat.",
+      "hl": "hat"
+    },
+    {
+      "t": 20.71,
+      "text": "Welcome to my igloo.",
+      "hl": "igloo"
+    },
+    {
+      "t": 22.75,
+      "text": "This is my hippo.",
+      "hl": "hippo"
+    },
+    {
+      "t": 24.85,
+      "text": "This is my ink.",
+      "hl": "ink"
+    },
+    {
+      "t": 27.17,
+      "text": "This is my green hat.",
+      "hl": "hat"
+    }
+  ]
+}

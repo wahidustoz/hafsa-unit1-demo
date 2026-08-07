@@ -1,8 +1,6 @@
-import { UNIT1 } from '../data.js'
 import * as audio from '../audio.js'
 import { confetti, pointerHand } from '../fx.js'
 
-const TOTAL = UNIT1.length
 const BURROW_COUNT = 5
 const WAVE_MIN_MS = 2600
 const WAVE_MAX_MS = 3400
@@ -28,8 +26,8 @@ function shuffle(list) {
   return out
 }
 
-function pickDistractors(target, n) {
-  const pool = UNIT1.filter((w) => w.word !== target.word)
+function pickDistractors(words, target, n) {
+  const pool = words.filter((w) => w.word !== target.word)
   return shuffle(pool).slice(0, n)
 }
 
@@ -102,10 +100,13 @@ export default {
       })
     }
 
-    scoreRowEl.innerHTML = UNIT1.map((_, i) => '<span class="pu-star" data-star="' + i + '">⭐</span>').join('')
+    const words = ctx.unit.words
+    const total = words.length
+
+    scoreRowEl.innerHTML = words.map((_, i) => '<span class="pu-star" data-star="' + i + '">⭐</span>').join('')
     const scoreEls = Array.from(scoreRowEl.querySelectorAll('[data-star]'))
 
-    const order = shuffle(UNIT1)
+    const order = shuffle(words)
     const burrowState = []
     for (let i = 0; i < BURROW_COUNT; i++) burrowState.push({ up: false, isTarget: false })
 
@@ -288,7 +289,7 @@ export default {
 
     async function runWave(target, gen) {
       const count = Math.random() < 0.5 ? 2 : 3
-      const distractors = pickDistractors(target, count - 1)
+      const distractors = pickDistractors(words, target, count - 1)
       const words = shuffle([target, ...distractors])
       const slots = pickSlots(count)
       slots.forEach((slotIdx, i) => popUp(slotIdx, words[i], words[i] === target))
@@ -315,7 +316,7 @@ export default {
       fieldEl.classList.remove('is-scaffold')
       hardResetBurrows()
       const target = order[roundIndex]
-      ctx.setProgress(roundIndex, TOTAL)
+      ctx.setProgress(roundIndex, total)
       showPrompt(target)
       audio.play(target.utter)
       resetIdle()
@@ -344,7 +345,7 @@ export default {
       await wait(CORRECT_HOLD_MS)
       if (destroyed) return
       roundIndex += 1
-      if (roundIndex >= TOTAL) {
+      if (roundIndex >= total) {
         await finish()
       } else {
         startRound()
@@ -352,7 +353,7 @@ export default {
     }
 
     async function finish() {
-      ctx.setProgress(TOTAL, TOTAL)
+      ctx.setProgress(total, total)
       hardResetBurrows()
       audio.chime('complete')
       confetti(root)
@@ -398,7 +399,7 @@ export default {
       cancelIdle()
       clearAllTimers()
       audio.stopAll()
-      roundIndex = Math.max(0, Math.min(i, TOTAL - 1))
+      roundIndex = Math.max(0, Math.min(i, total - 1))
       startRound()
     }
 

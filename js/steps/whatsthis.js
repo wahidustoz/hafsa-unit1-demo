@@ -1,4 +1,3 @@
-import { UNIT1 } from '../data.js'
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
 
@@ -30,7 +29,7 @@ export default {
   mount(root, ctx) {
     root.classList.add('step-whatsthis')
 
-    const order = shuffle(UNIT1)
+    const order = shuffle(ctx.unit.words)
     const total = order.length
     let index = 0
     let phase = 'prompt'
