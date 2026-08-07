@@ -1,5 +1,6 @@
 import { UNITS } from './units.js';
 import * as audio from './audio.js';
+import { mountRevealList } from './revealList.js';
 import stepHello from './steps/hello.js';
 import stepWhatsthis from './steps/whatsthis.js';
 import stepChant from './steps/chant.js';
@@ -18,21 +19,7 @@ const STEP_MODULES = [
   stepNumbers, stepCount, stepHowmany, stepAddup, stepMatchup,
 ];
 
-const HUB_GAP = 235;
-const HUB_MARGIN = 120;
-const HUB_HEIGHT = 620;
-const HUB_ROW = { high: 172, low: 430 };
-
-function hubPoints(n) {
-  return Array.from({ length: n }, (_, i) => ({
-    x: HUB_MARGIN + HUB_GAP * i,
-    y: i % 2 ? HUB_ROW.low : HUB_ROW.high,
-  }));
-}
-
-function hubViewBox(n) {
-  return { w: HUB_GAP * (n - 1) + HUB_MARGIN * 2, h: HUB_HEIGHT };
-}
+const STEP_ART = new Set();
 
 const steps = new Map();
 
@@ -42,20 +29,6 @@ export function registerStep(id, module) {
 
 STEP_MODULES.forEach((mod) => registerStep(mod.id, mod));
 
-const ROAD_POINTS = [
-  { x: 150, y: 196 },
-  { x: 365, y: 146 },
-  { x: 580, y: 192 },
-  { x: 795, y: 144 },
-  { x: 1010, y: 190 },
-  { x: 1010, y: 472 },
-  { x: 795, y: 516 },
-  { x: 580, y: 470 },
-  { x: 365, y: 514 },
-  { x: 150, y: 468 },
-];
-const ROAD_VIEWBOX = { w: 1180, h: 660 };
-
 const root = document.getElementById('app');
 const completed = new Set();
 
@@ -63,28 +36,13 @@ let cleanupCurrent = null;
 let stepPaused = false;
 let pauseListeners = [];
 let preloadedUnit = null;
+let unitsIndex = 0;
+const hubIndex = new Map();
 
 function preloadUnit(unit) {
   if (preloadedUnit === unit.n) return;
   preloadedUnit = unit.n;
   audio.preload(unit.preload);
-}
-
-function catmullRomPath(points) {
-  if (points.length < 2) return '';
-  let d = `M ${points[0].x} ${points[0].y}`;
-  for (let i = 0; i < points.length - 1; i++) {
-    const p0 = points[i === 0 ? i : i - 1];
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
-    const cp1x = p1.x + (p2.x - p0.x) / 6;
-    const cp1y = p1.y + (p2.y - p0.y) / 6;
-    const cp2x = p2.x - (p3.x - p1.x) / 6;
-    const cp2y = p2.y - (p3.y - p1.y) / 6;
-    d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)} ${cp2x.toFixed(1)} ${cp2y.toFixed(1)} ${p2.x} ${p2.y}`;
-  }
-  return d;
 }
 
 export function goto(hash) {
@@ -147,83 +105,14 @@ function buildTopBar() {
   return bar;
 }
 
-function buildUnitNode(unit, point) {
-  const isCurrent = unit.state === 'current';
-
-  const node = document.createElement('div');
-  node.className = 'candy-node units-node' + (isCurrent ? ' is-current' : '');
-  node.style.left = ((point.x / ROAD_VIEWBOX.w) * 100).toFixed(2) + '%';
-  node.style.top = ((point.y / ROAD_VIEWBOX.h) * 100).toFixed(2) + '%';
-
-  const pad = document.createElement('span');
-  pad.className = 'candy-node__pad';
-  pad.setAttribute('aria-hidden', 'true');
-
-  const bubble = document.createElement('button');
-  bubble.type = 'button';
-  bubble.className = 'candy-node__bubble';
-  bubble.setAttribute('aria-label', `Unit ${unit.n} — ${unit.label}. Tap to start!`);
-  bubble.addEventListener('click', () => goto('#/unit/' + unit.n));
-
-  const num = document.createElement('span');
-  num.className = 'candy-node__num';
-  num.setAttribute('aria-hidden', 'true');
-  num.textContent = String(unit.n);
-
-  const face = document.createElement('span');
-  face.className = 'candy-node__face';
-  face.setAttribute('aria-hidden', 'true');
-  face.textContent = unit.face;
-
-  bubble.append(num, face);
-  node.append(pad, bubble);
-
-  if (isCurrent) {
-    const start = document.createElement('span');
-    start.className = 'pill units-node__start';
-    start.setAttribute('aria-hidden', 'true');
-    start.textContent = 'Start ›';
-    node.appendChild(start);
-  }
-
-  const label = document.createElement('span');
-  label.className = 'pill node-pill';
-  label.setAttribute('aria-hidden', 'true');
-  label.textContent = unit.label;
-  node.appendChild(label);
-
-  return node;
-}
-
-function buildRoad() {
-  const wrap = document.createElement('div');
-  wrap.className = 'units-road';
-
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('class', 'units-road__svg');
-  svg.setAttribute('viewBox', `0 0 ${ROAD_VIEWBOX.w} ${ROAD_VIEWBOX.h}`);
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('focusable', 'false');
-
-  const d = catmullRomPath(ROAD_POINTS);
-  ['units-road__casing', 'units-road__fill', 'units-road__dots'].forEach((cls) => {
-    const path = document.createElementNS(svgNS, 'path');
-    path.setAttribute('class', cls);
-    path.setAttribute('d', d);
-    svg.appendChild(path);
-  });
-
-  wrap.appendChild(svg);
-
-  const nodes = document.createElement('div');
-  nodes.className = 'units-road__nodes';
-  nodes.setAttribute('role', 'group');
-  nodes.setAttribute('aria-label', `Learning path — ${UNITS.length} units`);
-  UNITS.forEach((unit, i) => nodes.appendChild(buildUnitNode(unit, ROAD_POINTS[i])));
-  wrap.appendChild(nodes);
-
-  return wrap;
+function unitRevealItem(unit) {
+  return {
+    headline: unit.label,
+    object: { src: unit.hero },
+    caption: 'Unit ' + unit.n,
+    ariaLabel: `Unit ${unit.n} — ${unit.label}. Tap to start!`,
+    onSelect: () => goto('#/unit/' + unit.n),
+  };
 }
 
 function renderUnits() {
@@ -232,94 +121,37 @@ function renderUnits() {
 
   const page = document.createElement('div');
   page.className = 'units-page';
-  page.append(buildTopBar(), buildRoad());
-
+  page.appendChild(buildTopBar());
   root.appendChild(page);
+
+  cleanupCurrent = mountRevealList(page, {
+    items: UNITS.map(unitRevealItem),
+    ariaLabel: `Learning path — ${UNITS.length} units`,
+    initialIndex: unitsIndex,
+    onCommit: (index) => {
+      unitsIndex = index;
+    },
+  });
 }
 
-function buildStepNode(unit, entry, i, points, viewBox) {
+function stepArt(step) {
+  if (!STEP_ART.has(step.id)) return { glyph: step.icon };
+  return { src: './assets/steps/' + step.id + '.png' };
+}
+
+function stepRevealItem(unit, entry, i) {
   const mod = steps.get(entry.id);
   const isDone = completed.has(`${unit.n}:${entry.id}`);
-  const point = points[i];
-
-  const node = document.createElement('div');
-  node.className = 'candy-node hub-node hub-node--' + entry.tone;
-  node.style.left = ((point.x / viewBox.w) * 100).toFixed(2) + '%';
-  node.style.top = ((point.y / viewBox.h) * 100).toFixed(2) + '%';
-  node.style.setProperty('--i', String(i));
-
-  const pad = document.createElement('span');
-  pad.className = 'candy-node__pad';
-  pad.setAttribute('aria-hidden', 'true');
-
-  const bubble = document.createElement('button');
-  bubble.type = 'button';
-  bubble.className = 'candy-node__bubble';
-  bubble.setAttribute('aria-label', mod.title + (isDone ? ' — completed' : ''));
-
-  const num = document.createElement('span');
-  num.className = 'candy-node__num';
-  num.setAttribute('aria-hidden', 'true');
-  num.textContent = String(i + 1);
-
-  const face = document.createElement('span');
-  face.className = 'candy-node__face';
-  face.setAttribute('aria-hidden', 'true');
-  face.textContent = entry.icon;
-
-  bubble.append(num, face);
-
-  if (isDone) {
-    const sticker = document.createElement('span');
-    sticker.className = 'candy-node__sticker';
-    sticker.setAttribute('aria-hidden', 'true');
-    sticker.textContent = '✓';
-    bubble.appendChild(sticker);
-  }
-
-  bubble.addEventListener('click', () => goto(`#/unit/${unit.n}/${entry.id}`));
-
-  const label = document.createElement('span');
-  label.className = 'pill hub-node__label';
-  label.setAttribute('aria-hidden', 'true');
-  label.textContent = mod.title;
-
-  node.append(pad, bubble, label);
-  return node;
-}
-
-function buildHubRoad(unit) {
-  const points = hubPoints(unit.steps.length);
-  const viewBox = hubViewBox(unit.steps.length);
-
-  const wrap = document.createElement('div');
-  wrap.className = 'hub-road';
-
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('class', 'hub-road__svg');
-  svg.setAttribute('viewBox', `0 0 ${viewBox.w} ${viewBox.h}`);
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('focusable', 'false');
-
-  const d = catmullRomPath(points);
-  ['hub-road__casing', 'hub-road__fill', 'hub-road__dots'].forEach((cls) => {
-    const path = document.createElementNS(svgNS, 'path');
-    path.setAttribute('class', cls);
-    path.setAttribute('d', d);
-    svg.appendChild(path);
-  });
-
-  wrap.appendChild(svg);
-
-  const nodes = document.createElement('div');
-  nodes.className = 'hub-road__nodes';
-  nodes.setAttribute('role', 'group');
-  nodes.setAttribute('aria-label', `Unit ${unit.n} steps`);
-  unit.steps.forEach((entry, i) => nodes.appendChild(buildStepNode(unit, entry, i, points, viewBox)));
-  wrap.appendChild(nodes);
-
-  return wrap;
+  return {
+    headline: mod.title,
+    object: stepArt(entry),
+    caption: 'Step ' + (i + 1) + (isDone ? ' ✓' : ''),
+    ariaLabel: `Step ${i + 1} — ${mod.title}${isDone ? ' — completed' : ''} — tap to start!`,
+    onSelect: () => {
+      hubIndex.set(unit.n, i);
+      goto(`#/unit/${unit.n}/${entry.id}`);
+    },
+  };
 }
 
 function renderHub(unit) {
@@ -353,13 +185,17 @@ function renderHub(unit) {
   });
 
   header.append(back, title, chips);
-
-  const stage = document.createElement('div');
-  stage.className = 'hub-stage';
-  stage.appendChild(buildHubRoad(unit));
-
-  page.append(header, stage);
+  page.appendChild(header);
   root.appendChild(page);
+
+  cleanupCurrent = mountRevealList(page, {
+    items: unit.steps.map((entry, i) => stepRevealItem(unit, entry, i)),
+    ariaLabel: `Unit ${unit.n} steps — ${unit.steps.length} steps`,
+    initialIndex: hubIndex.get(unit.n) || 0,
+    onCommit: (index) => {
+      hubIndex.set(unit.n, index);
+    },
+  });
 }
 
 function renderStep(unit, id) {

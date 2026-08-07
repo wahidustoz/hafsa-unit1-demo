@@ -844,16 +844,22 @@ const STORY_9 = {
 };
 
 const LETTER_UNITS = [
-  { n: 1, face: '🍎', letters: ['A', 'B', 'C'], words: UNIT1, chant: CHANT_1, story: STORY_1 },
-  { n: 2, face: '🐘', letters: ['D', 'E', 'F'], words: WORDS_2, chant: CHANT_2, story: STORY_2 },
-  { n: 3, face: '🦛', letters: ['G', 'H', 'I'], words: WORDS_3, chant: CHANT_3, story: STORY_3 },
-  { n: 4, face: '🦘', letters: ['J', 'K', 'L'], words: WORDS_4, chant: CHANT_4, story: STORY_4 },
-  { n: 5, face: '🍊', letters: ['M', 'N', 'O'], words: WORDS_5, chant: CHANT_5, story: STORY_5 },
-  { n: 6, face: '👑', letters: ['P', 'Q', 'R'], words: WORDS_6, chant: CHANT_6, story: STORY_6 },
-  { n: 7, face: '🐯', letters: ['S', 'T'], words: WORDS_7, chant: CHANT_7, story: STORY_7 },
-  { n: 8, face: '☂️', letters: ['U', 'V', 'W'], words: WORDS_8, chant: CHANT_8, story: STORY_8 },
-  { n: 9, face: '🦓', letters: ['X', 'Y', 'Z'], words: WORDS_9, chant: CHANT_9, story: STORY_9 },
+  { n: 1, face: '🍎', hero: 'apple', letters: ['A', 'B', 'C'], words: UNIT1, chant: CHANT_1, story: STORY_1 },
+  { n: 2, face: '🐘', hero: 'elephant', letters: ['D', 'E', 'F'], words: WORDS_2, chant: CHANT_2, story: STORY_2 },
+  { n: 3, face: '🦛', hero: 'hippo', letters: ['G', 'H', 'I'], words: WORDS_3, chant: CHANT_3, story: STORY_3 },
+  { n: 4, face: '🦘', hero: 'kangaroo', letters: ['J', 'K', 'L'], words: WORDS_4, chant: CHANT_4, story: STORY_4 },
+  { n: 5, face: '🍊', hero: 'orange', letters: ['M', 'N', 'O'], words: WORDS_5, chant: CHANT_5, story: STORY_5 },
+  { n: 6, face: '👑', hero: 'queen', letters: ['P', 'Q', 'R'], words: WORDS_6, chant: CHANT_6, story: STORY_6 },
+  { n: 7, face: '🐯', hero: 'tiger', letters: ['S', 'T'], words: WORDS_7, chant: CHANT_7, story: STORY_7 },
+  { n: 8, face: '☂️', hero: 'umbrella', letters: ['U', 'V', 'W'], words: WORDS_8, chant: CHANT_8, story: STORY_8 },
+  { n: 9, face: '🦓', hero: 'zebra', letters: ['X', 'Y', 'Z'], words: WORDS_9, chant: CHANT_9, story: STORY_9 },
 ];
+
+function heroImage(unit) {
+  const word = unit.words.find((entry) => entry.word === unit.hero);
+  if (!word) throw new Error(`Unit ${unit.n} has no word named "${unit.hero}"`);
+  return word.img;
+}
 
 export const UNITS = [
   ...LETTER_UNITS.map((unit) => ({
@@ -861,6 +867,7 @@ export const UNITS = [
     label: unit.letters.map((l) => l + l.toLowerCase()).join(' '),
     chips: unit.letters.map((l) => l + l.toLowerCase()),
     face: unit.face,
+    hero: heroImage(unit),
     state: unit.n === 1 ? 'current' : 'open',
     letters: unit.letters,
     words: unit.words,
@@ -880,6 +887,7 @@ export const UNITS = [
     label: 'Digits',
     chips: ['1 2 3', '4 5 6', '7 8 9 0'],
     face: '🔢',
+    hero: './assets/units/9/words/zero.png',
     state: 'open',
     steps: [
       { id: 'numbers', icon: '🔢', tone: 'primary' },
