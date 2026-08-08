@@ -290,9 +290,9 @@ export default {
     async function runWave(target, gen) {
       const count = Math.random() < 0.5 ? 2 : 3
       const distractors = pickDistractors(words, target, count - 1)
-      const words = shuffle([target, ...distractors])
+      const wave = shuffle([target, ...distractors])
       const slots = pickSlots(count)
-      slots.forEach((slotIdx, i) => popUp(slotIdx, words[i], words[i] === target))
+      slots.forEach((slotIdx, i) => popUp(slotIdx, wave[i], wave[i] === target))
       const duration = WAVE_MIN_MS + Math.random() * (WAVE_MAX_MS - WAVE_MIN_MS)
       await wait(duration)
       if (gen !== roundGen || destroyed) return
