@@ -91,14 +91,14 @@ export default {
 
     function loadWord() {
       const w = currentWord()
-      objectImg.src = w.img
+      currentQuestion = pickQuestion(w)
+      lastQuestionSlug = currentQuestion.slug
+      objectImg.src = currentQuestion.img || w.img
       objectImg.alt = w.word
       const parts = w.letters.split(' ')
       letterEls[0].textContent = parts[0] || ''
       letterEls[1].textContent = parts[1] || ''
       wordEl.textContent = w.word
-      currentQuestion = pickQuestion(w)
-      lastQuestionSlug = currentQuestion.slug
     }
 
     function clearAdvanceTimer() {
