@@ -19,7 +19,7 @@ const STEP_MODULES = [
   stepNumbers, stepCount, stepHowmany, stepAddup, stepMatchup,
 ];
 
-const STEP_ART = new Set();
+const STEP_ART = new Set(['hello', 'whatsthis', 'chant', 'peekaboo', 'story', 'bubbles', 'popup']);
 
 const steps = new Map();
 
@@ -136,7 +136,7 @@ function renderUnits() {
 
 function stepArt(step) {
   if (!STEP_ART.has(step.id)) return { glyph: step.icon };
-  return { src: './assets/steps/' + step.id + '.png' };
+  return { src: './assets/steps/' + step.id + '.webp' };
 }
 
 function stepRevealItem(unit, entry, i) {
