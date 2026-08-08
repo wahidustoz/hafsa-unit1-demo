@@ -283,6 +283,7 @@ export function mountRevealList(host, { items, ariaLabel, initialIndex = 0, onCo
     else if (event.key === 'ArrowLeft') settleTo(target - 1);
     else return;
     event.preventDefault();
+    cells[target].card.focus();
   }
 
   function onFocusIn(event) {
