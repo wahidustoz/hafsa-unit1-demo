@@ -1,5 +1,6 @@
 import * as audio from '../audio.js'
 import { confetti } from '../fx.js'
+import { WHATSTHIS_QUESTIONS } from '../whatsthisQuestions.js'
 
 function shuffle(list) {
   const result = list.slice()
@@ -20,6 +21,12 @@ function replay(el, className) {
 
 const POINTER_SRC = './assets/images/pointer.png'
 const VOICE_WHATS_THIS = './assets/audio/voice/whats-this.mp3'
+const QUESTION_AUDIO_DIR = './assets/audio/voice/whatsthis/'
+const DEFAULT_QUESTION = { text: "What's this?", slug: 'whats-this' }
+
+function questionAudioPath(slug) {
+  return slug === 'whats-this' ? VOICE_WHATS_THIS : QUESTION_AUDIO_DIR + 'q-' + slug + '.mp3'
+}
 
 export default {
   id: 'whatsthis',
@@ -37,6 +44,8 @@ export default {
     let advanceRemaining = 0
     let advanceStartedAt = 0
     let destroyed = false
+    let currentQuestion = DEFAULT_QUESTION
+    let lastQuestionSlug = null
 
     root.innerHTML = `
       <div class="wt-stage">
@@ -65,9 +74,19 @@ export default {
     const wordEl = root.querySelector('.wt-word')
     const plinth = root.querySelector('.wt-plinth')
     const objectImg = root.querySelector('.wt-object')
+    const promptEl = root.querySelector('.wt-prompt')
 
     function currentWord() {
       return order[index]
+    }
+
+    function pickQuestion(word) {
+      const unitQuestions = WHATSTHIS_QUESTIONS[ctx.unit.n]
+      const list = (unitQuestions && unitQuestions[word.word.toLowerCase()]) || [DEFAULT_QUESTION]
+      if (list.length === 1) return list[0]
+      const candidates = list.filter((q) => q.slug !== lastQuestionSlug)
+      const pool = candidates.length ? candidates : list
+      return pool[Math.floor(Math.random() * pool.length)]
     }
 
     function loadWord() {
@@ -78,6 +97,8 @@ export default {
       letterEls[0].textContent = parts[0] || ''
       letterEls[1].textContent = parts[1] || ''
       wordEl.textContent = w.word
+      currentQuestion = pickQuestion(w)
+      lastQuestionSlug = currentQuestion.slug
     }
 
     function clearAdvanceTimer() {
@@ -101,7 +122,8 @@ export default {
       root.classList.remove('is-answer')
       plinth.classList.remove('is-glowing')
       replay(plinth, 'is-popped')
-      audio.play(VOICE_WHATS_THIS)
+      promptEl.textContent = currentQuestion.text
+      audio.play(questionAudioPath(currentQuestion.slug))
     }
 
     function onPlinthActivate() {
