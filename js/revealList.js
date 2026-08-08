@@ -56,10 +56,13 @@ function buildCell(item) {
   card.className = 'reveal__card';
   card.setAttribute('aria-label', item.ariaLabel);
 
-  const headline = document.createElement('span');
-  headline.className = 'reveal__headline';
-  headline.setAttribute('aria-hidden', 'true');
-  headline.textContent = item.headline;
+  let headline = null;
+  if (item.headline) {
+    headline = document.createElement('span');
+    headline.className = 'reveal__headline';
+    headline.setAttribute('aria-hidden', 'true');
+    headline.textContent = item.headline;
+  }
 
   const object = document.createElement('span');
   object.className = 'reveal__object';
@@ -74,7 +77,8 @@ function buildCell(item) {
   captionText.textContent = item.caption;
   caption.appendChild(captionText);
 
-  card.append(headline, object, caption);
+  if (headline) card.appendChild(headline);
+  card.append(object, caption);
   el.appendChild(card);
   return { el, card, headline, object, caption, onSelect: item.onSelect };
 }
@@ -123,7 +127,7 @@ export function mountRevealList(host, { items, ariaLabel, initialIndex = 0, onCo
       cell.el.style.zIndex = String(120 - Math.round(span * 20));
       cell.el.classList.toggle('is-mute', span > VISIBLE);
       cell.object.style.transform = 'translate3d(' + d * slot * OBJECT_LEAD + 'px,0,0)';
-      cell.headline.style.transform = 'translate3d(' + -d * slot * HEADLINE_LAG + 'px,0,0)';
+      if (cell.headline) cell.headline.style.transform = 'translate3d(' + -d * slot * HEADLINE_LAG + 'px,0,0)';
       cell.caption.style.transform = 'translate3d(' + -d * slot * CAPTION_LAG + 'px,0,0)';
     }
   }
