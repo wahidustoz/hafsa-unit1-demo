@@ -8,7 +8,7 @@
 .step-whatsthis .wt-stage{
   --wt-letter:min(clamp(72px,17vw,260px),22cqh);
   --wt-word:min(clamp(var(--fs-title),4.5vw,var(--fs-display)),6.5cqh);
-  --wt-plinth:min(46cqh,500px);
+  --wt-plinth:min(52cqh,560px);
   width:100%;
   height:100%;
   min-height:0;
@@ -111,20 +111,16 @@
   min-width:var(--tap-child);
   min-height:var(--tap-child);
   border-radius:50%;
-  border:5px solid var(--ink);
-  background:radial-gradient(130% 130% at 30% 20%,var(--reward-lt) 0%,var(--reward) 58%,var(--reward-dk) 100%);
-  box-shadow:0 var(--lift) 0 var(--reward-hard),var(--shadow-ambient);
   cursor:pointer;
-  transition:transform var(--t-press) ease,box-shadow var(--t-press) ease;
+  transition:transform var(--t-press) ease;
 }
 
 .step-whatsthis:not(.is-answer) .wt-plinth:hover{
-  transform:translateY(-6px);
+  transform:translateY(-6px) scale(1.03);
 }
 
 .step-whatsthis .wt-plinth:active{
-  transform:translateY(var(--sink));
-  box-shadow:0 var(--lift-pressed) 0 var(--reward-hard),0 6px 10px var(--ink-a16);
+  transform:translateY(var(--sink)) scale(.98);
 }
 
 .step-whatsthis.is-answer .wt-plinth{
@@ -146,7 +142,7 @@
 
 .step-whatsthis .wt-object{
   position:relative;
-  width:calc(var(--wt-plinth) * .7);
+  width:calc(var(--wt-plinth) * .96);
   height:auto;
   filter:drop-shadow(0 10px 14px var(--ink-a16));
 }

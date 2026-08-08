@@ -7,7 +7,7 @@ export const WHATSTHIS_QUESTIONS = {
     'apple': [
       { text: "What's this?", slug: "whats-this" },
       { text: "What color's the apple?", slug: "what-colors-the-apple" },
-      { text: "What is the bear eating?", slug: "what-is-the-bear-eating" },
+      { text: "What is the bear eating?", slug: "what-is-the-bear-eating", img: './assets/whatsthis/crop-1-bear.webp' },
     ],
     'alligator': [
       { text: "What do you see?", slug: "what-do-you-see" },
