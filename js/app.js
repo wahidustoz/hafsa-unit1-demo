@@ -144,7 +144,7 @@ function stepRevealItem(unit, entry, i) {
   const isDone = completed.has(`${unit.n}:${entry.id}`);
   return {
     object: stepArt(entry),
-    caption: 'Step ' + (i + 1) + (isDone ? ' ✓' : ''),
+    caption: mod.title + (isDone ? ' ✓' : ''),
     ariaLabel: `Step ${i + 1} — ${mod.title}${isDone ? ' — completed' : ''} — tap to start!`,
     onSelect: () => {
       hubIndex.set(unit.n, i);
